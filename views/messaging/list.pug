@@ -1,0 +1,8 @@
+extends ../layout
+
+block content
+  a(href='/m/create') Create
+  ul
+    each conversation in conversations.length ? conversations : ['There are no Conversations yet']
+      li
+        a(href=conversation._id) #{conversation.title}

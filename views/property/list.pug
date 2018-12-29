@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  a(href='/p/create') Create
+  ul
+    each property in properties.length ? properties : ['There are no properties yet']
+      li
+        a(href=property.id) #{property.name}
+        | (#{property.type}) 
+        a(href='/p/'+property.id+'/m') Messaging
+        | 
+        a(href='/p/'+property.id+'/t') Tickets
+        | 
+        a(href='/p/'+property.id+'/s') Settings
