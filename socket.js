@@ -1,13 +1,27 @@
 const Conversation = require('./models/chat/conversation');
+const Account = require('./models/account');
 const Message = require('./models/chat/message');
 const Participant = require('./models/chat/participant');
 const Contact = require('./models/contact');
 const async = require('async');
+var mongoose = require('mongoose');
+
 
 module.exports = function (io) {
 
     io.on("connection", function (socket) {
             console.log("new connection");
+            var userId;
+            if (socket.request.session.passport.user) {
+                userId = socket.request.session.passport.user;
+                console.log("Your User ID is", userId);
+                Account.findOne({username: userId}, function (err, user) {
+                    socket.user = user;
+                    // todo might be null
+
+                });
+
+            }
 
             socket.on('new message', function (msg) {
                 console.log('new message: ' + msg);
@@ -17,28 +31,59 @@ module.exports = function (io) {
 
                 // validate conversation
                 if (msg['conversation']) {
-
                     async.waterfall([
-                        function (msg) {
-                            return function (callback) {
-                                conversation = Conversation.findOne({_id: msg['conversation']});
+                        function (callback) {
+                            conversation = Conversation.findOne({_id: msg['conversation']}, function (err, conversation) {
                                 callback(null, conversation);
-                            }
-
+                            });
                         },
                         function (conversation, callback) {
-                            return function (callback) {
-                                participant = Participant.findOne({_id: conversation.participants[0]});
-                                callback(err, participant);
 
+                            let arr = conversation.participants.map(ele => new mongoose.Types.ObjectId(ele.id));
 
-                            }
+                            // find participant
+                            Participant.findOne({ modelRef: mongoose.Types.ObjectId(socket.user._id)})
+                                .where('_id')
+                                .in(arr)
+                                .exec(function (err, participant) {
+
+                                console.log(participant);
+
+                                // create participant
+                                if (participant==null) {
+
+                                    Participant.create({
+                                        refModel: 'Member',
+                                        modelRef: socket.user._id
+                                    }, function (err, newParticipant) {
+                                        return callback(null, conversation,newParticipant);
+                                    });
+
+                                }else {
+                                    return callback(null,conversation, participant);
+                                }
+
+                            });
+
                         }
-                    ], function (error, success) {
+                    ], function (error, conversation,participant) {
                         if (error) {
-                            alert('Something is wrong!');
+                            console.log(error);
                         }
-                        return alert('Done!');
+
+                        var message = Message.create({
+                            body: msg['text'],
+                            conversation: conversation._id,
+                            owner: participant._id,
+
+                        }, function (err, message) {
+                            if (err) console.error(err);
+                            // saved!
+
+                            msg['_id'] = message._id;
+                            io.emit('chat message', message);
+                        });
+
                     });
 
 
@@ -67,13 +112,13 @@ module.exports = function (io) {
                                     participants: [participant._id]
                                 }, function (err, conversation) {
 
-                                    if (err){
+                                    if (err) {
                                         console.error(err)
                                     }
 
 
                                     msg['conversation'] = conversation._id;
-                                    return callback(null, conversation,participant);
+                                    return callback(null, conversation, participant);
 
 
                                 });
@@ -81,7 +126,7 @@ module.exports = function (io) {
 
                             }
 
-                        ], function (error, conversation,participant) {
+                        ], function (error, conversation, participant) {
                             if (error) {
                                 console.error(error)
                             }

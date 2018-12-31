@@ -1,4 +1,5 @@
 var Property = require('../models/property');
+var Member = require('../models/member');
 
 
 exports.createForm = function (req, res) {
@@ -19,7 +20,17 @@ exports.create = function (req, res,next) {
         if (err) {
             return next(err);
         }
-        res.redirect('/p')
+
+        // create membership
+        membership = new Member({
+            role:'Admin',
+            account:req.user._id,
+            property:property._id,
+        });
+
+        membership.save(function (err,property) {
+            res.redirect('/p')
+        });
     })
 };
 

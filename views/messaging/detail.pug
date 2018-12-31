@@ -1,0 +1,78 @@
+extends ../layout
+
+block content
+  
+  pre #{conversation}
+  br
+  h3 messages
+  ul.messages(style='overflow-y:scroll;height:300px;')
+    each message in messages.length ? messages : ['There are no messages yet']
+      li
+        pre #{message}
+      
+  .type_msg
+    .input_msg_write
+      input.text-box(type='text', placeholder="Type a message")
+      button#sendMessage
+        i.fa.fa-paper-plane
+
+          
+block scripts
+  script(src="/socket.io/socket.io.js")
+  script.
+    var name;
+    var socket = io();
+    const CONVERSATION = '#{conversation._id}';
+
+    socket.on('chat message', function (msg) {
+        console.log(msg);
+
+
+        appendMessage( JSON.stringify( msg),true);
+    });
+
+
+    $('#sendMessage').click(sendNewMessage);
+
+    function sendNewMessage() {
+        var userInput = $('.text-box');
+        var newMessage = userInput.val().trim() //.replace(/\<div\>|\<br.*?\>/ig, '\n').replace(/\<\/div\>/g, '').trim().replace(/\n/g, '<br>');
+
+        if (!newMessage) return;
+
+        var message = {
+            conversation: CONVERSATION,
+            text: newMessage
+        }
+
+        socket.emit('new message', message);
+
+        // clean out old message
+        userInput.val('');
+        // focus on input
+        userInput.focus();
+
+       // appendMessage(message['text']);
+    }
+
+    function appendMessage(newMessage, mine) {
+        var messagesContainer = $('.messages');
+
+        if (mine) {
+            messagesContainer.append([
+                '<li class="self"><pre>',
+                newMessage,
+                '</pre></li>'
+            ].join(''));
+        } else {
+            messagesContainer.append([
+                '<li class="other">',
+                newMessage,
+                '</li>'
+            ].join(''));
+        }
+        
+        messagesContainer.finish().animate({
+            scrollTop: messagesContainer.prop("scrollHeight")
+        }, 250);
+    }

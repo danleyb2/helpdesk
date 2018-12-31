@@ -1,8 +1,14 @@
 extends ../layout
 
 block content
-  a(href='/m/create') Create
-  ul
-    each conversation in conversations.length ? conversations : ['There are no Conversations yet']
-      li
-        a(href=conversation._id) #{conversation.title}
+  each conversation in conversations.length ? conversations : ['There are no Conversations yet']
+    h5
+      a(href='m/' + conversation._id) SSAda ajdkjwd
+      span.chat_date Dec 25
+    p #{conversation.title}
+   
+block scripts
+  script.
+    var name;
+    // load components
+    // implement components apis

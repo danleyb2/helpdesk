@@ -32,6 +32,8 @@ var TicketSchema = Schema({
     tags: [{type: mongoose.Schema.Types.ObjectId, ref: 'tags'}],
 
     */
+    property:   { type: mongoose.Schema.Types.ObjectId, ref: 'Property', required: true },
+
     subject: {type: String, required: true},
     issue: {type: String, required: true},
     closedDate: {type: Date},

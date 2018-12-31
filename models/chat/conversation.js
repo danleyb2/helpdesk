@@ -1,16 +1,15 @@
+var Message = require('./message');
 var mongoose = require('mongoose');
 
 var ConversationSchema = mongoose.Schema({
 
-    title: {type: String},
+        title: {type: String},
+        property: {type: mongoose.Schema.Types.ObjectId, ref: 'Property', required: true},
+        participants: [
+            {type: mongoose.Schema.Types.ObjectId, ref: 'Participant'}
+        ]
 
-    participants: [
-
-        {type: mongoose.Schema.Types.ObjectId, ref: 'Participant'}
-
-    ]
-
-},
+    },
     {
         timestamps: true
     });
@@ -18,5 +17,18 @@ var ConversationSchema = mongoose.Schema({
 ConversationSchema.methods.isGroup = function () {
     return this.participants.length > 2;
 };
+
+
+ConversationSchema.methods.recentMessages = function (callback) {
+    return Message.find({conversation: this._id})
+        .sort('createdAt')
+
+        // .populate({
+        //     path: 'owner',
+        //     select: '_id username fullname image lastOnline'
+        // })
+        .exec(callback);
+};
+
 
 module.exports = mongoose.model('Conversation', ConversationSchema);

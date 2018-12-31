@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
+// todo var winston = require('./config/winston');
 var io = require("socket.io")();
 
 
@@ -20,22 +21,7 @@ var propertyRouter = require('./routes/property');
 var usersRouter = require('./routes/users');
 
 var app = express();
-app.io           = io;
-
-// socket.io events
-var socket = require('./socket')(app.io);
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-
-app.use(logger('dev'));
-app.use(express.json());
-
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-
-app.use(cookieParser());
+app.io = io;
 
 // mongoose
 mongoose.connect('mongodb://home/helpdesk', {
@@ -62,13 +48,39 @@ var cookie = {
     maxAge: (1000 * 60 * 60 * 24) * 365 // 1 year
 };
 
-app.use(session({
+var sessionMiddleware = session({
     secret: sessionSecret,
     cookie: cookie,
     store: sessionStore,
     saveUninitialized: false,
     resave: false
-}));
+});
+
+io.use(function (socket, next) {
+    // Wrap the express middleware
+    sessionMiddleware(socket.request, {}, next);
+});
+
+// socket.io events
+var socket = require('./socket')(app.io);
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
+app.use(logger('dev'));
+// todo app.use(logger('dev', { stream: winston.stream }));
+
+app.use(express.json());
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+app.use(cookieParser());
+
+
+
+app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -119,6 +131,11 @@ app.use(function (err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+
+    // add this line to include winston logging
+    // todo winston.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+
 
     // render the error page
     res.status(err.status || 500);
