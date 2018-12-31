@@ -2,6 +2,14 @@ extends layout
 
 block content
     link(rel='stylesheet', href='/stylesheets/chatbox.css')
+    style(type='text/css').
+        .flex-fill{
+            flex-grow:1;
+            width: auto;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+        }
     br
     a(href="/") Home
     br
@@ -13,18 +21,30 @@ block content
                 span.title Talk To Us
                 button
                     i.fa.fa-times
-            ul.messages
-                li.other aasdad
-                li.self kklkklk
-            .footer
-                div.text-box(contenteditable=true, disabled="true")
-                button#sendMessage send    
+            .flex-fill#chat(style="display:none")
+                ul.messages
+                    li.other aasdad
+                    li.self kklkklk
+                .footer
+                    div.text-box(contenteditable=true, disabled="true")
+                    button#sendMessage send    
+            
+            flex-fill#contact
+                input#name(name='name', type='text', placeholder='Your Name' required='')
+                br
+                input#email(name='email', type='email', placeholder='Your Email', required='')
+                br
+                input#message(name='message', type='text', placeholder='Your Message', required='')
+                br
+                br
+                button#start Start
+            
     
 block scripts
     script(src="/socket.io/socket.io.js")
     script.
 
-        var socket = io();
+        var socket = io('/help');
         const CONVERSATION = null;
         
         // 'chat message' is for the id of the socket and $('#new-area') is for the text area
@@ -39,11 +59,17 @@ block scripts
     
         var element = $('.floating-chat');
         var myStorage = localStorage;
-    
+
         if (!myStorage.getItem('chatID')) {
             myStorage.setItem('chatID', createUUID());
         }
-    
+        /*
+        socket.on('connect', function () {
+            socket.emit('start chat', {'conversation': localStorage.getItem('CONVERSATION_ID')});
+
+        });
+        */      
+        
         setTimeout(function () {
             element.addClass('enter');
         }, 1000);
@@ -62,6 +88,10 @@ block scripts
             element.find('.header button').click(closeElement);
             element.find('#sendMessage').click(sendNewMessage);
             messages.scrollTop(messages.prop("scrollHeight"));
+
+            element.find('#start').click(startChat);
+
+
         }
     
         function closeElement() {
@@ -125,8 +155,7 @@ block scripts
             
             var message = {
                 conversation:CONVERSATION,
-                text:newMessage,
-                conversationId:myStorage.getItem('chatID')
+                text:newMessage
             }
 
             socket.emit('new message', message);
@@ -138,11 +167,31 @@ block scripts
             
             appendMessage(message['text']);
         }
+        function startChat() {
+            
+            var name = $('#name').val();
+            var email = $('#email').val();
+            var body = $('#message').val();
+            
+            // todo if (!name || !email|| !message) return;
+            
+            var message = {
+                name:name,
+                email:email,
+                // conversationId: myStorage.getItem('chatID'),
+                text:body
+            }
+            socket.emit('init chat', message);
+            
+            $('#contact').hide();
+            $('#chat').show();
+            
+            
+        }
     
         function onMetaAndEnter(event) {
             if ((event.metaKey || event.ctrlKey) && event.keyCode === 13) {
                 sendNewMessage();
             }
         }
-    
-    
+        
