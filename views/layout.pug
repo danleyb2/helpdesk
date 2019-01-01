@@ -8,20 +8,24 @@ html
     link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous")
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    nav.navbar.navbar-light.bg-light.justify-content-between
-      a.navbar-brand(href='/') Help Desk
-      form.form-inline
-        input.form-control.mr-sm-2(type="search" placeholder="Search" aria-label="Search")
-        button.btn.btn-outline-success.my-2.my-sm-0(type="submit") Search
-    
-    
-    
-    
-    block content
-    if (error && error.length > 0)
-        br
-        h4.error-msg= error
-        br
+    .container
+      nav.navbar.navbar-light.bg-light.justify-content-between.mb-2
+        a.navbar-brand(href='/') Help Desk
+        form.form-inline
+          input.form-control.mr-sm-2(type="search" placeholder="Search" aria-label="Search")
+          button.btn.btn-outline-success.my-2.my-sm-0(type="submit") Search
+        //ul.navbar-nav
+        //    li.nav-item.dropdown
+        //        a(class="nav-link dropdown-toggle" href="#!" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Hi
+        //
+      
+      .card
+        .card-body
+          block content
+          if (error && error.length > 0)
+              br
+              h4.error-msg= error
+              br
 
     script(src='https://code.jquery.com/jquery-3.2.1.min.js' crossorigin="anonymous")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")

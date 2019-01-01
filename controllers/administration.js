@@ -1,6 +1,12 @@
 var Member = require('../models/member');
 
 
+exports.index = function (req, res) {
+
+    res.render('administration/index', {title: 'Administration'});
+
+
+};
 exports.list = function (req, res) {
 
     Member.find({})

@@ -15,6 +15,7 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
 
+var apiRouter = require('./routes/api/mail');
 var accountRouter = require('./routes/account');
 var indexRouter = require('./routes/index');
 var propertyRouter = require('./routes/property');
@@ -93,6 +94,7 @@ app.use('/help', function (req, res, next) {
 
 });
 
+app.use('/api/mail', apiRouter);
 app.use('/', accountRouter);
 
 // redirect middleware

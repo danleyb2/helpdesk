@@ -8,6 +8,14 @@ block content
     div.form-group
       label(for='subject') Subject:
       input#subject.form-control(type='text', placeholder='Ticket Subject' name='subject' required='true' value=(undefined===instance ? '' : instance.subject) )
+    
+    div.form-group
+      label(for='contact_name') Contact Name:
+      input#contact_name.form-control(type='text', placeholder='Contact Name' name='contact_name' required='true' value=(undefined===instance ? '' : instance.contact_name) )
+    
+    div.form-group
+      label(for='contact_email') Contact Email:
+      input#contact_email.form-control(type='email', placeholder='Contact Email' name='contact_email' required='true' value=(undefined===instance ? '' : instance.contact_email) )
       
     div.form-group
       label(for='issue') Issue:

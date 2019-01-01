@@ -1,5 +1,5 @@
 var Ticket = require('../models/ticket');
-// var Member = require('../models/member');
+const Contact = require('../models/contact');
 
 
 exports.createForm = function (req, res) {
@@ -10,21 +10,34 @@ exports.createForm = function (req, res) {
 
 
 exports.create = function (req, res,next) {
-
-    let ticket = new Ticket({
-        subject: req.body.subject,
-        issue: req.body.issue,
-        property:req.params.pId
+    // create membership
+    contact = new Contact({
+        name:req.body.contact_name,
+        email:req.body.contact_email,
+        property:req.params.pId,
     });
 
-    ticket.save(function (err) {
-        if (err) {
+    contact.save(function (err,newContact) {
+
+        if (err){
             return next(err);
         }
 
-        res.redirect('/p/'+req.params.pId+'/t')
+        let ticket = new Ticket({
+            subject: req.body.subject,
+            issue: req.body.issue,
+            property:req.params.pId,
+            contact:newContact._id,
+        });
 
-    })
+        ticket.save(function (err) {
+            if (err) {
+                return next(err);
+            }
+            res.redirect('/p/'+req.params.pId+'/t')
+        })
+    });
+
 };
 
 exports.details = function (req, res) {
