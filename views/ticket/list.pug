@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+  a(href='t/create') Create New Ticket
+  br
+  br
+  
+  h4 Tickets
+  if tickets.length
+    ul
+      each ticket in tickets
+        li
+          a(href='#') #{ticket.subject} 
+          | #{ticket.issue}
+  else
+    p No tickets, Create one now

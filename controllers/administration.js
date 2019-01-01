@@ -1,15 +1,15 @@
-var Conversation = require('../models/chat/conversation');
+var Member = require('../models/member');
 
 
 exports.list = function (req, res) {
 
-    Conversation.find({})
-        .exec(function (err, conversations) {
+    Member.find({})
+        .exec(function (err, members) {
             if (err) {
                 return next(err);
             }
             //Successful, so render
-            res.render('messaging/list', {title: 'Conversations', 'conversations': conversations});
+            res.render('administration/member/list', {title: 'Members', 'members': members});
         });
 
 
@@ -18,7 +18,7 @@ exports.list = function (req, res) {
 
 exports.details = function (req, res) {
     Conversation.findById(req.params.id, function (err, conversation) {
-        if (err) return console.error(err);
+        if (err) return next(err);
 
         conversation.recentMessages(function (err,messages) {
 

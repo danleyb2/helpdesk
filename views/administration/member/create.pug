@@ -1,0 +1,23 @@
+extends ../../layout
+
+block content
+  h1=title
+
+  form(method='POST' action='')
+
+    div.form-group
+      label(for='name') Name:
+      input#name.form-control(type='text', placeholder='Property Name' name='name' required='true' value=(undefined===instance ? '' : instance.name) )
+
+    div.form-group
+      label(for='type') Type:
+      select#type.form-control(type='select', placeholder='Select Type' name='type' required='true' )
+        option(value='Site' selected=(undefined===instance || instance.type!='Site' ? false:'selected')) Site
+        option(value='Page' selected=(undefined===instance || instance.type!='Page' ? false:'selected')) Page
+
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

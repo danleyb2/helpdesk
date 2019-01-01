@@ -1,14 +1,19 @@
 extends ../layout
 
 block content
-  each conversation in conversations.length ? conversations : ['There are no Conversations yet']
-    h5
-      a(href='m/' + conversation._id) SSAda ajdkjwd
-      span.chat_date Dec 25
-    p #{conversation.title}
-   
+  br
+  br
+  h4 Conversations
+  if conversations.length
+    each conversation in conversations
+      h5
+        a(href='m/' + conversation.id) SSAda ajdkjwd
+        span.chat_date Dec 25
+      p #{conversation.title}
+  else
+    p No Active Conversations
+    a(href='') Sim One Now
+     
 block scripts
   script.
     var name;
-    // load components
-    // implement components apis

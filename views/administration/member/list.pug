@@ -1,0 +1,9 @@
+extends ../../layout
+
+block content
+  ul
+    each member in members.length ? members : ['There are no members yet']
+      li
+        a(href=member.id) #{member.name}
+        | (#{member.type}) 
+        

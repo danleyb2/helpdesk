@@ -33,6 +33,10 @@ router.post('/register', function(req, res) {
     });
 });
 
+router.get('/forgot_password', function(req, res) {
+    res.send('TODO');
+});
+
 router.get('/login', function(req, res) {
     res.render('login', { user : req.user });
 });

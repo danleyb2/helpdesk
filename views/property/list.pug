@@ -1,14 +1,27 @@
 extends ../layout
 
 block content
-  a(href='/p/create') Create
-  ul
-    each property in properties.length ? properties : ['There are no properties yet']
-      li
-        a(href=property.id) #{property.name}
-        | (#{property.type}) 
-        a(href='/p/'+property.id+'/m') Messaging
-        | 
-        a(href='/p/'+property.id+'/t') Tickets
-        | 
-        a(href='/p/'+property.id+'/s') Settings
+  a(href='/p/create') Create New Property
+  br
+  br
+  
+  h4 Properties
+  if properties.length
+    ul
+      each property in properties
+        li
+          a(href='/p/'+property.id) #{property.name} 
+          strong Type:
+              span 
+              | #{property.type}
+          br
+          a(href='/p/'+property.id+'/m') Messaging
+          | 
+          a(href='/p/'+property.id+'/t') Tickets
+          | 
+          a(href='/p/'+property.id+'/s') Settings
+          |  
+          // a(href='/p/'+property.id+'/update') Edit
+          // a(href='/p/'+property.id+'/delete') Delete
+  else
+    p No properties, Create one now

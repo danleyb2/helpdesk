@@ -7,7 +7,8 @@ block content
     a(href="/register") Register
   if (user)
     p You are currently logged in as #{user.username}
-    a(href="/logout") Logout
+      | 
+      a(href="/logout") Logout
     br
-    a(href="/p") Properties
+    a(href="/p") View Properties
 

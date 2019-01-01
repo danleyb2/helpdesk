@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+  h1=title
+
+  form(method='POST' action='')
+
+    div.form-group
+      label(for='subject') Subject:
+      input#subject.form-control(type='text', placeholder='Ticket Subject' name='subject' required='true' value=(undefined===instance ? '' : instance.subject) )
+      
+    div.form-group
+      label(for='issue') Issue:
+      input#issue.form-control(type='text', placeholder='Ticket Issue' name='issue' required='true' value=(undefined===instance ? '' : instance.issue) )
+      
+
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

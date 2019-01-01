@@ -35,20 +35,20 @@ exports.create = function (req, res,next) {
 };
 
 exports.details = function (req, res) {
-    Property.findById(req.params.id, function (err, property) {
+    Property.findById(req.params.pId, function (err, property) {
         if (err) return next(err);
         res.send(property);
     })
 };
 exports.update = function (req, res) {
-    Property.findByIdAndUpdate(req.params.id, {$set: req.body}, function (err, property) {
+    Property.findByIdAndUpdate(req.params.pId, {$set: req.body}, function (err, property) {
         if (err) return next(err);
         res.send('Product updated.');
     });
 };
 
 exports.delete = function (req, res) {
-    Property.findByIdAndRemove(req.params.id, function (err) {
+    Property.findByIdAndRemove(req.params.pId, function (err) {
         if (err) return next(err);
         res.send('Deleted successfully!');
     })
