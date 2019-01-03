@@ -4,6 +4,9 @@ const Member = require('./models/member');
 const Message = require('./models/chat/message');
 const Participant = require('./models/chat/participant');
 const Contact = require('./models/contact');
+const Property = require('./models/property');
+
+const mailer = require('./mailer');
 //const async = require('async');
 var mongoose = require('mongoose');
 
@@ -27,12 +30,13 @@ module.exports = function (io) {
         socket.on('new message', async function (msg) {
             // console.log('new message: ' + msg);
 
-
-
             var conversation;
             var participant;
+            var property;
 
             conversation = await Conversation.findOne({_id: msg['conversation']});
+            property = await Property.findOne({_id: conversation.property});
+
             let participantIds = conversation.participants.map(p => new mongoose.Types.ObjectId(p.id));
 
             if (socket.user){
@@ -51,10 +55,18 @@ module.exports = function (io) {
                 }
 
             } else {
-                participant = await Participant.findOne({refModel: 'Contact'})
-                    .where('_id')
-                    .in(participantIds)
-                    .exec();
+                if (conversation.mail) {
+                    participant = await Participant.findOne({refModel: 'Contact'})
+                        .where('_id')
+                        .in(participantIds)
+                        .populate('modelRef')
+                        .exec();
+                }else {
+                    participant = await Participant.findOne({refModel: 'Contact'})
+                        .where('_id')
+                        .in(participantIds)
+                        .exec();
+                }
 
             }
 
@@ -64,11 +76,20 @@ module.exports = function (io) {
                 owner: participant._id,
             });
 
+            if (conversation.mail) {
+                let mailOptions = {
+                    from: property.support_email, // sender address
+                    to: participant['modelRef']['email'], // list of receivers
+                    replyTo: 'notifications-' + conversation._id + '@danleyb2.online',
+                    subject: conversation.title, // Subject line
+                    text: message['body'], // plain text body
+                    // html: '<b>Hello world?</b>' // html body
+                };
+                await mailer.sendNotification(mailOptions);
+            }
 
             message['owner'] = participant;
-
             var room = 'c/' + conversation._id;
-
             console.log(io.sockets.adapter.rooms[room]);
 
             io.sockets.in(room).emit('chat message', message);

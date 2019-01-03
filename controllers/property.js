@@ -13,7 +13,8 @@ exports.create = function (req, res,next) {
 
     let property = new Property({
         name: req.body.name,
-        type: req.body.type
+        type: req.body.type,
+        support_email: req.body.support_email
     });
 
     property.save(function (err) {
