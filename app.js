@@ -18,6 +18,7 @@ var MongoStore = require('connect-mongo')(session);
 var apiRouter = require('./routes/api/mail');
 var accountRouter = require('./routes/account');
 var indexRouter = require('./routes/index');
+var chatRouter = require('./routes/chat');
 var propertyRouter = require('./routes/property');
 var usersRouter = require('./routes/users');
 
@@ -88,11 +89,7 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/help', function (req, res, next) {
-
-    res.render('help')
-
-});
+app.use('/chat', chatRouter);
 
 app.use('/api/mail', apiRouter);
 app.use('/', accountRouter);

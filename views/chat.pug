@@ -44,31 +44,46 @@ block scripts
     script(src="/socket.io/socket.io.js")
     script.
 
-        var socket = io('/help');
-        const CONVERSATION = null;
+        var socket = io();
+        var CONVERSATION = null;
+        const PROPERTY = '#{property._id}';
         
         // 'chat message' is for the id of the socket and $('#new-area') is for the text area
         socket.on('chat message', function (msg) {
             console.log(msg);
-            
-            
-            appendMessage(msg);
+            appendMessage(msg['body'],msg['owner']['refModel']==='Contact');
+        });
+        
+        socket.on('start chat', function (msg) {
+            // console.log(msg);
+            CONVERSATION = msg['conversation'];
+            localStorage.setItem('CONVERSATION_ID',CONVERSATION)
+            appendMessage(msg['text'],true);
+        });
+        
+        socket.on('init chat', function (msg) {
+            console.log(msg);
+            CONVERSATION = msg['conversation'];
+            $('.messages').empty();            
+
+            for (var i = 0; i < msg['messages'].length; i++) {
+                var message = msg['messages'][i];
+                appendMessage(message['body'],message['owner']['refModel']==='Contact')
+            }
+            $('#contact').hide();
+            $('#chat').show();
         });
         
         // chat
     
         var element = $('.floating-chat');
-        var myStorage = localStorage;
-
-        if (!myStorage.getItem('chatID')) {
-            myStorage.setItem('chatID', createUUID());
-        }
-        /*
+        
         socket.on('connect', function () {
-            socket.emit('start chat', {'conversation': localStorage.getItem('CONVERSATION_ID')});
-
+            if(localStorage.getItem('CONVERSATION_ID')) {
+                socket.emit('init chat', {'conversation': localStorage.getItem('CONVERSATION_ID')});
+            }
         });
-        */      
+              
         
         setTimeout(function () {
             element.addClass('enter');
@@ -128,13 +143,13 @@ block scripts
             
             if(mine) {
                 messagesContainer.append([
-                    '<li class="self">',
+                    '<li class="other">',
                     newMessage,
                     '</li>'
                 ].join(''));
             }else {
                 messagesContainer.append([
-                    '<li class="other">',
+                    '<li class="self ">',
                     newMessage,
                     '</li>'
                 ].join(''));
@@ -153,8 +168,11 @@ block scripts
     
             if (!newMessage) return;
             
+            
+            // todo conversation can never be null
             var message = {
                 conversation:CONVERSATION,
+                property: PROPERTY,
                 text:newMessage
             }
 
@@ -165,7 +183,7 @@ block scripts
             // focus on input
             userInput.focus();
             
-            appendMessage(message['text']);
+           // appendMessage(message['text']);
         }
         function startChat() {
             
@@ -178,10 +196,11 @@ block scripts
             var message = {
                 name:name,
                 email:email,
+                property:PROPERTY,
                 // conversationId: myStorage.getItem('chatID'),
                 text:body
             }
-            socket.emit('init chat', message);
+            socket.emit('start chat', message);
             
             $('#contact').hide();
             $('#chat').show();

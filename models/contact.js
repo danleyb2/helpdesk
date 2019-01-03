@@ -3,7 +3,8 @@ var Schema = mongoose.Schema;
 
 
 var ContactSchema = new Schema({
-    email:      { type: String, required: true, unique: false },
+    name:      { type: String },
+    email:      { type: String, required: true, unique: true },
     property:   { type: mongoose.Schema.Types.ObjectId, ref: 'Property', required: true },
 
 }, {timestamps: true});

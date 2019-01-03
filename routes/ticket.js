@@ -7,7 +7,7 @@ const ticketController = require('../controllers/ticket');
 router.get('/create', ticketController.createForm);
 router.post('/create', ticketController.create);
 
-router.get('/:id', ticketController.details);
+router.get('/:tId', ticketController.details);
 router.put('/:id/update', ticketController.update);
 router.delete('/:id/delete', ticketController.delete);
 

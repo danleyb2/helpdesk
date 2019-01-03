@@ -7,9 +7,8 @@ block content
   if conversations.length
     each conversation in conversations
       h5
-        a(href='m/' + conversation.id) SSAda ajdkjwd
-        span.chat_date Dec 25
-      p #{conversation.title}
+        a(href='m/' + conversation.id) #{conversation.title} 
+        span.chat_date #{conversation.createdAt}
   else
     p No Active Conversations
     a(href='') Sim One Now

@@ -17,7 +17,7 @@ router.put('/:pId/update', propertyController.update);
 router.delete('/:pId/delete', propertyController.delete);
 
 router.use('/:pId/m',propertyMessagingRouter);
-router.use('/:pId/s',propertyAdministrationRouter);
+//router.use('/:pId/s',propertyAdministrationRouter);
 router.use('/:pId/t',propertyTicketsRouter);
 
 router.get('/', propertyController.list);

@@ -19,8 +19,16 @@ var ParticipantSchema = Schema({
         // hasUnread: {type: Boolean},
         // lastRead: {type: Date},
         // deletedAt: {type: Date}
-    }, {timestamps: true}
+    }, {timestamps: true,toObject: { virtuals: true },toJSON: { virtuals: true }}
 );
 
+/*
+ParticipantSchema.virtual('profile',{
+    ref: 'Member',//doc => doc.refModel, // The model to use, conditional on the doc
+    localField: 'modelRef', // Find people or organizations where `localField`
+    foreignField: '_id', // is equal to `foreignField`
+    justOne: true // and return only one
+});
+*/
 
 module.exports = mongoose.model('Participant', ParticipantSchema);

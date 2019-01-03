@@ -10,7 +10,15 @@ block content
     ul
       each ticket in tickets
         li
-          a(href='#') #{ticket.subject} 
-          | #{ticket.issue}
+          a(href='t/'+ticket.id) #{ticket.subject} 
+          br
+          strong Description 
+          span #{ticket.issue}
+          br
+          strong Date 
+          span #{ticket.createdAt}
+          br
+          strong Contact 
+          span #{ticket.contact.email}
   else
     p No tickets, Create one now

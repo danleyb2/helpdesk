@@ -34,6 +34,7 @@ var TicketSchema = Schema({
     */
     property:   { type: mongoose.Schema.Types.ObjectId, ref: 'Property', required: true },
     contact:   { type: mongoose.Schema.Types.ObjectId, ref: 'Contact', required: true },
+    conversation:   { type: mongoose.Schema.Types.ObjectId, ref: 'Conversation', required: true },
 
     subject: {type: String, required: true},
     issue: {type: String, required: true},

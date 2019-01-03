@@ -1,0 +1,99 @@
+extends ../layout
+
+block content
+    strong Date: 
+    span #{ticket.createdAt}
+    br
+    strong Subject: 
+    span #{ticket.subject}
+    br
+    strong Issue: 
+    span #{ticket.issue}
+    br
+    h3 messages
+    ul.messages(style='overflow-y:scroll;height:300px;')
+        if messages.length
+            each message in messages
+                li
+                    strong Sender: 
+                    if message.owner.refModel === 'Member'
+                        span #{message.owner.modelRef.role}
+                    else
+                        span #{message.owner.modelRef.email}
+                    br
+                    strong Date: 
+                    span #{message.createdAt}
+                    br
+                    strong Body: 
+                    span #{message.body}
+                    br
+        else
+            li There are no messages yet
+  
+    .input_msg_write
+      input.text-box.form-control(type='text', placeholder="Add Message")
+      button.btn.btn-primary#sendMessage Send
+        i.fa.fa-paper-plane
+      button.btn.btn-danger#closeTicket Close
+
+          
+block scripts
+  script(src="/socket.io/socket.io.js")
+  script.
+    var socket = io();
+    const CONVERSATION = '#{ticket.conversation._id}';
+
+    socket.on('chat message', function (msg) {
+        console.log(msg);
+        appendMessage(msg,true);
+    });
+
+
+    $('#sendMessage').click(sendNewMessage);
+
+    function sendNewMessage() {
+        var userInput = $('.text-box');
+        var newMessage = userInput.val().trim()
+
+        if (!newMessage) return;
+
+        var message = {
+            conversation: CONVERSATION,
+            text: newMessage
+        }
+
+        socket.emit('new message', message);
+
+        // clean out old message
+        userInput.val('');
+        // focus on input
+        userInput.focus();
+
+       // appendMessage(message['text']);
+    }
+
+    function appendMessage(newMessage, mine) {
+        var messagesContainer = $('.messages');
+
+        if (mine) {
+            messagesContainer.append(`
+            <li class="self">
+                <strong>Sender: </strong><span>${newMessage.owner}</span><br>
+                <strong>Date: </strong><span>${newMessage.createdAt}</span><br>
+                <strong>Body: </strong><span>${newMessage.body}</span><br>
+            </li>
+            `)
+            
+            
+        } else {
+            messagesContainer.append([
+                '<li class="other">',
+                newMessage,
+                '</li>'
+            ].join(''));
+        }
+        
+        messagesContainer.finish().animate({
+            scrollTop: messagesContainer.prop("scrollHeight")
+        }, 250);
+    }

@@ -4,6 +4,7 @@ var Conversation = require('../models/chat/conversation');
 exports.list = function (req, res) {
 
     Conversation.find({})
+        .sort('createdAt')
         .exec(function (err, conversations) {
             if (err) {
                 return next(err);

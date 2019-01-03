@@ -1,34 +1,56 @@
 extends ../layout
 
-block content
-  
-  pre #{conversation}
+block content    
+  strong Date: 
+    span #{conversation.createdAt}
+  br
+  strong Title: 
+    span #{conversation.title}
+  br      
+  strong Participants:
+    each participant in conversation.participants
+        span #{participant} ,
   br
   h3 messages
   ul.messages(style='overflow-y:scroll;height:300px;')
-    each message in messages.length ? messages : ['There are no messages yet']
-      li
-        pre #{message}
+      if messages.length
+          each message in messages
+              li
+                  strong Sender: 
+                  if message.owner.refModel === 'Member'
+                      span #{message.owner.modelRef.role}
+                  else
+                      span #{message.owner.modelRef.email}
+                  br
+                  strong Date: 
+                  span #{message.createdAt}
+                  br
+                  strong Body: 
+                  span #{message.body}
+                  br
+      else
+          li There are no messages yet
       
   .type_msg
     .input_msg_write
       input.text-box(type='text', placeholder="Type a message")
-      button#sendMessage
+      button.btn#sendMessage
         i.fa.fa-paper-plane
 
           
 block scripts
   script(src="/socket.io/socket.io.js")
   script.
-    var name;
     var socket = io();
     const CONVERSATION = '#{conversation._id}';
 
     socket.on('chat message', function (msg) {
         console.log(msg);
+        appendMessage( msg,true);
+    });
 
-
-        appendMessage( JSON.stringify( msg),true);
+    socket.on('connect', function () {
+        socket.emit('init chat', {'conversation': CONVERSATION});
     });
 
 
@@ -59,11 +81,13 @@ block scripts
         var messagesContainer = $('.messages');
 
         if (mine) {
-            messagesContainer.append([
-                '<li class="self"><pre>',
-                newMessage,
-                '</pre></li>'
-            ].join(''));
+            messagesContainer.append(`
+                        <li class="self">
+                            <strong>Sender: </strong><span>${newMessage.owner}</span><br>
+                            <strong>Date: </strong><span>${newMessage.createdAt}</span><br>
+                            <strong>Body: </strong><span>${newMessage.body}</span><br>
+                        </li>
+                        `)
         } else {
             messagesContainer.append([
                 '<li class="other">',

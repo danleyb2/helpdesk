@@ -22,6 +22,14 @@ ConversationSchema.methods.isGroup = function () {
 ConversationSchema.methods.recentMessages = function (callback) {
     return Message.find({conversation: this._id})
         .sort('createdAt')
+        //.populate('owner owner.profile')
+
+        .populate({
+            path: 'owner',
+            populate:{
+                path:'modelRef',
+            },
+        })
 
         // .populate({
         //     path: 'owner',
