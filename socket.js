@@ -52,21 +52,24 @@ module.exports = function (io) {
                         refModel: 'Member',
                         modelRef: member._id
                     });
+
+                    conversation.participants.push(participant);
+                    await conversation.save();
+                    //
+                    // await Conversation.updateOne(
+                    //     { _id: conversation._id },
+                    //     { $push: { participants: participant } }
+                    // );
+
                 }
 
             } else {
-                if (conversation.mail) {
-                    participant = await Participant.findOne({refModel: 'Contact'})
-                        .where('_id')
-                        .in(participantIds)
-                        .populate('modelRef')
-                        .exec();
-                }else {
-                    participant = await Participant.findOne({refModel: 'Contact'})
-                        .where('_id')
-                        .in(participantIds)
-                        .exec();
-                }
+
+                participant = await Participant.findOne({refModel: 'Contact'})
+                    .where('_id')
+                    .in(participantIds)
+                    .exec();
+
 
             }
 
@@ -76,21 +79,29 @@ module.exports = function (io) {
                 owner: participant._id,
             });
 
-            if (conversation.mail) {
+            if (conversation.mail_notifications) {
+
+                var contact = await Participant.findOne({refModel: 'Contact'})
+                    .where('_id')
+                    .in(participantIds)
+                    .populate('modelRef')
+                    .exec();
+
+
                 let mailOptions = {
                     from: property.support_email, // sender address
-                    to: participant['modelRef']['email'], // list of receivers
+                    to: contact['modelRef']['email'], // list of receivers
                     replyTo: 'notifications-' + conversation._id + '@danleyb2.online',
-                    subject: conversation.title, // Subject line
+                    subject: `Re: ${conversation.title}`, // Subject line
                     text: message['body'], // plain text body
                     // html: '<b>Hello world?</b>' // html body
                 };
-                await mailer.sendNotification(mailOptions);
+                mailer.sendNotification(mailOptions);
             }
 
             message['owner'] = participant;
             var room = 'c/' + conversation._id;
-            console.log(io.sockets.adapter.rooms[room]);
+            // console.log(io.sockets.adapter.rooms[room]);
 
             io.sockets.in(room).emit('chat message', message);
 
@@ -101,7 +112,7 @@ module.exports = function (io) {
 
             conversation = await Conversation.findOne({_id: msg['conversation']}).populate('participants').exec();
             if (conversation == null) {
-                console.error('SHOULD NOT HAPPEN')
+                console.trace('SHOULD NOT HAPPEN')
 
             } else {
                 conversation.recentMessages(function (err, messages) {
@@ -111,7 +122,7 @@ module.exports = function (io) {
                     socket.join(room);
                     //io.sockets.in(room).emit('init chat', msg);
                     //io.to(
-                        socket.emit('init chat', msg);
+                    socket.emit('init chat', msg);
                 });
             }
         });
@@ -153,7 +164,7 @@ module.exports = function (io) {
             var room = 'c/' + conversation._id;
             socket.join(room);
             //io.to(
-                socket.emit('start chat', msg);
+            socket.emit('start chat', msg);
 
         });
 
@@ -162,5 +173,3 @@ module.exports = function (io) {
 
     return io;
 };
-
-// p1tNzKCzsi9CWLwt9A5XBkvluNEnf1rF

@@ -5,7 +5,7 @@ const ticketController = require('../../controllers/api/ticket');
 
 
 
-router.post('/create', ticketController.create);
+router.post('/receive', ticketController.receive);
 
 
 

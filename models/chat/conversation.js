@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var ConversationSchema = mongoose.Schema({
 
         title: {type: String},
-        email: { type: Boolean,default:false },
+        mail_notifications: { type: Boolean,default:false },
         property: {type: mongoose.Schema.Types.ObjectId, ref: 'Property', required: true},
         participants: [
             {type: mongoose.Schema.Types.ObjectId, ref: 'Participant'}
