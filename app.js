@@ -26,7 +26,7 @@ var app = express();
 app.io = io;
 
 // mongoose
-mongoose.connect('mongodb://home/helpdesk', {
+mongoose.connect(`mongodb://${process.env.DB_HOST}/${process.env.DB_NAME}`, {
     useCreateIndex: true,
     useNewUrlParser: true
 });
