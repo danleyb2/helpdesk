@@ -6,8 +6,8 @@
     "node": "10.13.0"
   },
   "scripts": {
-    "start": "node ./bin/www",
-    "devstart": "nodemon ./bin/www"
+    "start": "node -r dotenv/config ./bin/www",
+    "devstart": "nodemon -r dotenv/config ./bin/www"
   },
   "repository": {
     "type": "git",
