@@ -9,16 +9,35 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     .container
-      nav.navbar.navbar-light.bg-light.justify-content-between.mb-2
-        a.navbar-brand(href='/') Help Desk
-        form.form-inline
-          input.form-control.mr-sm-2(type="search" placeholder="Search" aria-label="Search")
-          button.btn.btn-outline-success.my-2.my-sm-0(type="submit") Search
-        //ul.navbar-nav
-        //    li.nav-item.dropdown
-        //        a(class="nav-link dropdown-toggle" href="#!" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Hi
-        //
-      
+      nav.navbar.navbar-light.bg-light.justify-content-between.mb-2.navbar-expand-lg
+        a.navbar-brand(href='/') HelpDesk
+        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
+          span.navbar-toggler-icon
+        #navbarNav.collapse.navbar-collapse
+          .navbar-nav.mr-auto
+            ul.navbar-nav
+              li.nav-item.active
+                a.nav-link(href='/m')
+                  | Messaging 
+                  span.badge.badge-pill.badge-primary 4
+              li.nav-item
+                a.nav-link(href='/t') Tickets 
+                  span.badge.badge-pill.badge-primary 4
+              //li.nav-item
+              //  a.nav-link(href='#') Pricing
+              //li.nav-item
+              //  a.nav-link.disabled(href='#') Disabled        
+          form.form-inline.col-md-5
+            input.form-control.col-md-12(type='search', name='q' placeholder='Search Tickets, Contacts, Conversations')
+          ul.navbar-nav
+            li.nav-item.dropdown
+              a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href='#!', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Hi!
+              .dropdown-menu.dropdown-menu-right(aria-labelledby='navbarDropdownMenuLink')
+                a.dropdown-item(href='/market/') Profile
+                a.dropdown-item(href='/login/') Settings
+                a.dropdown-item(href='/signup/') Logout
+
+
       .card
         .card-body
           block content

@@ -20,6 +20,9 @@ var accountRouter = require('./routes/account');
 var indexRouter = require('./routes/index');
 var chatRouter = require('./routes/chat');
 var propertyRouter = require('./routes/property');
+var messagingRouter = require('./routes/messaging/general');
+var ticketsRouter = require('./routes/ticket');
+
 var usersRouter = require('./routes/users');
 
 var app = express();
@@ -109,6 +112,8 @@ function checkAuthentication(req, res, next) {
 
 app.use('/', checkAuthentication, indexRouter);
 app.use('/p', checkAuthentication, propertyRouter);
+app.use('/m', checkAuthentication, messagingRouter);
+app.use('/t', checkAuthentication, ticketsRouter);
 
 // app.use('/dashboard', usersRouter);
 

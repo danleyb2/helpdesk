@@ -5,8 +5,8 @@ administrationController = require('../controllers/administration');
 
 
 router.get('/', administrationController.index);
-router.get('/', administrationController.list);
-router.get('/:id', administrationController.details);
+//router.get('/', administrationController.list);
+// router.get('/:id', administrationController.details);
 
 
 module.exports = router;

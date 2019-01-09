@@ -10,13 +10,13 @@ block content
     ul
       each ticket in tickets
         li
-          a(href='t/'+ticket.id) #{ticket.subject} 
+          a(href='t/'+ticket.id) #{ticket.subject.toLowerCase()} 
           br
           strong Description 
-          span #{ticket.issue}
+          span !{ticket.issue}
           br
           strong Date 
-          span #{ticket.createdAt}
+          span #{ticket.createdAt.toLocaleString()}
           br
           strong Contact 
           span #{ticket.contact.email}
