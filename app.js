@@ -99,6 +99,7 @@ app.use('/', accountRouter);
 
 // redirect middleware
 function checkAuthentication(req, res, next) {
+    res.locals.req = req;
     // do any checks you want to in here
 
     // CHECK THE USER STORED IN SESSION FOR A CUSTOM VARIABLE
@@ -108,6 +109,16 @@ function checkAuthentication(req, res, next) {
 
     // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
     res.redirect('/login');
+}
+
+function loadCommon(req, res, next) {
+    res.locals = {
+        siteTitle: "My Website's Title",
+        pageTitle: "The Home Page",
+        author: "Cory Gross",
+        description: "My app's description",
+    };
+    next();
 }
 
 app.use('/', checkAuthentication, indexRouter);
