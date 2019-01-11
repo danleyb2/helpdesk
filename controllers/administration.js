@@ -1,15 +1,16 @@
 var Member = require('../models/member');
+var Property = require('../models/property');
 
 
-exports.index = function (req, res) {
+exports.index = function (req, res, next) {
 
-    res.render('administration/index', {title: 'Administration'});
-
+    res.render('administration/general');
 
 };
-exports.list = function (req, res) {
+exports.members = function (req, res) {
 
     Member.find({})
+        .populate('account')
         .exec(function (err, members) {
             if (err) {
                 return next(err);

@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+  h4 Settings #{property.name}
+  ul.nav.nav-tabs
+    li.nav-item
+      a.nav-link.active(href='s') General
+    li.nav-item
+      a.nav-link(href='s/members') Members
+    li.nav-item
+      a.nav-link(href='s/tickets') Ticket
+    li.nav-item
+      a.nav-link.disabled(href='#' tabindex='-1' aria-disabled='true') Disabled
+      
+  .card
+      .card-body
+          block tab
+              

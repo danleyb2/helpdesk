@@ -5,7 +5,8 @@ administrationController = require('../controllers/administration');
 
 
 router.get('/', administrationController.index);
-//router.get('/', administrationController.list);
+router.get('/members', administrationController.members);
+
 // router.get('/:id', administrationController.details);
 
 

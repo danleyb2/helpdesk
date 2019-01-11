@@ -118,7 +118,7 @@ function loadCommon(req, res, next) {
         author: "Cory Gross",
         description: "My app's description",
     };
-    next();
+   return next();
 }
 
 app.use('/', checkAuthentication, indexRouter);

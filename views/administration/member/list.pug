@@ -1,9 +1,15 @@
-extends ../../layout
+extends ../layout
 
-block content
-  ul
-    each member in members.length ? members : ['There are no members yet']
-      li
-        a(href=member.id) #{member.name}
-        | (#{member.type}) 
-        
+block tab
+  button.btn.btn-default Invite New
+  if members.length
+    ul
+      each member in members
+        li
+          a(href=member.id) #{member.account.username} 
+          | #{member.role} 
+          | #{member.status} 
+          
+          
+  else
+    p No Members Yes
