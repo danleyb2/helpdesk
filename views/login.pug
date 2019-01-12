@@ -103,189 +103,6 @@ block main
       flex-shrink: 0;
     }
 
-    .floating-chat .chat .messages {
-      padding: 10px;
-      margin: 0;
-      list-style: none;
-      overflow-y: scroll;
-      overflow-x: hidden;
-      flex-grow: 1;
-      border-radius: 4px;
-      background: transparent;
-    }
-
-    .floating-chat .chat .messages::-webkit-scrollbar {
-      width: 5px;
-    }
-
-    .floating-chat .chat .messages::-webkit-scrollbar-track {
-      border-radius: 5px;
-      background-color: rgba(25, 147, 147, 0.1);
-    }
-
-    .floating-chat .chat .messages::-webkit-scrollbar-thumb {
-      border-radius: 5px;
-      background-color: rgba(25, 147, 147, 0.2);
-    }
-
-    .floating-chat .chat .messages li {
-      position: relative;
-      clear: both;
-      display: inline-block;
-      padding: 14px;
-      margin: 0 0 20px 0;
-      font: 12px/16px "Noto Sans", sans-serif;
-      border-radius: 10px;
-      background-color: rgba(25, 147, 147, 0.2);
-      word-wrap: break-word;
-      max-width: 81%;
-    }
-
-    .floating-chat .chat .messages li:before {
-      position: absolute;
-      top: 0;
-      width: 25px;
-      height: 25px;
-      border-radius: 25px;
-      content: "";
-      background-size: cover;
-    }
-
-    .floating-chat .chat .messages li:after {
-      position: absolute;
-      top: 10px;
-      content: "";
-      width: 0;
-      height: 0;
-      border-top: 10px solid rgba(25, 147, 147, 0.2);
-    }
-
-    .floating-chat .chat .messages li.other {
-      animation: show-chat-odd 0.15s 1 ease-in;
-      -moz-animation: show-chat-odd 0.15s 1 ease-in;
-      -webkit-animation: show-chat-odd 0.15s 1 ease-in;
-      float: right;
-      margin-right: 45px;
-      color: #0AD5C1;
-    }
-
-    .floating-chat .chat .messages li.other:before {
-      right: -45px;
-      background-image: url(https://github.com/Thatkookooguy.png);
-    }
-
-    .floating-chat .chat .messages li.other:after {
-      border-right: 10px solid transparent;
-      right: -10px;
-    }
-
-    .floating-chat .chat .messages li.self {
-      animation: show-chat-even 0.15s 1 ease-in;
-      -moz-animation: show-chat-even 0.15s 1 ease-in;
-      -webkit-animation: show-chat-even 0.15s 1 ease-in;
-      float: left;
-      margin-left: 45px;
-      color: #0EC879;
-    }
-
-    .floating-chat .chat .messages li.self:before {
-      left: -45px;
-      background-image: url(https://github.com/ortichon.png);
-    }
-
-    .floating-chat .chat .messages li.self:after {
-      border-left: 10px solid transparent;
-      left: -10px;
-    }
-
-    .floating-chat .chat .footer {
-      flex-shrink: 0;
-      display: flex;
-      padding-top: 10px;
-      max-height: 90px;
-      background: transparent;
-    }
-
-    .floating-chat .chat .footer .text-box {
-      border-radius: 3px;
-      background: rgba(25, 147, 147, 0.2);
-      min-height: 100%;
-      width: 100%;
-      margin-right: 5px;
-      color: #0EC879;
-      overflow-y: auto;
-      padding: 2px 5px;
-    }
-
-    .floating-chat .chat .footer .text-box::-webkit-scrollbar {
-      width: 5px;
-    }
-
-    .floating-chat .chat .footer .text-box::-webkit-scrollbar-track {
-      border-radius: 5px;
-      background-color: rgba(25, 147, 147, 0.1);
-    }
-
-    .floating-chat .chat .footer .text-box::-webkit-scrollbar-thumb {
-      border-radius: 5px;
-      background-color: rgba(25, 147, 147, 0.2);
-    }
-
-    @keyframes show-chat-even {
-      0% {
-        margin-left: -480px;
-      }
-      100% {
-        margin-left: 0;
-      }
-    }
-
-    @-moz-keyframes show-chat-even {
-      0% {
-        margin-left: -480px;
-      }
-      100% {
-        margin-left: 0;
-      }
-    }
-
-    @-webkit-keyframes show-chat-even {
-      0% {
-        margin-left: -480px;
-      }
-      100% {
-        margin-left: 0;
-      }
-    }
-
-    @keyframes show-chat-odd {
-      0% {
-        margin-right: -480px;
-      }
-      100% {
-        margin-right: 0;
-      }
-    }
-
-    @-moz-keyframes show-chat-odd {
-      0% {
-        margin-right: -480px;
-      }
-      100% {
-        margin-right: 0;
-      }
-    }
-
-    @-webkit-keyframes show-chat-odd {
-      0% {
-        margin-right: -480px;
-      }
-      100% {
-        margin-right: 0;
-      }
-    }
-
-
 
   .container
     h1 Login Page
@@ -304,9 +121,17 @@ block main
       | 
       a(href='/forgot_password') Forgot Password ?
       
+      
+      
+  
+      
   .floating-chat
     i.fa.fa-comments
     .chat
+      .header
+        span.title Live Chat
+        button
+          i.fa.fa-times
       iframe.flex-fill(src='http://localhost:3000/chat/5c2e03ceec99c70f69d46c87')
 
 
@@ -320,22 +145,22 @@ block scripts
       element.click(openElement);
 
       function openElement() {
-          var messages = element.find('.messages');
-          var textInput = element.find('.text-box');
           element.find('>i').hide();
           element.addClass('expand');
           element.find('.chat').addClass('enter');
-          var strLength = textInput.val().length * 2;
-          textInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
           element.off('click', openElement);
           element.find('.header button').click(closeElement);
-          element.find('#sendMessage').click(sendNewMessage);
-          messages.scrollTop(messages.prop("scrollHeight"));
-
           element.find('#start').click(startChat);
-
-
       }
-      
+      function closeElement() {
+          element.find('.chat').removeClass('enter').hide();
+          element.find('>i').show();
+          element.removeClass('expand');
+          element.find('.header button').off('click', closeElement);
+          setTimeout(function () {
+              element.find('.chat').removeClass('enter').show()
+              element.click(openElement);
+          }, 500);
+      }
     
     
