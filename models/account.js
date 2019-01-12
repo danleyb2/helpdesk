@@ -23,7 +23,10 @@ var Account = new Schema({
 
 * */
 
-Account.plugin(passportLocalMongoose);
+Account.plugin(passportLocalMongoose,{
+    usernameLowerCase:true
+
+});
 
 module.exports = mongoose.model('Account', Account);
 
