@@ -1,7 +1,8 @@
 extends ../layout
 
 block tab
-  button.btn.btn-default Invite New
+  button.btn.btn-primary(type='button' data-toggle='modal' data-target='#exampleModalCenter')
+    | Invite New
   if members.length
     ul
       each member in members
@@ -13,3 +14,17 @@ block tab
           
   else
     p No Members Yes
+    
+    
+  #exampleModalCenter.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalCenterTitle.modal-title Modal title
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          | ...
+        .modal-footer
+          button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+          button.btn.btn-primary(type='button') Save changes  

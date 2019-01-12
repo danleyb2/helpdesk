@@ -4,15 +4,15 @@ block content
   h4 Settings #{property.name}
   ul.nav.nav-tabs
     li.nav-item
-      a.nav-link.active(href='s') General
+      a.nav-link(href='/p/'+property._id+'/s', class=('/p/'+property._id+'/s/') === (req.baseUrl+req.path)? 'active' : '') General
     li.nav-item
-      a.nav-link(href='s/members') Members
-    li.nav-item
-      a.nav-link(href='s/tickets') Ticket
+      a.nav-link(href='/p/'+property._id+'/s/members' class=('/p/'+property._id+'/s/members') === (req.baseUrl+req.path)? 'active' : '') Members
+    li.nav-item 
+      a.nav-link(href='/p/'+property._id+'/s/tickets' class=('/p/'+property._id+'/s/tickets') === (req.baseUrl+req.path) ? 'active' : '') Ticket
     li.nav-item
       a.nav-link.disabled(href='#' tabindex='-1' aria-disabled='true') Disabled
       
-  .card
-      .card-body
-          block tab
-              
+  .card(style="border-top: initial;border-radius: initial;")
+    .card-body
+        block tab
+            
