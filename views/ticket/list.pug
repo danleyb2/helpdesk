@@ -1,24 +1,18 @@
 extends ../layout
 
 block content
-  a(href='t/create') Create New Ticket
-  br
-  br
+  a.btn.btn-primary.btn-lg.mb-2(href='t/create') Create New Ticket
   
-  h4 Tickets
   if tickets.length
-    ul
+    .list-group
       each ticket in tickets
-        li
-          a(href='t/'+ticket.id) #{ticket.subject.toLowerCase()} 
-          br
-          strong Description 
-          span !{ticket.issue}
-          br
-          strong Date 
-          span #{ticket.createdAt.toLocaleString()}
-          br
-          strong Contact 
-          span #{ticket.contact.email}
+        a.list-group-item.list-group-item-action(href='t/'+ticket.id)
+          .d-flex.w-100.justify-content-between
+            h5.mb-1 #{ticket.subject}
+            small #{ticket.createdAt.toLocaleString()}
+          p.mb-1
+            | !{ticket.issue}
+          small #{ticket.contact.email}
+    
   else
     p No tickets, Create one now
