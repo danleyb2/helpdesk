@@ -2,7 +2,7 @@ extends ../layout
 
 block content
     strong Date: 
-    span #{ticket.createdAt}
+    span #{ticket.createdAt.toLocaleString()}
     br
     strong Subject: 
     span #{ticket.subject}
@@ -22,10 +22,10 @@ block content
                         span #{message.owner.modelRef.email}
                     br
                     strong Date: 
-                    span #{message.createdAt}
+                    span #{message.createdAt.toLocaleString()}
                     br
                     strong Body: 
-                    span #{message.body}
+                    span !{message.body}
                     br
         else
             li There are no messages yet
