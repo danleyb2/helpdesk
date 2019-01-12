@@ -8,21 +8,20 @@ propertyMessagingRouter = require('./messaging/property');
 propertyAdministrationRouter = require('./administration');
 
 var Property = require('../models/property');
-function loadProperty(req, res, next) {
-    Property.findOne({_id:req.params.pId})
-        .exec(function (err, property) {
+router.param('pId', function (req, res, next, id) {
+    Property.findOne({_id:id},function (err, property) {
             if (err) {
-                return next(err);
+                next(err);
+            } else if (property) {
+                res.locals.title = 'Administration';
+                res.locals.property = property;
+                next();
+            } else {
+                next(new Error('failed to load property'));
+
             }
-
-            res.locals.title = 'Administration';
-            res.locals.property = property;
-
-            return next();
         });
-
-
-}
+});
 
 
 router.get('/create', propertyController.createForm);
@@ -32,8 +31,8 @@ router.get('/:pId', propertyController.details);
 router.put('/:pId/update', propertyController.update);
 router.delete('/:pId/delete', propertyController.delete);
 
-router.use('/:pId/m',propertyMessagingRouter);
-router.use('/:pId/s', loadProperty, propertyAdministrationRouter);
+router.use('/:pId/m', propertyMessagingRouter);
+router.use('/:pId/s', propertyAdministrationRouter);
 
 router.get('/', propertyController.list);
 
