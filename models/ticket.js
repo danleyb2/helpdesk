@@ -20,18 +20,15 @@ var Schema = mongoose.Schema;
 
 var TicketSchema = Schema({
 
-    // uid: {type: Number, unique: false, index: true},
-    // owner: {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'accounts'},
-    // group: {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'groups'},
-    // assignee: {type: mongoose.Schema.Types.ObjectId, ref: 'accounts'},
+    assignee: {type: mongoose.Schema.Types.ObjectId, ref: 'Member',required:false},
+    status: {type: String, required: true, enum:['Open', 'Closed'], default:'Open'},
+    priority: {type: mongoose.Schema.Types.ObjectId, ref: 'Priority', required: true},
+    type: {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Type'},
     /*
     deleted: {type: Boolean, default: false, required: true, index: true},
-    type: {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'tickettypes'},
-    status: {type: Number, default: 0, required: true, index: true},
-    priority: {type: mongoose.Schema.Types.ObjectId, ref: 'priorities', required: true},
     tags: [{type: mongoose.Schema.Types.ObjectId, ref: 'tags'}],
-
     */
+    department:   { type: mongoose.Schema.Types.ObjectId, ref: 'Department', required: false },
     property:   { type: mongoose.Schema.Types.ObjectId, ref: 'Property', required: true },
     contact:   { type: mongoose.Schema.Types.ObjectId, ref: 'Contact', required: true },
     conversation:   { type: mongoose.Schema.Types.ObjectId, ref: 'Conversation', required: true },
@@ -40,12 +37,10 @@ var TicketSchema = Schema({
     issue: {type: String, required: true},
     closedDate: {type: Date},
 
-    // comments: [commentSchema],
     // notes: [noteSchema],
     // attachments: [attachmentSchema],
     // history: [historySchema],
     // subscribers: [{type: mongoose.Schema.Types.ObjectId, ref: 'accounts'}]
-
 
 }, {timestamps: true});
 
