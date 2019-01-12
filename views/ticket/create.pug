@@ -19,7 +19,7 @@ block content
       
     div.form-group
       label(for='issue') Issue:
-      input#issue.form-control(type='text', placeholder='Ticket Issue' name='issue' required='true' value=(undefined===instance ? '' : instance.issue) )
+      textarea#issue.form-control(placeholder='Ticket Issue' name='issue' required='true') #{undefined===instance ? '' : instance.issue}
       
 
     button.btn.btn-primary(type='submit') Submit
