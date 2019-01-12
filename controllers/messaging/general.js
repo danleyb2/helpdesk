@@ -1,6 +1,5 @@
 var Conversation = require('../../models/chat/conversation');
 
-
 exports.list = function (req, res) {
 
     Conversation.find({})
@@ -18,19 +17,33 @@ exports.list = function (req, res) {
 
 
 exports.details = function (req, res) {
-    Conversation.findById(req.params.id, function (err, conversation) {
-        if (err) return console.error(err);
 
-        conversation.recentMessages(function (err,messages) {
 
-            res.render('messaging/detail', {
-                title: 'Conversation',
-                'conversation': conversation,
-                'messages': messages
+    Conversation.find({})
+        .sort('createdAt')
+        .exec(function (err, conversations) {
+            if (err) {
+                return next(err);
+            }
+
+            Conversation.findById(req.params.id, function (err, conversation) {
+                if (err) return console.error(err);
+
+                conversation.recentMessages(function (err,messages) {
+
+                    res.render('messaging/conversations', {
+                        title: 'Conversation',
+                        'conversations': conversations,
+                        'conversation': conversation,
+                        'messages': messages
+                    });
+
+                });
+
+
             });
-
         });
 
 
-    })
+
 };
