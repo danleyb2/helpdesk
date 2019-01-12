@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 // todo var winston = require('./config/winston');
 var io = require("socket.io")();
+var format = require('date-fns/format');
 
 
 var mongoose = require('mongoose');
@@ -27,6 +28,9 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 app.io = io;
+
+app.locals.dateFnsFormat = format;
+
 
 // mongoose
 mongoose.connect(`mongodb://${process.env.DB_HOST}/${process.env.DB_NAME}`, {

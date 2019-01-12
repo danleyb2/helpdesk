@@ -3,7 +3,6 @@ extends ../layout
 block content
   link(rel='stylesheet', href='/stylesheets/conversations.css')
   .messaging
-    my-element(disabled="disabled")
     .inbox_msg
       .inbox_people
         .headind_srch
@@ -16,31 +15,42 @@ block content
                 button(type='button')
                   i.fa.fa-search
         .inbox_chat
-          each conversation in conversations.length ? conversations : ['There are no Conversations yet']
-            .chat_list.active_chat
-              .chat_people
-                .chat_img
-                  img(src="https://ptetutorials.com/images/user-profile.png" alt="sunil")
-                .chat_ib
-                  h5 
-                    a(href='m/'+conversation._id) SSAda ajdkjwd
-                    span.chat_date Dec 25
-                  p #{conversation.title}
+          if conversations.length
+            each conversation in conversations
+              .chat_list.active_chat
+                .chat_people
+                  .chat_img
+                    img(src="https://ptetutorials.com/images/user-profile.png" alt="sunil")
+                  .chat_ib
+                    h5 
+                      a(href='/m/'+conversation._id) Sender
+                      span.chat_date= dateFnsFormat(conversation.createdAt,'MMM d, h:m aa')
+                    p #{conversation.title}
+          else
+            p No Active Conversations
+            a(href='') Sim One Now
       .mesgs
         .msg_history
           .incoming_msg
-            .incoming_msg_img
-              img(src="https://ptetutorials.com/images/user-profile.png" alt="sunil")
-              
-            .received_msg
-              .received_withd_msg
-                p this is the message content
-                span.time_date 11:01 AM    |    June 9
-            .outgoing_msg
-              .sent_msg
-                p this is the outgoing message content
-                span.time_date 11:01 AM    |    June 9
-                
+            if messages && messages.length
+              each message in messages
+                if message.owner.refModel === 'Member' && message.owner.modelRef.account.toString() === req.user._id.toString()
+                  .outgoing_msg
+                    .sent_msg
+                      p !{message.body}
+                      span.time_date= dateFnsFormat(conversation.createdAt,'h:m aa | MMM d')
+                else
+                  .incoming_msg_img
+                    img(src="https://ptetutorials.com/images/user-profile.png" alt="sunil")
+
+                  .received_msg
+                    .received_withd_msg
+                      p !{message.body}
+                      span.time_date= dateFnsFormat(conversation.createdAt, 'h:m aa | MMM d')
+
+            else
+              p There are no messages yet  
+
         .type_msg
           .input_msg_write
             input.write_msg(type='text', placeholder="Type a message")
