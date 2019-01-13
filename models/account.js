@@ -4,7 +4,9 @@ var passportLocalMongoose = require('passport-local-mongoose');
 
 
 var Account = new Schema({
-    active: Boolean
+    active: Boolean,
+    name:      { type: String },
+    email:      { type: String, required: true, unique: true },
 
 }, {timestamps: true});
 
@@ -24,7 +26,8 @@ var Account = new Schema({
 * */
 
 Account.plugin(passportLocalMongoose,{
-    usernameLowerCase:true
+    usernameLowerCase:true,
+    usernameQueryFields:['email']
 
 });
 

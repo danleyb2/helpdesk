@@ -106,16 +106,15 @@ block main
 
   .container
     h1 Login Page
+    pre #{info}
     p.lead Say something worthwhile here.
-    br
     form(role='form', action="/login", method="post", style='max-width: 300px;')
       .form-group
-        input.form-control(type='text', name="username", placeholder='Enter Username' value='danleyb2')
+        label(for="username") Username or Email  
+        input.form-control#username(type='text', name="username", placeholder='Username or Email' value='danleyb2')
       .form-group
         input.form-control(type='password', name="password", placeholder='Password', value='brian123')
       button.btn.btn-default(type='submit') Submit &nbsp;
-      a(href='/')
-        button.btn.btn-primary(type="button") Cancel
       br  
       a(href='/register') Register
       | 
