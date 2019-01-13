@@ -6,7 +6,7 @@ const Participant = require('./models/chat/participant');
 const Contact = require('./models/contact');
 const Property = require('./models/property');
 
-const mailer = require('./mailer');
+const mailer = require('./mailer/index');
 //const async = require('async');
 var mongoose = require('mongoose');
 
