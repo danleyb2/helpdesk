@@ -1,6 +1,6 @@
 'use strict';
 const nodemailer = require('nodemailer');
-
+const pug = require('pug');
 
 
 // create reusable transporter object using the default SMTP transport
@@ -38,5 +38,22 @@ exports.sendNotification = function(mailOptions) {
         console.log('Message sent: %s', info.messageId);
 
     });
+
+};
+
+/**
+ * Compile a template file as email body
+ *
+ * @param template pug file
+ * @param locals template compilation locals
+ * @param options subject, from,to
+ *
+ */
+exports.sendTemplateNotification = function(template,locals,options) {
+    const compiledFunction = pug.compileFile(template);
+    options['html'] = compiledFunction(locals);
+
+    this.sendNotification(options);
+
 
 };
