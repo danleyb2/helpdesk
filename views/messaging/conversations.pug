@@ -17,7 +17,7 @@ block content
         .inbox_chat
           if conversations.length
             each conversation in conversations
-              .chat_list.active_chat
+              .chat_list(class=currentConversation && currentConversation._id.toString()===conversation._id.toString()? 'active_chat':'')
                 .chat_people
                   .chat_img
                     img(src="https://ptetutorials.com/images/user-profile.png" alt="sunil")
@@ -38,7 +38,7 @@ block content
                   .outgoing_msg
                     .sent_msg
                       p !{message.body}
-                      span.time_date= dateFnsFormat(conversation.createdAt,'h:m aa | MMM d')
+                      span.time_date= dateFnsFormat(message.createdAt, 'h:m aa | MMM d')
                 else
                   .incoming_msg_img
                     img(src="https://ptetutorials.com/images/user-profile.png" alt="sunil")
@@ -46,7 +46,7 @@ block content
                   .received_msg
                     .received_withd_msg
                       p !{message.body}
-                      span.time_date= dateFnsFormat(conversation.createdAt, 'h:m aa | MMM d')
+                      span.time_date= dateFnsFormat(message.createdAt, 'h:m aa | MMM d')
 
             else
               p There are no messages yet  
