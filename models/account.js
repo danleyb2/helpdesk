@@ -5,9 +5,17 @@ var passportLocalMongoose = require('passport-local-mongoose');
 
 var Account = new Schema({
     active: Boolean,
-    name:      { type: String },
-    email:      { type: String, required: true, unique: true },
-
+    name: {type: String},
+    email: {type: String, required: true, unique: true},
+    username: {
+        type: String,
+        trim: true,
+        index: {
+            unique: true,
+            partialFilterExpression: {username: {$type: 'string'}}
+        },
+        required: false
+    }
 }, {timestamps: true});
 
 /*
@@ -25,9 +33,10 @@ var Account = new Schema({
 
 * */
 
-Account.plugin(passportLocalMongoose,{
-    usernameLowerCase:true,
-    usernameQueryFields:['email']
+Account.plugin(passportLocalMongoose, {
+    usernameLowerCase: true,
+    usernameQueryFields: ['username'],
+    usernameField:'email'
 
 });
 
