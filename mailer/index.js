@@ -53,6 +53,8 @@ exports.sendTemplateNotification = function(template,locals,options) {
     const compiledFunction = pug.compileFile(template);
     options['html'] = compiledFunction(locals);
 
+    // todo optimization, render with cache https://pugjs.org/api/getting-started.html
+
     this.sendNotification(options);
 
 
