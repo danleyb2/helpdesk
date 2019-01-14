@@ -1,5 +1,7 @@
 var Property = require('../models/property');
 var Member = require('../models/member');
+var Priority = require('../models/ticket/priority');
+var Type = require('../models/ticket/type');
 
 
 exports.createForm = function (req, res) {
@@ -9,7 +11,7 @@ exports.createForm = function (req, res) {
 };
 
 
-exports.create = function (req, res,next) {
+exports.create = function (req, res, next) {
 
     let property = new Property({
         name: req.body.name,
@@ -17,22 +19,45 @@ exports.create = function (req, res,next) {
         support_email: req.body.support_email
     });
 
-    property.save(function (err) {
+    // const DEFAULT_TYPES = ['Issue', 'Task'];
+    // const DEFAULT_PRIORITIES = ['Normal', 'Urgent', 'Critical'];
+
+    property.save(property.save(async function (err) {
         if (err) {
             return next(err);
         }
 
-        // create membership
-        membership = new Member({
-            role:'Admin',
-            account:req.user._id,
-            property:property._id,
+        /*
+        // create default ticket types
+        let types = DEFAULT_TYPES.map(function (type) {
+            return {
+                name: type,
+                property: property
+            }
         });
+        await Type.insertMany(types);
+        // create default ticket priorities
+        let priorities = DEFAULT_PRIORITIES.map(function (priority) {
+            return {
+                name: priority,
+                property: property
+            }
+        });
+        await Priority.insertMany(priorities);
+        */
 
-        membership.save(function (err,property) {
-            res.redirect('/p')
+        // create membership
+        let membership = new Member({
+            role: 'Admin',
+            status: 'Enabled',
+            account: req.user._id,
+            property: property._id,
         });
-    })
+        await membership.save();
+        res.redirect('/p')
+
+    }));
+
 };
 
 exports.details = function (req, res) {
@@ -57,7 +82,7 @@ exports.delete = function (req, res) {
 
 exports.list = function (req, res, next) {
     Property.find({}, 'name type')
-        //.populate('author')
+    //.populate('author')
         .exec(function (err, properties) {
             if (err) {
                 return next(err);

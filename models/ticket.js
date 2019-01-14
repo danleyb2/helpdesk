@@ -22,8 +22,8 @@ var TicketSchema = Schema({
 
     assignee: {type: mongoose.Schema.Types.ObjectId, ref: 'Member',required:false},
     status: {type: String, required: true, enum:['Open', 'Closed'], default:'Open'},
-    priority: {type: mongoose.Schema.Types.ObjectId, ref: 'Priority', required: true},
-    type: {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Type'},
+    priority: {type: String, required: true, enum:['Low', 'Medium', 'High'], default:'Medium'},
+    type: {type: String, required: true, enum:['Issue', 'Task'], default:'Issue'},
     /*
     deleted: {type: Boolean, default: false, required: true, index: true},
     tags: [{type: mongoose.Schema.Types.ObjectId, ref: 'tags'}],
@@ -41,8 +41,27 @@ var TicketSchema = Schema({
     // attachments: [attachmentSchema],
     // history: [historySchema],
     // subscribers: [{type: mongoose.Schema.Types.ObjectId, ref: 'accounts'}]
+    seq: {type: Number, required:true}
+
 
 }, {timestamps: true});
 
+TicketSchema.statics.findLastSeq = function (property, callback) {
+    this.findOne({ property: property }) // 'this' now refers to the Member class
+        .sort('-seq')
+        .exec(callback);
+};
+
+TicketSchema.pre('save', function (next) {
+    var doc = this;
+    if (this.isNew) {
+        TicketSchema.findLastSeq(this.property, function (err,ticket) {
+            doc.seq = ticket? ticket.seq + 1:1;
+            next();
+        });
+
+    }
+
+});
 
 module.exports = mongoose.model('Ticket', TicketSchema);

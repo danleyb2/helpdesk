@@ -1,26 +1,22 @@
 extends ../layout
 
 block content
-  a(href='/p/create') Create New Property
-  br
-  br
+  a.btn.btn-success.mb-2(href='/p/create') Create New Property
   
-  h4 Properties
   if properties.length
-    ul
+    ul.list-group
       each property in properties
-        li
+        li.list-group-item
           a(href='/p/'+property.id) #{property.name} 
           strong Type:
               span 
               | #{property.type}
           br
-          a(href='/p/'+property.id+'/m') Messaging
+          a.btn.btn-primary(href='/p/'+property.id+'/m') Messaging 
           | 
-          a(href='/p/'+property.id+'/t') Tickets
+          a.btn.btn-primary(href='/p/'+property.id+'/t') Tickets 
           | 
-          a(href='/p/'+property.id+'/s') Settings
-          |  
+          a.btn.btn-primary(href='/p/'+property.id+'/s') Settings
           // a(href='/p/'+property.id+'/update') Edit
           // a(href='/p/'+property.id+'/delete') Delete
   else
