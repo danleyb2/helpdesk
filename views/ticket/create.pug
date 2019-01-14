@@ -4,27 +4,32 @@ block content
   h1=title
 
   form(method='POST' action='')
-
-    div.form-group
-      label(for='subject') Subject:
-      input#subject.form-control(type='text', placeholder='Ticket Subject' name='subject' required='true' value=(undefined===instance ? '' : instance.subject) )
-    
-    div.form-group
-      label(for='contact_name') Contact Name:
-      input#contact_name.form-control(type='text', placeholder='Contact Name' name='contact_name' required='true' value=(undefined===instance ? '' : instance.contact_name) )
-    
-    div.form-group
-      label(for='contact_email') Contact Email:
-      input#contact_email.form-control(type='email', placeholder='Contact Email' name='contact_email' required='true' value=(undefined===instance ? '' : instance.contact_email) )
+    if properties.length
       
-    div.form-group
-      label(for='issue') Issue:
-      textarea#issue.form-control(placeholder='Ticket Issue' name='issue' required='true') #{undefined===instance ? '' : instance.issue}
+      div.form-group
+        label(for='type') Property:
+        select#type.form-control(type='select', placeholder='Select Property' name='property' required='true' )
+          each property in properties
+            option(value=property._id selected=(instance && instance.property.toString() === property._id.toString() ? 'selected' : 'false')) #{property.name}
+  
+      div.form-group
+        label(for='subject') Subject:
+        input#subject.form-control(type='text', placeholder='Ticket Subject' name='subject' required='true' value=(undefined===instance ? '' : instance.subject) )
       
-
-    button.btn.btn-primary(type='submit') Submit
-
-  if errors
-    ul
-      for error in errors
-        li!= error.msg
+      div.form-group
+        label(for='contact_name') Contact Name:
+        input#contact_name.form-control(type='text', placeholder='Contact Name' name='contact_name' required='true' value=(undefined===instance ? '' : instance.contact_name) )
+      
+      div.form-group
+        label(for='contact_email') Contact Email:
+        input#contact_email.form-control(type='email', placeholder='Contact Email' name='contact_email' required='true' value=(undefined===instance ? '' : instance.contact_email) )
+        
+      div.form-group
+        label(for='issue') Issue:
+        textarea#issue.form-control(placeholder='Ticket Issue' name='issue' required='true') #{undefined===instance ? '' : instance.issue}
+        
+  
+      button.btn.btn-primary(type='submit') Submit
+    else
+      
+      a.btn.btn-primary(href='/p/create') Create Property

@@ -1,13 +1,17 @@
 var Ticket = require('../models/ticket');
 const Contact = require('../models/contact');
+const Property = require('../models/property');
 const Participant = require('../models/chat/participant');
 const Conversation = require('../models/chat/conversation');
 
 
 
-exports.createForm = function (req, res) {
+exports.createForm = async function (req, res) {
 
-    res.render('ticket/create', {})
+    var properties = await Property.find({}); // TODO filter with memberships
+
+
+    res.render('ticket/create', {properties:properties})
 
 };
 
@@ -58,7 +62,7 @@ exports.create = async function (req, res, next) {
     let ticket = new Ticket({
         subject: req.body.subject,
         issue: req.body.issue,
-        property: req.params.pId,
+        property: req.body.property,
         conversation: conversation._id,
         contact: participant.modelRef,
     });
