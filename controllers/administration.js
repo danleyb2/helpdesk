@@ -1,5 +1,7 @@
 var Member = require('../models/member');
+var Account = require('../models/account');
 var Property = require('../models/property');
+const mailer = require('../mailer/index');
 
 
 exports.index = function (req, res, next) {
@@ -22,6 +24,53 @@ exports.members = function (req, res) {
 
 };
 
+exports.memberCreate = function (req, res) {
+
+    function registerMembership(account){
+        Member.create({
+            role: 'Admin',
+            status: 'Pending',
+            account: account._id,
+            property: req.params.pId,
+        },function (err,member) {
+            let mailOptions = {
+                from: 'noreply@helpdesk.com',
+                to: account.email,
+                subject: `New property invite`,
+                // text: message['body'], // plain text body
+                // html: '<b>Hello world?</b>' // html body
+            };
+
+            let locals = {
+                link:`/membership/${member._id}/accept`,
+                property:member.property,
+                role:member.role
+            };
+            if (account.isNew){
+                locals.password = '12345'
+            }
+            mailer.sendTemplateNotification('invite.pug',locals,mailOptions);
+            res.redirect(`/p/${member.property}/s/members`);
+        });
+    }
+
+    Account.findOne({email:req.body.email},function (err, account) {
+        if (!account){
+            Account.register(new Account({
+                //username: req.body.username,
+                email: req.body.email
+            }), '12345', function (err, account) {
+                if (err) {
+                    console.log(err)
+                }
+                registerMembership(account)
+            });
+        }else {
+            registerMembership(account)
+        }
+    });
+
+};
 
 exports.details = function (req, res) {
     Conversation.findById(req.params.id, function (err, conversation) {

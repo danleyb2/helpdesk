@@ -1,15 +1,16 @@
 extends ../layout
 
 block tab
-  button.btn.btn-primary(type='button' data-toggle='modal' data-target='#exampleModalCenter')
+  button.btn.btn-primary.mb-2(type='button' data-toggle='modal' data-target='#exampleModalCenter')
     | Invite New
   if members.length
-    ul
+    ul.list-group
       each member in members
-        li
-          a(href=member.id) #{member.account.username} 
-          | #{member.role} 
-          | #{member.status} 
+        li.list-group-item
+          div Username : #{member.account.username} 
+          div Email : #{member.account.email} 
+          div Role : #{member.role} 
+          div Status : #{member.status} 
           
           
   else
@@ -19,12 +20,16 @@ block tab
   #exampleModalCenter.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true')
     .modal-dialog.modal-dialog-centered(role='document')
       .modal-content
-        .modal-header
-          h5#exampleModalCenterTitle.modal-title Modal title
-          button.close(type='button' data-dismiss='modal' aria-label='Close')
-            span(aria-hidden='true') &times;
-        .modal-body
-          | ...
-        .modal-footer
-          button.btn.btn-secondary(type='button' data-dismiss='modal') Close
-          button.btn.btn-primary(type='button') Save changes  
+        form(action='' method='post')
+          .modal-header
+            h5#exampleModalCenterTitle.modal-title Invite New Member
+            button.close(type='button' data-dismiss='modal' aria-label='Close')
+              span(aria-hidden='true') &times;
+          .modal-body
+            div.form-group
+              label(for='email') Email:
+              input#email.form-control(type='email', placeholder='Email' name='email' required='true' value='' )
+  
+          .modal-footer
+            button.btn.btn-secondary(type='button' data-dismiss='modal') Cancel
+            button.btn.btn-primary(type='submit') Invite  
