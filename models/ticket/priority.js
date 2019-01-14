@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 
-const DEFAULT_PRIORITIES = ['Normal','Urgent','Critical'];
 
 var PrioritySchema = mongoose.Schema({
     property:   { type: mongoose.Schema.Types.ObjectId, ref: 'Property', required: true },
