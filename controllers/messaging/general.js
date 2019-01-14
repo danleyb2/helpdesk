@@ -34,7 +34,7 @@ exports.details = function (req, res) {
                     res.render('messaging/conversations', {
                         title: 'Conversation',
                         'conversations': conversations,
-                        'conversation': conversation,
+                        'currentConversation': conversation,
                         'messages': messages
                     });
 
