@@ -4,11 +4,19 @@ var Property = require('../models/property');
 const mailer = require('../mailer/index');
 
 
+exports.liveChat = function (req, res, next) {
+
+    res.render('administration/livechat');
+
+};
+
+
 exports.index = function (req, res, next) {
 
     res.render('administration/general');
 
 };
+
 exports.members = function (req, res) {
 
     Member.find({})
