@@ -5,6 +5,7 @@ administrationController = require('../controllers/administration');
 
 
 router.get('/', administrationController.index);
+router.get('/livechat', administrationController.liveChat);
 router.get('/members', administrationController.members);
 router.post('/members', administrationController.memberCreate);
 
