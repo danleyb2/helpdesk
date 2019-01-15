@@ -106,12 +106,13 @@ block main
 
   .container
     h1 Login Page
-    pre #{info}
+    if info
+      pre #{info.message}
     p.lead Say something worthwhile here.
     form(role='form', action="/login", method="post", style='max-width: 300px;')
       .form-group
         label(for="username") Username or Email  
-        input.form-control#username(type='text', name="username", placeholder='Username or Email' value='')
+        input.form-control#username(type='text', name="email", placeholder='Username or Email' value='')
       .form-group
         input.form-control(type='password', name="password", placeholder='Password', value='')
       button.btn.btn-default(type='submit') Submit &nbsp;
