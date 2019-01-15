@@ -7,7 +7,7 @@ var logger = require('morgan');
 // todo var winston = require('./config/winston');
 var io = require("socket.io")();
 var format = require('date-fns/format');
-
+const cors = require('cors');
 
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -21,6 +21,7 @@ var accountRouter = require('./routes/account');
 var indexRouter = require('./routes/index');
 var chatRouter = require('./routes/chat');
 var propertyRouter = require('./routes/property');
+var notificationRouter = require('./routes/notification');
 var messagingRouter = require('./routes/messaging/general');
 var ticketsRouter = require('./routes/ticket');
 
@@ -87,18 +88,32 @@ app.use(bodyParser.json());
 
 app.use(cookieParser());
 
-
-
 app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 app.use('/chat', chatRouter);
 
 app.use('/api/mail', apiRouter);
+
+var whitelist = ['http://example1.com', 'http://example2.com','http://localhost:63342'];
+var corsOptionsDelegate = function (req, callback) {
+    var corsOptions;
+    if (whitelist.indexOf(req.header('Origin')) !== -1) {
+        corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+    } else {
+        corsOptions = { origin: false } // disable CORS for this request
+    }
+
+    callback(null, corsOptions) // callback expects two parameters: error and options
+};
+
+app.get('/livechat/:pId/embed',cors(corsOptionsDelegate), function (req, res, next) {
+    //res.header("Access-Control-Allow-Origin", "*");
+    res.render('embed',{})
+});
 app.use('/', accountRouter);
 
 // redirect middleware
@@ -126,9 +141,20 @@ function loadCommon(req, res, next) {
 }
 
 app.use('/', checkAuthentication, indexRouter);
+app.use('/n', checkAuthentication, notificationRouter);
 app.use('/p', checkAuthentication, propertyRouter);
 app.use('/m', checkAuthentication, messagingRouter);
 app.use('/t', checkAuthentication, ticketsRouter);
+app.use('/s', checkAuthentication, function (req, res, next) {
+
+    res.render('account/settings');
+
+});
+app.get('/profile', checkAuthentication, function (req, res) {
+
+    res.render('account/profile');
+});
+
 
 // app.use('/dashboard', usersRouter);
 
