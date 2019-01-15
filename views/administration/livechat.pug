@@ -1,19 +1,17 @@
 extends ./layout
 
 block tab
-  form(method='POST' action='')
-    div.form-group
-      label(for='name') Name:
-      input#name.form-control(type='text', placeholder='Property Name' name='name' required='true' value=(undefined === property ? '' : property.name) )
-
-    div.form-group
-      label(for='support_email') Support Email:
-      input#support_email.form-control(type='email', placeholder='Support Email' name='support_email' required='true' value=(undefined === property ? '' : property.support_email) )
-
-    div.form-group
-      label(for='type') Type:
-      select#type.form-control(type='select', placeholder='Select Type' name='type' required='true' )
-        option(value='Site' selected=(undefined === property || property.type != 'Site' ? false : 'selected')) Site
-        option(value='Page' selected=(undefined === property || property.type != 'Page' ? false : 'selected')) Page
-
-    button.btn.btn-primary(type='submit') Save
+  textarea.form-control(rows=14)
+    | <!--Start of LiveChat Embed Script-->
+    | <script type="text/javascript">
+    | (function(){
+    | var s1=document.createElement("script"),
+    | s0=document.getElementsByTagName("script")[0];
+    | s1.async=true;
+    | s1.src='http://localhost:3000/livechat/#{property.id}/embed';
+    | s1.charset='UTF-8';
+    | s1.setAttribute('crossorigin','*');
+    | s0.parentNode.insertBefore(s1,s0);
+    | })();
+    | </script>
+    | <!--End of LiveChat Embed Script-->
