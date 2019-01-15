@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+  br
+  br
+  h4 Conversations
+  if conversations.length
+    each conversation in conversations
+      h5
+        a(href='m/' + conversation.id) #{conversation.title} 
+        span.chat_date #{conversation.createdAt}
+  else
+    p No Active Conversations
+    a(href='') Sim One Now
+     
+block scripts
+  script.
+    var name;
