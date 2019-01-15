@@ -18,13 +18,13 @@ exports.createForm = async function (req, res) {
 
 exports.create = async function (req, res, next) {
 
-    var contact = await Contact.findOne({email: req.body.contact_email, property: req.params.pId});
+    var contact = await Contact.findOne({email: req.body.contact_email, property: req.body.property});
     if (contact == null) {
 
         contact = await Contact.create({
             name: req.body.contact_name,
             email: req.body.contact_email,
-            property: req.params.pId,
+            property: req.body.property,
         });
     }
 
@@ -38,7 +38,7 @@ exports.create = async function (req, res, next) {
 
     var conversation = await Conversation.create({
         title: req.body.subject,
-        property: req.params.pId,
+        property: req.body.property,
         participants: [participant._id]
     });
 
@@ -71,7 +71,8 @@ exports.create = async function (req, res, next) {
         if (err) {
             return next(err);
         }
-        res.redirect('/p/' + req.params.pId + '/t')
+        // res.redirect('/p/' + req.body.property + '/t')
+        res.redirect('/t/')
     })
 
 };
