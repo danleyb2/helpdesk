@@ -6,12 +6,26 @@ block content
   if tickets.length
     .list-group
       each ticket in tickets
-        a.list-group-item.list-group-item-action(href='t/'+ticket.id)
+        a.list-group-item.list-group-item-action(href='/t/'+ticket.id)
           .d-flex.w-100.justify-content-between
             h5.mb-1 #{ticket.subject}
             small #{ticket.createdAt.toLocaleString()}
-          p.mb-1
-            | !{ticket.issue}
+          p.mb-1 !{ticket.issue}
+          .row
+            .col
+              div Number  : #{ticket.seq}
+              div Priority : #{ticket.priority}
+              div Status : #{ticket.status}
+                
+              div Assignee : #{ticket.assignee}
+              div type : #{ticket.type}
+            .col
+              button.btn.btn-primary Close
+              br
+              button.btn.btn-primary Close
+              
+              
+              
           small #{ticket.contact.email}
     
   else

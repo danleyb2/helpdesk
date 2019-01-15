@@ -1,0 +1,64 @@
+extends ../layout
+
+block content
+    .row
+        .col-md-3
+            .list-group
+                a.list-group-item.list-group-item-action.active(href='#') Profile
+                a.list-group-item.list-group-item-action(href='#') Account
+                a.list-group-item.list-group-item-action(href='#') Emails
+                a.list-group-item.list-group-item-action.mb-2(href='#') Notifications
+                a.list-group-item.list-group-item-action(href='#') Developer
+                
+        .col-md-9
+            .card
+                .card-body
+                    .row
+                        .col-md-12
+                            h4 Your Profile
+                            hr
+                    .row
+                        .col-md-12
+                            form
+                                .form-group.row
+                                    label.col-4.col-form-label(for='username') User Name*
+                                    .col-8
+                                        input#username.form-control.here(name='username' placeholder='Username' required='required' type='text')
+                                .form-group.row
+                                    label.col-4.col-form-label(for='name') First Name
+                                    .col-8
+                                        input#name.form-control.here(name='name' placeholder='First Name' type='text')
+                                .form-group.row
+                                    label.col-4.col-form-label(for='lastname') Last Name
+                                    .col-8
+                                        input#lastname.form-control.here(name='lastname' placeholder='Last Name' type='text')
+                                .form-group.row
+                                    label.col-4.col-form-label(for='text') Nick Name*
+                                    .col-8
+                                        input#text.form-control.here(name='text' placeholder='Nick Name' required='required' type='text')
+                                .form-group.row
+                                    label.col-4.col-form-label(for='select') Display Name public as
+                                    .col-8
+                                        select#select.custom-select(name='select')
+                                            option(value='admin') Admin
+                                .form-group.row
+                                    label.col-4.col-form-label(for='email') Email*
+                                    .col-8
+                                        input#email.form-control.here(name='email' placeholder='Email' required='required' type='text')
+                                .form-group.row
+                                    label.col-4.col-form-label(for='website') Website
+                                    .col-8
+                                        input#website.form-control.here(name='website' placeholder='website' type='text')
+                                .form-group.row
+                                    label.col-4.col-form-label(for='publicinfo') Public Info
+                                    .col-8
+                                        textarea#publicinfo.form-control(name='publicinfo' cols='40' rows='4')
+                                .form-group.row
+                                    label.col-4.col-form-label(for='newpass') New Password
+                                    .col-8
+                                        input#newpass.form-control.here(name='newpass' placeholder='New Password' type='text')
+                                .form-group.row
+                                    .offset-4.col-8
+                                        button.btn.btn-primary(name='submit' type='submit') Update My Profile
+    
+
