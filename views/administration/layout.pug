@@ -11,6 +11,8 @@ block content
       a.nav-link(href='/p/'+property._id+'/s/tickets' class=('/p/'+property._id+'/s/tickets') === (req.baseUrl+req.path) ? 'active' : '') Ticket
     li.nav-item
       a.nav-link(href='#' tabindex='-1' aria-disabled='true') Departments
+    li.nav-item
+      a.nav-link(href='/p/' + property._id + '/s/livechat' class=('/p/' + property._id + '/s/livechat') === (req.baseUrl + req.path) ? 'active' : '') LiveChat
       
   .card(style="border-top: initial;border-radius: initial;")
     .card-body
