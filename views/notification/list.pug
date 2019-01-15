@@ -1,17 +1,15 @@
 extends ../layout
 
 block content
-  br
-  br
-  h4 Conversations
-  if conversations.length
-    each conversation in conversations
+  h4 Notifications
+  if notifications.length
+    each notification in notifications
       h5
-        a(href='m/' + conversation.id) #{conversation.title} 
+        a(href='n/' + notification.id) #{notification.action} 
         span.chat_date #{conversation.createdAt}
   else
-    p No Active Conversations
-    a(href='') Sim One Now
+    p No notifications
+    
      
 block scripts
   script.

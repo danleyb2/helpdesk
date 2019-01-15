@@ -1,17 +1,10 @@
 var express = require('express');
 
 var router = express.Router({mergeParams: true});
-const ticketController = require('../controllers/ticket');
+const notificationController = require('../controllers/notification.js');
 
 
-router.get('/create', ticketController.createForm);
-router.post('/create', ticketController.create);
-
-router.get('/:tId', ticketController.details);
-router.put('/:id/update', ticketController.update);
-router.delete('/:id/delete', ticketController.delete);
-
-router.get('/', ticketController.list);
+router.get('/', notificationController.list);
 
 
 module.exports = router;
