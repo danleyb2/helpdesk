@@ -41,24 +41,21 @@ var TicketSchema = Schema({
     // attachments: [attachmentSchema],
     // history: [historySchema],
     // subscribers: [{type: mongoose.Schema.Types.ObjectId, ref: 'accounts'}]
-    seq: {type: Number, required:true}
+    seq: {type: Number}
 
 
 }, {timestamps: true});
 
-TicketSchema.statics.findLastSeq = function (property, callback) {
-    this.findOne({ property: property }) // 'this' now refers to the Member class
-        .sort('-seq')
-        .exec(callback);
-};
 
 TicketSchema.pre('save', function (next) {
     var doc = this;
     if (this.isNew) {
-        TicketSchema.findLastSeq(this.property, function (err,ticket) {
-            doc.seq = ticket? ticket.seq + 1:1;
-            next();
-        });
+        this.constructor.findOne({ property: this.property }) // 'this' now refers to the Member class
+            .sort('-seq')
+            .exec(function (err,ticket) {
+                doc.seq = ticket? ticket.seq + 1:1;
+                next();
+            });
 
     }
 
