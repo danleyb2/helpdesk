@@ -14,7 +14,7 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-exports.sendNotification = function(mailOptions) {
+exports.sendNotification = function(mailOptions,cb) {
 
 // setup email data with unicode symbols
     /*
@@ -31,13 +31,7 @@ exports.sendNotification = function(mailOptions) {
     */
 
 // send mail with defined transport object
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log('Message sent: %s', info.messageId);
-
-    });
+    transporter.sendMail(mailOptions, cb);
 
 };
 
@@ -47,15 +41,15 @@ exports.sendNotification = function(mailOptions) {
  * @param template pug file
  * @param locals template compilation locals
  * @param options subject, from,to
- *
+ * @param cb
  */
-exports.sendTemplateNotification = function(template,locals,options) {
+exports.sendTemplateNotification = function(template,locals,options,cb) {
     const compiledFunction = pug.compileFile(template);
     options['html'] = compiledFunction(locals);
 
     // todo optimization, render with cache https://pugjs.org/api/getting-started.html
 
-    this.sendNotification(options);
+    this.sendNotification(options,cb);
 
 
 };

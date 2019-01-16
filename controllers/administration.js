@@ -57,7 +57,10 @@ exports.memberCreate = function (req, res) {
             if (account.isNew){
                 locals.password = '12345'
             }
-            mailer.sendTemplateNotification('invite.pug',locals,mailOptions);
+            mailer.sendTemplateNotification('invite.pug',locals,mailOptions,function (err, info) {
+                console.log('Message sent: %s', info.messageId);
+
+            });
             res.redirect(`/p/${member.property}/s/members`);
         });
     }

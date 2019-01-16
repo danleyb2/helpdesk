@@ -101,7 +101,10 @@ module.exports = function (io) {
                     text: message['body'], // plain text body
                     // html: '<b>Hello world?</b>' // html body
                 };
-                mailer.sendNotification(mailOptions);
+                mailer.sendNotification(mailOptions,function (err, info) {
+                    console.log('Message sent: %s', info.messageId);
+
+                });
             }
 
             message['owner'] = participant;
