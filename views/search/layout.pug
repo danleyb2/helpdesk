@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+  h4 Search 
+    small #{req.query.q}
+  ul.nav.nav-tabs
+    li.nav-item
+      a.nav-link(href='/p/s', class=('/p/s/') === (req.baseUrl+req.path)? 'active' : '') All
+    li.nav-item
+      a.nav-link(href='/p/members' class=('/p/members') === (req.baseUrl+req.path)? 'active' : '') Tickets
+    li.nav-item 
+      a.nav-link(href='/p/tickets' class=('/p/tickets') === (req.baseUrl+req.path) ? 'active' : '') Contacts
+    li.nav-item
+      a.nav-link(href='#' tabindex='-1' aria-disabled='true') Conversations
+    li.nav-item
+      a.nav-link(href='/p/livechat' class=('/p/livechat') === (req.baseUrl + req.path) ? 'active' : '') Properties
+      
+  .card(style="border-top: initial;border-radius: initial;")
+    .card-body
+        block tab
+            

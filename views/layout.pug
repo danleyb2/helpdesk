@@ -48,8 +48,8 @@ block main
             a.nav-link(href='/p') Properties
           //li.nav-item
           //  a.nav-link.disabled(href='#') Disabled        
-      form.form-inline.col-md-5
-        input.form-control.col-md-12(type='search', name='q' placeholder='Search Tickets, Contacts, Conversations')
+      form.form-inline.col-md-5(action='/search' method='get')
+        input.form-control.col-md-12(type='search', name='q' placeholder='Search Tickets, Contacts, Conversations' value=req.query.q?req.query.q:'')
       ul.navbar-nav
         li.nav-item
           span.d-inline-block

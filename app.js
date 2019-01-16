@@ -19,6 +19,7 @@ var MongoStore = require('connect-mongo')(session);
 var apiRouter = require('./routes/api/mail');
 var accountRouter = require('./routes/account');
 var indexRouter = require('./routes/index');
+var searchRouter = require('./routes/search');
 var chatRouter = require('./routes/chat');
 var propertyRouter = require('./routes/property');
 var notificationRouter = require('./routes/notification');
@@ -141,6 +142,7 @@ function loadCommon(req, res, next) {
 }
 
 app.use('/', checkAuthentication, indexRouter);
+app.use('/search', checkAuthentication, searchRouter);
 app.use('/n', checkAuthentication, notificationRouter);
 app.use('/p', checkAuthentication, propertyRouter);
 app.use('/m', checkAuthentication, messagingRouter);
