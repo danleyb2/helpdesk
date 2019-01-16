@@ -15,7 +15,8 @@ var Account = new Schema({
             partialFilterExpression: {username: {$type: 'string'}}
         },
         required: false
-    }
+    },
+    isVerified: { type: Boolean, default: false },
 }, {timestamps: true});
 
 /*
