@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var passportLocalMongoose = require('passport-local-mongoose');
-
+const Member = require('./member');
 
 var Account = new Schema({
     active: Boolean,
@@ -40,6 +40,21 @@ Account.plugin(passportLocalMongoose, {
     usernameField:'email'
 
 });
+
+
+Account.methods.currentProperties = function (cb) {
+
+    Member.find({account:this._id,'status':'Enabled'},function (err,memberships) {
+        let properties = memberships.map(function (membership) {
+            return membership.property;
+        });
+
+        cb(properties);
+
+    });
+
+};
+
 
 module.exports = mongoose.model('Account', Account);
 

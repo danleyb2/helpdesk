@@ -8,8 +8,9 @@ const Conversation = require('../models/chat/conversation');
 
 exports.createForm = async function (req, res) {
 
-    var properties = await Property.find({}); // TODO filter with memberships
-
+    var properties = await Property.find({
+        '_id': { $in: req.properties}
+    });
 
     res.render('ticket/create', {properties:properties})
 
@@ -114,7 +115,7 @@ exports.list = function (req, res, next) {
                 return next(err);
             }
             //Successful, so render
-            res.render('ticket/list', {title: 'Ticket List', 'tickets': tickets});
+            res.render('ticket/list', {title: 'Tickets', 'tickets': tickets});
         });
 
 

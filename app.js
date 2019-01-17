@@ -15,6 +15,8 @@ var passport = require('passport');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
+const { checkAuthentication, loadCommon } = require('./middleware');
+
 
 var apiRouter = require('./routes/api/mail');
 var accountRouter = require('./routes/account');
@@ -51,8 +53,8 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // end mongoose
 
-var sessionSecret = 'helpdesk$123#SessionKeY!2387';
-sessionStore = new MongoStore({mongooseConnection: mongoose.connection, autoReconnect: true});
+
+let sessionStore = new MongoStore({mongooseConnection: mongoose.connection, autoReconnect: true});
 
 var cookie = {
     httpOnly: true,
@@ -60,7 +62,7 @@ var cookie = {
 };
 
 var sessionMiddleware = session({
-    secret: sessionSecret,
+    secret: process.env.SESSION_SECRET,
     cookie: cookie,
     store: sessionStore,
     saveUninitialized: false,
@@ -99,6 +101,9 @@ app.use('/chat', chatRouter);
 
 app.use('/api/mail', apiRouter);
 
+// todo app.use('/tos', apiRouter);
+// todo app.use('/privacy', apiRouter);
+
 var whitelist = ['http://example1.com', 'http://example2.com','http://localhost:63342'];
 var corsOptionsDelegate = function (req, callback) {
     var corsOptions;
@@ -117,36 +122,13 @@ app.get('/livechat/:pId/embed',cors(corsOptionsDelegate), function (req, res, ne
 });
 app.use('/', accountRouter);
 
-// redirect middleware
-function checkAuthentication(req, res, next) {
-    res.locals.req = req;
-    // do any checks you want to in here
 
-    // CHECK THE USER STORED IN SESSION FOR A CUSTOM VARIABLE
-    // you can do this however you want with whatever variables you set up
-    if (req.isAuthenticated())
-        return next();
-
-    // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
-    res.redirect('/login');
-}
-
-function loadCommon(req, res, next) {
-    res.locals = {
-        siteTitle: "My Website's Title",
-        pageTitle: "The Home Page",
-        author: "Cory Gross",
-        description: "My app's description",
-    };
-   return next();
-}
-
-app.use('/', checkAuthentication, indexRouter);
+app.use('/', checkAuthentication, loadCommon, indexRouter);
 app.use('/search', checkAuthentication, searchRouter);
 app.use('/n', checkAuthentication, notificationRouter);
-app.use('/p', checkAuthentication, propertyRouter);
-app.use('/m', checkAuthentication, messagingRouter);
-app.use('/t', checkAuthentication, ticketsRouter);
+app.use('/p', checkAuthentication,loadCommon, propertyRouter);
+app.use('/m', checkAuthentication,loadCommon, messagingRouter);
+app.use('/t', checkAuthentication, loadCommon, ticketsRouter);
 app.use('/s', checkAuthentication, function (req, res, next) {
 
     res.render('account/settings');

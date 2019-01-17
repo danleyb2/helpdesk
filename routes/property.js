@@ -8,6 +8,7 @@ propertyMessagingRouter = require('./messaging/property');
 propertyAdministrationRouter = require('./administration');
 
 var Property = require('../models/property');
+
 router.param('pId', function (req, res, next, id) {
     Property.findOne({_id:id},function (err, property) {
             if (err) {

@@ -25,10 +25,23 @@ block content
         input#contact_email.form-control(type='email', placeholder='Contact Email' name='contact_email' required='true' value=(undefined===instance ? '' : instance.contact_email) )
         
       div.form-group
-        label(for='issue') Issue:
+        label(for='issue') Issue Description:
         textarea#issue.form-control(placeholder='Ticket Issue' name='issue' required='true') #{undefined===instance ? '' : instance.issue}
         
-  
+      div.form-group
+        label(for='priority') Priority:
+        select#priority.form-control(type='select', placeholder='Select Priority' name='priority' required='true' )
+          option(value='Low' selected=(undefined === instance || instance.priority != 'Low' ? false : 'selected')) Low
+          option(value='Medium' selected=(undefined === instance || instance.priority != 'Medium' ? false : 'selected')) Medium
+          option(value='High' selected=(undefined === instance || instance.priority != 'High' ? false : 'selected')) High
+          
+      div.form-group
+        label(for='status') Status:
+        select#status.form-control(type='select', placeholder='Select status' name='status' required='true' )
+          option(value='Open' selected=(undefined === instance || instance.status != 'Open' ? false : 'selected')) Open
+          option(value='Closed' selected=(undefined === instance || instance.status != 'Closed' ? false : 'selected')) Closed
+          
+
       button.btn.btn-primary(type='submit') Submit
     else
       

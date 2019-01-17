@@ -25,10 +25,11 @@ block main
       z-index: 2;
     }
     
-  .alert.alert-secondary.mt-2(role='alert')
-    | A simple secondary alert with 
-    a.alert-link(href='#') an example link
-    | . Give it a click if you like.
+  if !req.user.isVerified  
+    .alert.alert-secondary.mt-2(role='alert')
+      | Please take a moment to 
+      a.alert-link(href='#') Verify Your Email Address
+      | . To be able to create properties and tickets.
     
   nav.navbar.navbar-light.bg-light.justify-content-between.mb-2.navbar-expand-lg
     a.navbar-brand(href='/') HelpDesk
@@ -43,7 +44,7 @@ block main
               span.badge.badge-pill.badge-primary 4
           li.nav-item
             a.nav-link(href='/t') Tickets 
-              span.badge.badge-pill.badge-primary 4
+              span.badge.badge-pill.badge-primary #{open_tickets_count}
           li.nav-item
             a.nav-link(href='/p') Properties
           //li.nav-item

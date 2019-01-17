@@ -1,7 +1,7 @@
 extends ../layout
 
 block content
-  a.btn.btn-primary.btn-lg.mb-2(href='t/create') Create New Ticket
+  a.btn.btn-primary.btn-lg.mb-2(href='/t/create') Create New Ticket
   
   if tickets.length
     .list-group
@@ -11,21 +11,32 @@ block content
             h5.mb-1 #{ticket.subject}
             small #{ticket.createdAt.toLocaleString()}
           p.mb-1 !{ticket.issue}
-          .row
-            .col
-              div Number  : #{ticket.seq}
-              div Priority : #{ticket.priority}
-              div Status : #{ticket.status}
+          //.row
+          //.col
+          div Number  : #{ticket.seq}
+          div Priority 
+          // : #{ticket.priority}
+          .btn-group.btn-group-toggle(data-toggle='buttons')
+            label.btn.btn-secondary.active
+              input#option1(type='radio' name='options' autocomplete='off' checked='')
+              |  Low
+            label.btn.btn-secondary
+              input#option2(type='radio' name='options' autocomplete='off')
+              |  Medium
+            label.btn.btn-secondary
+              input#option3(type='radio' name='options' autocomplete='off')
+              |  High  
+          // div Status : #{ticket.status}
                 
-              div Assignee : #{ticket.assignee}
-              div type : #{ticket.type}
-            .col
-              button.btn.btn-primary Close
-              br
-              button.btn.btn-primary Close
-              
-              
-              
+          div Assignee : #{ticket.assignee}
+          div type : #{ticket.type}
+          //.row
+          if ticket.status === 'Open'
+            button.btn.btn-primary Close
+          else
+            button.btn.btn-primary Open
+          
+          br    
           small #{ticket.contact.email}
     
   else

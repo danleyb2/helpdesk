@@ -4,6 +4,7 @@ var Token = require('../models/account/token');
 var passport = require('passport');
 const accountController = require('../controllers/account');
 const mailer = require('../mailer/index');
+const crypto = require('crypto');
 
 var router = express.Router();
 
@@ -30,8 +31,9 @@ router.post('/register', function (req, res, next) {
     }), req.body.password, function (err, account) {
         if (err) {
             return res.render('register', {error: err.message});
-            // return res.render('register', { account : account });
         }
+
+        /*
 
         // Create a verification token for this user
         var token = new Token({ account: account._id, token: crypto.randomBytes(16).toString('hex') });
@@ -51,13 +53,13 @@ router.post('/register', function (req, res, next) {
                 if (err) { return res.status(500).send({ msg: err.message }); }
 
                 console.log('Message sent: %s', info.messageId);
-                res.status(200).send('A verification email has been sent to ' + user.email + '.');
+                res.status(200).send('A verification email has been sent to ' + account.email + '.');
             });
 
 
         });
+        */
 
-        /* todo Authenticate but restrict permissions till verified
         passport.authenticate('local')(req, res, function () {
             // res.redirect('/');
             req.session.save(function (err) {
@@ -69,7 +71,7 @@ router.post('/register', function (req, res, next) {
 
         });
 
-        */
+
     });
 });
 
@@ -86,12 +88,14 @@ router.post('/login', function (req, res, next) {
        // badRequestMessage: 'Missing username or password.',
     } , function (error, account, info) {
         if (account) {
-            // Make sure the user has been verified
+            // todo Make sure the user has been verified
+            /*
             if (!account.isVerified) {
                 return res
                     .status(401)
                     .send({type: 'not-verified', msg: 'Your account has not been verified.'});
             }
+            */
 
             req.logIn(account, {}, function(err) {
                 if (err) { return next(err); }

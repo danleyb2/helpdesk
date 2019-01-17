@@ -81,7 +81,10 @@ exports.delete = function (req, res) {
 };
 
 exports.list = function (req, res, next) {
-    Property.find({}, 'name type')
+
+    Property.find({
+        '_id': { $in: req.properties }
+    }, 'name type')
     //.populate('author')
         .exec(function (err, properties) {
             if (err) {

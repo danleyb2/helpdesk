@@ -7,12 +7,13 @@ block content
       a.nav-link(href='/p/'+property._id+'/s', class=('/p/'+property._id+'/s/') === (req.baseUrl+req.path)? 'active' : '') General
     li.nav-item
       a.nav-link(href='/p/'+property._id+'/s/members' class=('/p/'+property._id+'/s/members') === (req.baseUrl+req.path)? 'active' : '') Members
-    li.nav-item 
-      a.nav-link(href='/p/'+property._id+'/s/tickets' class=('/p/'+property._id+'/s/tickets') === (req.baseUrl+req.path) ? 'active' : '') Ticket
-    li.nav-item
-      a.nav-link(href='#' tabindex='-1' aria-disabled='true') Departments
     li.nav-item
       a.nav-link(href='/p/' + property._id + '/s/livechat' class=('/p/' + property._id + '/s/livechat') === (req.baseUrl + req.path) ? 'active' : '') LiveChat
+    li.nav-item
+      a.nav-link.disabled(href='#' tabindex='-1' aria-disabled='true') Departments
+    li.nav-item
+      a.nav-link.disabled(href='/p/'+property._id+'/s/tickets' class=('/p/'+property._id+'/s/tickets') === (req.baseUrl+req.path) ? 'active' : '') Ticket
+      
       
   .card(style="border-top: initial;border-radius: initial;")
     .card-body
