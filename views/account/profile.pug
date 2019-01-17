@@ -9,33 +9,7 @@ block content
         h6 Upload a different photo...
         input.text-center.center-block.file-upload(type='file')
       hr
-      br
-      .panel.panel-default
-        .panel-heading
-          | Website 
-          i.fa.fa-link.fa-1x
-        .panel-body
-          a(href='http://bootnipets.com') bootnipets.com
-      ul.list-group
-        li.list-group-item.text-muted
-          | Activity 
-          i.fa.fa-dashboard.fa-1x
-        li.list-group-item.text-right
-          span.pull-left
-            strong Shares
-          |  125
-        li.list-group-item.text-right
-          span.pull-left
-            strong Likes
-          |  13
-        li.list-group-item.text-right
-          span.pull-left
-            strong Posts
-          |  37
-        li.list-group-item.text-right
-          span.pull-left
-            strong Followers
-          |  78
+      
       
     // /col-3
     .col-sm-9
@@ -43,41 +17,25 @@ block content
         .form-group
           .col-xs-6
             label(for='first_name')
-              h4 Username
-            input#first_name.form-control(type='text' name='first_name' placeholder='first name' title='enter your first name if any.')
-        .form-group
-          .col-xs-6
-            label(for='last_name')
-              h4 Full name
-            input#last_name.form-control(type='text' name='last_name' placeholder='last name' title='enter your last name if any.')
+              h4 Full Name
+            div#first_name.form-control #{req.user.name}
         .form-group
           .col-xs-6
             label(for='phone')
-              h4 Phone
-            input#phone.form-control(type='text' name='phone' placeholder='enter phone' title='enter your phone number if any.')
+              h4 Username
+            div#phone.form-control #{req.user.username}
         .form-group
           .col-xs-6
             label(for='email')
               h4 Email
-            input#email.form-control(type='email' name='email' placeholder='you@email.com' title='enter your email.')
-        
+            div#email.form-control #{req.user.email}
             
-        .form-group
-          .col-xs-6
-            label(for='password')
-              h4 Password
-            input#password.form-control(type='password' name='password' placeholder='password' title='enter your password.')
-        .form-group
-          .col-xs-6
-            label(for='password2')
-              h4 Verify
-            input#password2.form-control(type='password' name='password2' placeholder='password2' title='enter your password2.')
         .form-group
           .col-xs-12
             br
-            button.btn.btn-lg.btn-success.pull-right(type='submit')
+            a.btn.btn-lg.btn-success.pull-right(href='/s')
               i.glyphicon.glyphicon-ok-sign
-              |  Save
+              |  Edit
             
 
 block scripts
@@ -100,6 +58,7 @@ block scripts
 
           $(".file-upload").on('change', function () {
               readURL(this);
+              // todo upload avatar
           });
       });
   
