@@ -3,7 +3,7 @@ var Conversation = require('../models/chat/conversation');
 
 exports.list = function (req, res) {
 
-    Conversation.find({})
+    Conversation.find({"property": { $in: req.properties }})
         .sort('createdAt')
         .exec(function (err, conversations) {
             if (err) {

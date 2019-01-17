@@ -3,7 +3,7 @@ var Notification = require('../models/notification');
 
 exports.list = function (req, res) {
 
-    Notification.find({})
+    Notification.find({"receivers.account": req.user._id})
         .sort('createdAt')
         .exec(function (err, notifications) {
             if (err) {

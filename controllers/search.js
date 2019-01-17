@@ -5,7 +5,7 @@ var Ticket = require('../models/ticket');
 
 exports.search = function (req, res) {
 
-    Ticket.find({})
+    Ticket.find({"property": { $in: req.properties }})
         //.sort('createdAt')
         .exec(function (err, tickets) {
             if (err) {
