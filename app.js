@@ -101,8 +101,14 @@ app.use('/chat', chatRouter);
 
 app.use('/api/mail', apiRouter);
 
-// todo app.use('/tos', apiRouter);
-// todo app.use('/privacy', apiRouter);
+app.use('/tos', function (req, res) {
+
+    res.render('tos');
+});
+app.use('/privacy', function (req, res) {
+
+    res.render('privacy');
+});
 
 var whitelist = ['http://example1.com', 'http://example2.com','http://localhost:63342'];
 var corsOptionsDelegate = function (req, callback) {
@@ -124,17 +130,17 @@ app.use('/', accountRouter);
 
 
 app.use('/', checkAuthentication, loadCommon, indexRouter);
-app.use('/search', checkAuthentication, searchRouter);
-app.use('/n', checkAuthentication, notificationRouter);
+app.use('/search', checkAuthentication,loadCommon, searchRouter);
+app.use('/n', checkAuthentication, loadCommon, notificationRouter);
 app.use('/p', checkAuthentication,loadCommon, propertyRouter);
 app.use('/m', checkAuthentication,loadCommon, messagingRouter);
 app.use('/t', checkAuthentication, loadCommon, ticketsRouter);
-app.use('/s', checkAuthentication, function (req, res, next) {
+app.use('/s', checkAuthentication, loadCommon, function (req, res, next) {
 
     res.render('account/settings');
 
 });
-app.get('/profile', checkAuthentication, function (req, res) {
+app.get('/profile', checkAuthentication,loadCommon, function (req, res) {
 
     res.render('account/profile');
 });
