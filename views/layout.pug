@@ -28,7 +28,7 @@ block main
   if !req.user.isVerified  
     .alert.alert-secondary.mt-2(role='alert')
       | Please take a moment to 
-      a.alert-link(href='#') Verify Your Email Address
+      a.alert-link(href='/verify_email') Verify Your Email Address
       | . To be able to create properties and tickets.
     
   nav.navbar.navbar-light.bg-light.justify-content-between.mb-2.navbar-expand-lg
@@ -55,7 +55,7 @@ block main
         li.nav-item
           span.d-inline-block
             a.nav-link.notification-indicator(href='/n' aria-label='Notifications')
-              span.mail-status.unread
+              span.mail-status(class=unread_notifications?'unread':'')
               i.fas.fa-bell.fa-lg
             
         li.nav-item.dropdown
@@ -64,6 +64,9 @@ block main
             a.dropdown-item(href='/profile') Profile
             a.dropdown-item(href='/s') Settings
             a.dropdown-item(href='/logout') Logout
+            .dropdown-divider
+            a.dropdown-item(href='/tos') Terms of Service
+            a.dropdown-item(href='/privacy') Privacy Policy
   
   
   .card
