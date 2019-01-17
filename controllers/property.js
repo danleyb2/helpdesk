@@ -12,6 +12,11 @@ exports.createForm = function (req, res) {
 
 
 exports.create = function (req, res, next) {
+    if (!req.user.isVerified) {
+        return res
+            .status(401)
+            .send({type: 'not-verified', msg: 'Your account has not been verified.'});
+    }
 
     let property = new Property({
         name: req.body.name,

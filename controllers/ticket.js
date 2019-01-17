@@ -18,6 +18,11 @@ exports.createForm = async function (req, res) {
 
 
 exports.create = async function (req, res, next) {
+    if (!req.user.isVerified) {
+        return res
+            .status(401)
+            .send({type: 'not-verified', msg: 'Your account has not been verified.'});
+    }
 
     var contact = await Contact.findOne({email: req.body.contact_email, property: req.body.property});
     if (contact == null) {
@@ -108,7 +113,7 @@ exports.delete = function (req, res) {
 };
 
 exports.list = function (req, res, next) {
-    Ticket.find({})
+    Ticket.find({"property": { $in: req.properties }})
         .populate('contact')
         .exec(function (err, tickets) {
             if (err) {
