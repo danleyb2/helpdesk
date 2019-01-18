@@ -12,9 +12,9 @@ function loadCommon(req, res, next) {
         req.properties = properties;
 
         Object.assign(res.locals, {
-            open_tickets_count: await Ticket.count({ "property": { $in: properties }}),
+            open_tickets_count: await Ticket.countDocuments({ "property": { $in: properties }}),
             // open_tickets_count: Ticket.find(),
-            unread_notifications: await Notification.count({"receivers.account": req.user._id,"receivers.read": false})
+            unread_notifications: await Notification.countDocuments({"receivers.account": req.user._id,"receivers.read": false})
 
         });
 
