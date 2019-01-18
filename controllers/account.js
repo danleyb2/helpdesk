@@ -16,14 +16,14 @@ exports.confirmationPost = function (req, res) {
     */
 
     // Find a matching token
-    Token.findOne({ token: req.body.token }, function (err, token) {
+    Token.findOne({ token: req.params.token }, function (err, token) {
         if (!token) return res.status(400).send({
             type: 'not-verified',
             msg: 'We were unable to find a valid token. Your token my have expired.'
         });
 
         // If we found a token, find a matching user
-        Account.findOne({ _id: token.account, email: req.body.email }, function (err, user) {
+        Account.findOne({ _id: token.account }, function (err, user) {
             if (!user) return res.status(400).send({
                 msg: 'We were unable to find a user for this token.'
             });
@@ -36,7 +36,7 @@ exports.confirmationPost = function (req, res) {
             user.isVerified = true;
             user.save(function (err) {
                 if (err) { return res.status(500).send({ msg: err.message }); }
-                res.status(200).send("The account has been verified. Please log in.");
+                res.status(200).send("The account has been verified.");
 
                 // todo authenticate user
 

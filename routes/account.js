@@ -33,32 +33,7 @@ router.post('/register', function (req, res, next) {
             return res.render('register', {error: err.message});
         }
 
-        /*
 
-        // Create a verification token for this user
-        var token = new Token({ account: account._id, token: crypto.randomBytes(16).toString('hex') });
-
-        // Save the verification token
-        token.save(function (err) {
-            if (err) { return res.status(500).send({ msg: err.message }); }
-
-            // Send the email
-            var mailOptions = {
-                from: 'no-reply@helpdesk.com',
-                to: account.email,
-                subject: 'Account Verification Token',
-                text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n'
-            };
-            mailer.sendNotification(mailOptions,function (err,info) {
-                if (err) { return res.status(500).send({ msg: err.message }); }
-
-                console.log('Message sent: %s', info.messageId);
-                res.status(200).send('A verification email has been sent to ' + account.email + '.');
-            });
-
-
-        });
-        */
 
         passport.authenticate('local')(req, res, function () {
             // res.redirect('/');
@@ -73,6 +48,37 @@ router.post('/register', function (req, res, next) {
 
 
     });
+});
+
+router.get('/verify_email', function (req, res, next) {
+
+        // Create a verification token for this user
+        var token = new Token({ account: req.user._id, token: crypto.randomBytes(16).toString('hex') });
+        // todo don't create a new token if a previous exists
+        // todo send token asynchronously during registration
+
+
+        // Save the verification token
+        token.save(function (err) {
+            if (err) { return res.status(500).send({ msg: err.message }); }
+
+            // Send the email
+            var mailOptions = {
+                from: 'no-reply@helpdesk.com',
+                to: req.user.email,
+                subject: 'Account Verification Token',
+                text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n'
+            };
+            mailer.sendNotification(mailOptions,function (err,info) {
+                if (err) { return res.status(500).send({ msg: err.message }); }
+
+                console.log('Message sent: %s', info.messageId);
+                res.status(200).send('A verification email has been sent to ' + req.user.email + '.');
+            });
+
+
+        });
+
 });
 
 router.get('/forgot_password', function (req, res) {
@@ -113,7 +119,7 @@ router.get('/logout', function (req, res) {
     res.redirect('/');
 });
 
-router.post('/confirmation', accountController.confirmationPost);
+router.get('/confirmation/:token', accountController.confirmationPost);
 router.post('/resend', accountController.resendTokenPost);
 
 
