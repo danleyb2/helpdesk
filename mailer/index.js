@@ -1,6 +1,8 @@
 'use strict';
 const nodemailer = require('nodemailer');
 const pug = require('pug');
+var debug = require('debug')('helpdesk:mailer');
+
 
 
 // create reusable transporter object using the default SMTP transport
@@ -29,9 +31,13 @@ exports.sendNotification = function(mailOptions,cb) {
     };
 
     */
-
 // send mail with defined transport object
-    transporter.sendMail(mailOptions, cb);
+    if (process.env.NODE_ENV === 'development') {
+        debug(mailOptions['text']);
+        cb(null,mailOptions)
+    }else {
+        transporter.sendMail(mailOptions, cb);
+    }
 
 };
 
