@@ -100,7 +100,7 @@
     <span class="title">Live Chat</span>
     <button><i class="fa fa-times"></i></button>
     </div>
-    <iframe class="flex-fill" src="http://localhost:3000/chat/5c2e03ceec99c70f69d46c87"></iframe>
+    <iframe class="flex-fill" src="#{req.protocol}://#{process.env.HOST}:#{process.env.PORT}/chat/#{req.params.pId}"></iframe>
     </div>
     </div>`;
     var div = document.createElement('div');

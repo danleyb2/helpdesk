@@ -2,6 +2,18 @@ extends application
 
 block main
     style(type='text/css').
+        /* 100% height css layout */
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html, body {
+            height: 100%;
+        }
+        
+        
+    style(type='text/css').
         .flex-fill{
             flex-grow:1;
             width: auto;
@@ -18,24 +30,7 @@ block main
         body {
             /*background: skyblue;*/
             font: 12px/16px "Noto Sans", sans-serif;
-        }
-
-        .floating-chat {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            
-            transform: translateY(70px);
-            transition: all 250ms ease-out;
-            border-radius: 50%;
-            opacity: 0;
-            background: -moz-linear-gradient(-45deg, #183850 0, #183850 25%, #192C46 50%, #22254C 75%, #22254C 100%);
-            background: -webkit-linear-gradient(-45deg, #183850 0, #183850 25%, #192C46 50%, #22254C 75%, #22254C 100%);
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }
+        }      
 
         button {
             /*background: transparent;*/
@@ -52,7 +47,7 @@ block main
             /*position: absolute;*/
             /*opacity: 0;*/
             /*width: 1px;*/
-            /*height: 1px;*/
+            height: 100%;
             /*border-radius: 50%;*/
             /*transition: all 250ms ease-out;*/
             margin: auto;
@@ -60,14 +55,6 @@ block main
             /*left: 0;*/
             /*right: 0;*/
             /*bottom: 0;*/
-        }
-
-        .chat.enter {
-            opacity: 1;
-            border-radius: 0;
-            margin: 10px;
-            width: auto;
-            height: auto;
         }
 
         .chat .header {
@@ -324,13 +311,17 @@ block scripts
                 var message = msg['messages'][i];
                 appendMessage(message['body'],message['owner']['refModel']==='Contact')
             }
+            
+            // todo this is duplicated in startChat
             $('#contact').hide();
             $('#chat').show();
+            onStartChat();
+
         });
         
         // chat
     
-        var element = $('.floating-chat');
+        var element = $('.chat');
         
         socket.on('connect', function () {
             if(localStorage.getItem('CONVERSATION_ID')) {
@@ -339,43 +330,30 @@ block scripts
         });
               
         
-        setTimeout(function () {
-            // element.addClass('enter');
-        }, 1000);
         
     
-        element.click(openElement);
-    
-        function openElement() {
+        // element.click(openElement);
+        element.find('#start').click(startChat);
+        // todo
+        
+        function onStartChat() {
+
             var messages = element.find('.messages');
             var textInput = element.find('.text-box');
-            element.find('>i').hide();
-            element.addClass('expand');
-            element.find('.chat').addClass('enter');
-            var strLength = textInput.val().length * 2;
+            // var strLength = textInput.val().length * 2;
             textInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
-            element.off('click', openElement);
-            element.find('.header button').click(closeElement);
+            
+            // todo element.find('.header button').click(closeElement);
             element.find('#sendMessage').click(sendNewMessage);
             messages.scrollTop(messages.prop("scrollHeight"));
-
-            element.find('#start').click(startChat);
-
-
         }
-    
-        function closeElement() {
-            element.find('.chat').removeClass('enter').hide();
-            element.find('>i').show();
-            element.removeClass('expand');
-            element.find('.header button').off('click', closeElement);
-            element.find('#sendMessage').off('click', sendNewMessage);
-            element.find('.text-box').off('keydown', onMetaAndEnter).prop("disabled", true).blur();
-            setTimeout(function () {
-                element.find('.chat').removeClass('enter').show()
-                element.click(openElement);
-            }, 500);
-        }
+        
+        // todo on close
+        /*
+        element.find('.header button').off('click', closeElement);
+        element.find('#sendMessage').off('click', sendNewMessage);
+        element.find('.text-box').off('keydown', onMetaAndEnter).prop("disabled", true).blur();
+        */   
     
         function createUUID() {
             // http://www.ietf.org/rfc/rfc4122.txt
@@ -459,6 +437,8 @@ block scripts
             
             $('#contact').hide();
             $('#chat').show();
+
+            onStartChat();
             
             
         }

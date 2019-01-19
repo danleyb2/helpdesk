@@ -34,7 +34,7 @@ var app = express();
 app.io = io;
 
 app.locals.dateFnsFormat = format;
-
+app.enable('trust proxy');
 
 // mongoose
 mongoose.connect(`mongodb://${process.env.DB_HOST}/${process.env.DB_NAME}`, {
@@ -124,7 +124,9 @@ var corsOptionsDelegate = function (req, callback) {
 
 app.get('/livechat/:pId/embed',cors(corsOptionsDelegate), function (req, res, next) {
     //res.header("Access-Control-Allow-Origin", "*");
-    res.render('embed',{})
+
+    res.render('embed', { req : req });
+
 });
 app.use('/', accountRouter);
 
