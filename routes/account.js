@@ -50,34 +50,39 @@ router.post('/register', function (req, res, next) {
     });
 });
 
-router.get('/verify_email', function (req, res, next) {
+router.get('/verify_email', async function (req, res, next) {
+    if (req.user.isVerified) {
+        return res.status(400).send({
+            type: 'already-verified',
+            msg: 'This user has already been verified.'
+        });
+    }
 
+    let token = await Token.find({account: req.user._id});
+    if (!token){
         // Create a verification token for this user
-        var token = new Token({ account: req.user._id, token: crypto.randomBytes(16).toString('hex') });
-        // todo don't create a new token if a previous exists
-        // todo send token asynchronously during registration
+        token = await Token.create({ account: req.user._id, token: crypto.randomBytes(16).toString('hex') });
 
-
-        // Save the verification token
-        token.save(function (err) {
+        // Send the email
+        var mailOptions = {
+            from: 'no-reply@helpdesk.com',
+            to: req.user.email,
+            subject: 'Account Verification Token',
+            text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n'
+        };
+        mailer.sendNotification(mailOptions,function (err,info) {
             if (err) { return res.status(500).send({ msg: err.message }); }
-
-            // Send the email
-            var mailOptions = {
-                from: 'no-reply@helpdesk.com',
-                to: req.user.email,
-                subject: 'Account Verification Token',
-                text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n'
-            };
-            mailer.sendNotification(mailOptions,function (err,info) {
-                if (err) { return res.status(500).send({ msg: err.message }); }
-
-                console.log('Message sent: %s', info.messageId);
-                res.status(200).send('A verification email has been sent to ' + req.user.email + '.');
-            });
-
+            console.log('Message sent: %s', info.messageId);
 
         });
+
+    }else {
+        // todo update expiry if will be soon
+
+    }
+
+    res.render('account/verify_email', {user:req.user});
+
 
 });
 

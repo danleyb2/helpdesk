@@ -1,0 +1,14 @@
+extends ../application
+
+block main
+    .row
+        .col A verification email has been sent to 
+            strong #{user.email}
+    a(href='/') Home        
+
+
+block scripts
+    script.
+        $(document).ready(function () {
+
+        });
