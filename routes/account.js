@@ -58,11 +58,7 @@ router.get('/verify_email', async function (req, res, next) {
         });
     }
 
-    let token = await Token.find({account: req.user._id});
-    if (!token){
-        // Create a verification token for this user
-        token = await Token.create({ account: req.user._id, token: crypto.randomBytes(16).toString('hex') });
-
+    function sendEmail(token){
         // Send the email
         var mailOptions = {
             from: 'no-reply@helpdesk.com',
@@ -76,8 +72,25 @@ router.get('/verify_email', async function (req, res, next) {
 
         });
 
+    }
+
+    let token = await Token.findOne({account: req.user._id});
+    if (!token){
+        // Create a verification token for this user
+        Token.create({
+            account: req.user._id,
+            token: crypto.randomBytes(16).toString('hex')
+
+        },function (err, token) {
+            if (err){
+                console.trace(err);
+            }
+            sendEmail(token);
+        });
+
     }else {
         // todo update expiry if will be soon
+        sendEmail(token);
 
     }
 
