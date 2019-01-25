@@ -40,50 +40,60 @@ exports.members = function (req, res) {
 exports.memberCreate = function (req, res) {
 
     function registerMembership(account){
-        Member.create({
-            role: 'Admin',
-            status: 'Pending',
+
+        Member.findOne({
             account: account._id,
-            property: req.params.pId,
-        },function (err,member) {
+            property: req.params.pId
+        },function (err, member) {
+            if (member) {
 
-            Notification.create({
-                sender:req.user._id,
-                receivers:[{
-                    account:account._id,
-                    read:false
-                }],
-                action:'INVITED',
-                refModel:'Member',
-                modelRef:member._id
+            }else {
+                Member.create({
+                    role: 'Admin',
+                    status: 'Pending',
+                    account: account._id,
+                    property: req.params.pId,
+                },function (err,member) {
 
-            },function (err, notification) {
-                let mailOptions = {
-                    from: 'noreply@helpdesk.com',
-                    to: account.email,
-                    subject: `New property invite`,
-                    // text: message['body'], // plain text body
-                    // html: '<b>Hello world?</b>' // html body
-                };
+                    Notification.create({ // todo don't create a previous INVITED action exists
+                        sender:req.user._id,
+                        receivers:[{
+                            account:account._id,
+                            read:false
+                        }],
+                        action:'INVITED',
+                        refModel:'Member',
+                        modelRef:member._id
 
-                let locals = {
-                    link:`/membership/${member._id}/accept`,
-                    property:member.property,
-                    role:member.role
-                };
-                if (account.isNew){
-                    locals.password = '12345'
-                }
-                mailer.sendTemplateNotification('invite.pug',locals,mailOptions,function (err, info) {
-                    console.log('Message sent: %s', info.messageId);
+                    },function (err, notification) {
+                        let mailOptions = {
+                            from: 'noreply@helpdesk.com',
+                            to: account.email,
+                            subject: `New property invite`,
+                            // text: message['body'], // plain text body
+                            // html: '<b>Hello world?</b>' // html body
+                        };
 
+                        let locals = {
+                            link:`/membership/${member._id}/accept`,
+                            property:member.property,
+                            role:member.role
+                        };
+                        if (account.isNew){
+                            locals.password = '12345'
+                        }
+                        mailer.sendTemplateNotification('invite.pug',locals,mailOptions,function (err, info) {
+                            console.log('Message sent: %s', info.messageId);
+
+                        });
+                        res.redirect(`/p/${member.property}/s/members`);
+
+                    });
                 });
-                res.redirect(`/p/${member.property}/s/members`);
-
-            });
-
+            }
 
         });
+
     }
 
     Account.findOne({email:req.body.email},function (err, account) {
