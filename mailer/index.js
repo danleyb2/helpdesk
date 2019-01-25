@@ -33,7 +33,7 @@ exports.sendNotification = function(mailOptions,cb) {
     */
 // send mail with defined transport object
     if (process.env.NODE_ENV === 'development') {
-        debug(mailOptions['text']);
+        debug(mailOptions);
         cb(null,mailOptions)
     }else {
         transporter.sendMail(mailOptions, cb);
@@ -50,7 +50,9 @@ exports.sendNotification = function(mailOptions,cb) {
  * @param cb
  */
 exports.sendTemplateNotification = function(template,locals,options,cb) {
-    const compiledFunction = pug.compileFile(template);
+    const compiledFunction = pug.compileFile(__dirname+'/templates/'+template,{
+        compileDebug:(process.env.NODE_ENV === 'development')
+    });
     options['html'] = compiledFunction(locals);
 
     // todo optimization, render with cache https://pugjs.org/api/getting-started.html
