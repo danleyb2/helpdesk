@@ -3,17 +3,14 @@ var mongoose = require('mongoose');
 
 var ConversationSchema = mongoose.Schema({
 
-        title: {type: String},
-        mail_notifications: { type: Boolean,default:false },
-        property: {type: mongoose.Schema.Types.ObjectId, ref: 'Property', required: true},
-        participants: [
-            {type: mongoose.Schema.Types.ObjectId, ref: 'Participant'}
-        ]
+    title: {type: String},
+    mail_notifications: {type: Boolean, default: false},
+    property: {type: mongoose.Schema.Types.ObjectId, ref: 'Property', required: true},
+    participants: [
+        {type: mongoose.Schema.Types.ObjectId, ref: 'Participant'}
+    ]
 
-    },
-    {
-        timestamps: true
-    });
+}, {timestamps: true});
 
 ConversationSchema.methods.isGroup = function () {
     return this.participants.length > 2;
@@ -27,8 +24,8 @@ ConversationSchema.methods.recentMessages = function (callback) {
 
         .populate({
             path: 'owner',
-            populate:{
-                path:'modelRef',
+            populate: {
+                path: 'modelRef',
             },
         })
 
