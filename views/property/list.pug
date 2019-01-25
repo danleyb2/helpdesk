@@ -3,21 +3,75 @@ extends ../layout
 block content
   a.btn.btn-success.mb-2(href='/p/create') Create New Property
   
-  if properties.length
+  if memberships.length
     ul.list-group
-      each property in properties
+      each membership in memberships
         li.list-group-item
-          a(href='/p/'+property.id) #{property.name} 
-          strong Type:
+          .row
+            .col
+              a(href='/p/'+membership.property.id) #{membership.property.name} 
+              br
+              strong Type:
               span 
-              | #{property.type}
-          br
-          a.btn.btn-primary(href='/p/'+property.id+'/m') Messaging 
-          | 
-          a.btn.btn-primary(href='/p/'+property.id+'/t') Tickets 
-          | 
-          a.btn.btn-primary(href='/p/'+property.id+'/s') Settings
-          // a(href='/p/'+property.id+'/update') Edit
-          // a(href='/p/'+property.id+'/delete') Delete
+              | #{membership.property.type}
+              br
+              strong Support Email:
+              span  
+              | #{membership.property.support_email}
+            .col
+              if membership.status === 'Pending'
+                button.btn.btn-primary.mb-2.float-right(data-whatever=membership.property.name data-toggle='modal' data-target='#exampleModal') Manage Invite
+              else  
+                a.btn.btn-primary.float-right(href='/p/'+membership.property.id+'/s') Settings
+              // a(href='/p/'+property.id+'/update') Edit
+              // a(href='/p/'+property.id+'/delete') Delete
   else
-    p No properties, Create one now
+    p No properties, Create one or Wait for an Invite
+    
+  #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalTitle' aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        form(action='' method='post')
+          .modal-header
+            h5#exampleModalCenterTitle.modal-title Invite
+            button.close(type='button' data-dismiss='modal' aria-label='Close')
+              span(aria-hidden='true') &times;
+          .modal-body
+            p Accept or Decline Invite to 
+              span 
+
+          .modal-footer
+            button#decline.btn.btn-danger(type='button') Decline
+            button#accept.btn.btn-primary(type='submit') Accept    
+            
+            
+block scripts
+  script.
+      $('#exampleModal').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget) // Button that triggered the modal
+          var recipient = button.data('whatever') // Extract info from data-* attributes
+          // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+          // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+          var modal = $(this)
+          modal.find('.modal-title').text('Invite to ' + recipient)
+          modal.find('.modal-body span').text(recipient)
+          
+          $('#accept').click(function (evt) {
+
+              $.ajax({
+                  url: 'mail.php',
+                  type: 'POST',
+                  data: {
+                      
+                  }
+              }).done(function (data) {
+                  console.log(data);
+                  $('#exampleModal').modal('hide');
+                  
+              }).fail(function () {
+                  // todo $theBut.removeClass('disabled')
+              });
+              
+          });
+          
+      })

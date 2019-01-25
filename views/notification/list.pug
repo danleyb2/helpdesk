@@ -3,10 +3,16 @@ extends ../layout
 block content
   h4 Notifications
   if notifications.length
-    each notification in notifications
-      h5
-        a(href='n/' + notification.id) #{notification.action} 
-        span.chat_date #{conversation.createdAt}
+    ul.list-group
+      each notification in notifications
+        li.list-group-item
+          a(href='n/' + notification.id) #{notification.action} 
+          span #{notification.createdAt.toLocaleString()}
+          case notification.action
+              when 'INVITED'
+                p You have a new invite as an #{notification.modelRef.role} to #{notification.modelRef.property.name}
+              default
+                p undefined action message !!
   else
     p No notifications
     
