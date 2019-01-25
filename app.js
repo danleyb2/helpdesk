@@ -18,7 +18,7 @@ var MongoStore = require('connect-mongo')(session);
 const { checkAuthentication, loadCommon } = require('./middleware');
 
 
-var apiRouter = require('./routes/api/mail');
+const apiRouter = require('./routes/api');
 var accountRouter = require('./routes/account');
 var indexRouter = require('./routes/index');
 var searchRouter = require('./routes/search');
