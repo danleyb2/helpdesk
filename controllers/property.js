@@ -87,17 +87,14 @@ exports.delete = function (req, res) {
 
 exports.list = function (req, res, next) {
 
-    Property.find({
-        '_id': { $in: req.properties }
-    }, 'name type')
-    //.populate('author')
-        .exec(function (err, properties) {
-            if (err) {
-                return next(err);
-            }
-            //Successful, so render
-            res.render('property/list', {title: 'Property List', 'properties': properties});
+    Member.find({
+            account: req.user._id
+        })
+        .populate({
+            path: 'property',
+        })
+        .exec(function (err, memberships) {
+            res.render('property/list', {title: 'Memberships', 'memberships': memberships});
         });
-
 
 };
