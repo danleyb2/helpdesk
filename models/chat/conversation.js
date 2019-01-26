@@ -6,6 +6,7 @@ var ConversationSchema = mongoose.Schema({
     title: {type: String},
     mail_notifications: {type: Boolean, default: false},
     property: {type: mongoose.Schema.Types.ObjectId, ref: 'Property', required: true},
+    status: {type: String, required: true, enum:['Active', 'Ticketed', 'Stale'], default:'Active'},
     participants: [
         {type: mongoose.Schema.Types.ObjectId, ref: 'Participant'}
     ]
