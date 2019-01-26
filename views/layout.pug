@@ -42,7 +42,7 @@ block main
             li.nav-item.active
               a.nav-link(href='/m')
                 | Messaging 
-                span.badge.badge-pill.badge-primary 4
+                span.badge.badge-pill.badge-primary #{active_conversations_count}
             li.nav-item
               a.nav-link(href='/t') Tickets 
                 span.badge.badge-pill.badge-primary #{open_tickets_count}

@@ -1,5 +1,6 @@
 var Ticket = require('./models/ticket');
 var Notification = require('./models/notification');
+var Conversation = require('./models/chat/conversation');
 
 module.exports = {
     loadCommon,
@@ -13,6 +14,7 @@ function loadCommon(req, res, next) {
 
         Object.assign(res.locals, {
             open_tickets_count: await Ticket.countDocuments({ "property": { $in: properties }}),
+            active_conversations_count: await Conversation.countDocuments({ "property": { $in: properties },status:'Active'}),
             // open_tickets_count: Ticket.find(),
             unread_notifications: await Notification.countDocuments({"receivers.account": req.user._id,"receivers.read": false})
 
