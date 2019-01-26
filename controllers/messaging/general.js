@@ -3,7 +3,7 @@ var Conversation = require('../../models/chat/conversation');
 exports.list = function (req, res) {
 
     Conversation.find({})
-        .sort('createdAt')
+        .sort('-createdAt') // todo should be last message or updated at
         .exec(function (err, conversations) {
             if (err) {
                 return next(err);
@@ -20,7 +20,7 @@ exports.details = function (req, res) {
 
 
     Conversation.find({})
-        .sort('createdAt')
+        .sort('-createdAt') // todo should be last message or updated at
         .exec(function (err, conversations) {
             if (err) {
                 return next(err);
