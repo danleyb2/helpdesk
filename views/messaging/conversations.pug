@@ -31,35 +31,100 @@ block content
             a(href='') Sim One Now
       .mesgs
         .msg_history
-          .incoming_msg
-            if messages && messages.length
-              each message in messages
-                if message.owner.refModel === 'Member' && message.owner.modelRef.account.toString() === req.user._id.toString()
-                  .outgoing_msg
-                    .sent_msg
-                      p !{message.body}
-                      span.time_date= dateFnsFormat(message.createdAt, 'h:m aa | MMM d')
-                else
+          if messages && messages.length
+            each message in messages
+              if message.owner.refModel === 'Member' && message.owner.modelRef.account.toString() === req.user._id.toString()
+                .outgoing_msg
+                  .sent_msg
+                    p !{message.body}
+                    span.time_date= dateFnsFormat(message.createdAt, 'h:m aa | MMM d')
+              else
+                .incoming_msg
                   .incoming_msg_img
                     img(src="https://ptetutorials.com/images/user-profile.png" alt="sunil")
-
+    
                   .received_msg
                     .received_withd_msg
                       p !{message.body}
                       span.time_date= dateFnsFormat(message.createdAt, 'h:m aa | MMM d')
 
-            else
-              p There are no messages yet  
+          else
+            p There are no messages yet  
 
         .type_msg
           .input_msg_write
             input.write_msg(type='text', placeholder="Type a message")
-            button.msg_send_btn(type='button')
+            button.msg_send_btn#sendMessage(type='button')
               i.fa.fa-paper-plane
   
 
 block scripts
+  script(src="/socket.io/socket.io.js")
   script.
-    var name;
-    // load components
-    // implement components apis
+      var socket = io();
+      const CONVERSATION = '#{currentConversation?currentConversation._id:null}';
+
+      socket.on('chat message', function (msg) {
+          console.log(msg);
+          appendMessage(msg, true);
+      });
+
+      socket.on('connect', function () {
+          socket.emit('init chat', {'conversation': CONVERSATION});
+      });
+
+      $('#sendMessage').click(sendNewMessage);
+
+      function sendNewMessage() {
+          var userInput = $('.write_msg');
+          var newMessage = userInput.val().trim()
+
+          if (!newMessage) return;
+
+          var message = {
+              conversation: CONVERSATION,
+              text: newMessage
+          }
+
+          socket.emit('new message', message);
+
+          // clean out old message
+          userInput.val('');
+          // focus on input
+          userInput.focus();
+
+          // appendMessage(message['text']);
+      }
+
+      function appendMessage(newMessage, mine) {
+          var messagesContainer = $('.msg_history');
+
+          if (mine) {
+              messagesContainer.append(`
+              <div class="outgoing_msg">
+                <div class="sent_msg">
+                    <p>${newMessage.body}</p>
+                    <span class="time_date">${newMessage.createdAt}</span>
+                </div>
+              </div>`)
+
+
+          } else {
+              messagesContainer.append(`
+              <div class="incoming_msg">  
+                <div class="incoming_msg_img">
+                    <img src="https://ptetutorials.com/images/user-profile.png" alt="${newMessage.owner}">
+                </div>  
+                <div class="received_msg">
+                    <div class="received_withd_msg">
+                        <p>${newMessage.body}</p>
+                        <span class="time_date">${newMessage.createdAt}</span>
+                    </div>
+                </div>
+              </div>`);
+          }
+
+          messagesContainer.finish().animate({
+              scrollTop: messagesContainer.prop("scrollHeight")
+          }, 250);
+      }
