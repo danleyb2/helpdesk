@@ -348,9 +348,11 @@ block scripts
             messages.scrollTop(messages.prop("scrollHeight"));
         }
         
-        // todo on close
+        element.find('.header button').on('click', function(evt){
+            window.top.postMessage('closeHelpDesk', '*')
+            
+        });
         /*
-        element.find('.header button').off('click', closeElement);
         element.find('#sendMessage').off('click', sendNewMessage);
         element.find('.text-box').off('keydown', onMetaAndEnter).prop("disabled", true).blur();
         */   
