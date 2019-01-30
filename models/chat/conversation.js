@@ -58,10 +58,11 @@ ConversationSchema.statics.findOrderByLastMessage = function (properties,callbac
                 "participants": {"$first": "$participants"},
                 "property": {"$first": "$property"},
                 "status": {"$first": "$status"},
-
                 "latestMessage": {"$first": "$messages"}
             }
-        }
+        },
+        {"$sort": {"latestMessage.createdAt": -1}},
+
     ],callback);
 
 };
