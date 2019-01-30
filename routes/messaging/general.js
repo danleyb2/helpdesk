@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router({mergeParams: true});
 
-messagingController = require('../../controllers/messaging/general');
+messagingController = require('../../controllers/messaging/index');
 
 
 router.get('/', messagingController.list);
