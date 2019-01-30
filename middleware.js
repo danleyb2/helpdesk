@@ -9,7 +9,6 @@ module.exports = {
 
 function loadCommon(req, res, next) {
     req.user.currentProperties(async function (properties) {
-        console.log(properties);
         req.properties = properties;
 
         Object.assign(res.locals, {
