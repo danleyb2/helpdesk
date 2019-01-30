@@ -38,4 +38,32 @@ ConversationSchema.methods.recentMessages = function (callback) {
 };
 
 
+ConversationSchema.statics.findOrderByLastMessage = function (properties,callback) {
+    return this.aggregate([
+        {"$match": {"property": {$in: properties}}},
+        {
+            "$lookup": {
+                "from": "messages",
+                "localField": "_id",
+                "foreignField": "conversation",
+                "as": "messages"
+            }
+        },
+        {"$unwind": "$messages"},
+        {"$sort": {"messages.createdAt": -1}},
+        {
+            "$group": {
+                "_id": "$_id",
+                "title": {"$first": "$title"},
+                "participants": {"$first": "$participants"},
+                "property": {"$first": "$property"},
+                "status": {"$first": "$status"},
+
+                "latestMessage": {"$first": "$messages"}
+            }
+        }
+    ],callback);
+
+};
+
 module.exports = mongoose.model('Conversation', ConversationSchema);
