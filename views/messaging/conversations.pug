@@ -64,71 +64,74 @@ block scripts
   script.
       var socket = io();
       const CONVERSATION = '#{currentConversation?currentConversation._id:null}';
-      
-      if(CONVERSATION) {
 
-          socket.on('chat message', function (msg) {
-              console.log(msg);
-              appendMessage(msg, true);
-          });
+      $(function() {
+          if (CONVERSATION) {
+              socket.on('chat message', function (msg) {
+                  console.log(msg);
+                  appendMessage(msg, true);
+              });
 
-          socket.on('connect', function () {
-              socket.emit('init chat', {'conversation': CONVERSATION});
-          });
+              socket.on('connect', function () {
+                  socket.emit('init chat', {'conversation': CONVERSATION});
+              });
 
-          $('#sendMessage').click(sendNewMessage);
+              $('#sendMessage').click(sendNewMessage);
 
-          function sendNewMessage() {
-              var userInput = $('.write_msg');
-              var newMessage = userInput.val().trim()
+              var messagesContainer = $('.msg_history')[0];
+              messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-              if (!newMessage) return;
+              function sendNewMessage() {
+                  var userInput = $('.write_msg');
+                  var newMessage = userInput.val().trim()
 
-              var message = {
-                  conversation: CONVERSATION,
-                  text: newMessage
+                  if (!newMessage) return;
+
+                  var message = {
+                      conversation: CONVERSATION,
+                      text: newMessage
+                  }
+
+                  socket.emit('new message', message);
+
+                  // clean out old message
+                  userInput.val('');
+                  // focus on input
+                  userInput.focus();
+
+                  // appendMessage(message['text']);
               }
 
-              socket.emit('new message', message);
+              function appendMessage(newMessage, mine) {
 
-              // clean out old message
-              userInput.val('');
-              // focus on input
-              userInput.focus();
-
-              // appendMessage(message['text']);
-          }
-
-          function appendMessage(newMessage, mine) {
-              var messagesContainer = $('.msg_history');
-
-              if (mine) {
-                  messagesContainer.append(`
-              <div class="outgoing_msg">
-                <div class="sent_msg">
-                    <p>${newMessage.body}</p>
-                    <span class="time_date">${newMessage.createdAt}</span>
-                </div>
-              </div>`)
+                  if (mine) {
+                      messagesContainer.append(`
+                      <div class="outgoing_msg">
+                        <div class="sent_msg">
+                            <p>${newMessage.body}</p>
+                            <span class="time_date">${newMessage.createdAt}</span>
+                        </div>
+                      </div>`)
 
 
-              } else {
-                  messagesContainer.append(`
-              <div class="incoming_msg">  
-                <div class="incoming_msg_img">
-                    <img src="https://ptetutorials.com/images/user-profile.png" alt="${newMessage.owner}">
-                </div>  
-                <div class="received_msg">
-                    <div class="received_withd_msg">
-                        <p>${newMessage.body}</p>
-                        <span class="time_date">${newMessage.createdAt}</span>
-                    </div>
-                </div>
-              </div>`);
+                  } else {
+                      messagesContainer.append(`
+                      <div class="incoming_msg">  
+                        <div class="incoming_msg_img">
+                            <img src="https://ptetutorials.com/images/user-profile.png" alt="${newMessage.owner}">
+                        </div>  
+                        <div class="received_msg">
+                            <div class="received_withd_msg">
+                                <p>${newMessage.body}</p>
+                                <span class="time_date">${newMessage.createdAt}</span>
+                            </div>
+                        </div>
+                      </div>`);
+                  }
+
+                  messagesContainer.finish().animate({
+                      scrollTop: messagesContainer.prop("scrollHeight")
+                  }, 250);
               }
-
-              messagesContainer.finish().animate({
-                  scrollTop: messagesContainer.prop("scrollHeight")
-              }, 250);
           }
-      }
+      });
