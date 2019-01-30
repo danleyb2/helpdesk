@@ -4,7 +4,8 @@
 
 #### Requirements
 
-MongoDB v3.2+.
+MongoDB v3.2+. - Database
+mkdocs - documentation
 
 
 #### Setup
@@ -25,3 +26,19 @@ if need to also send emails and have 2 way email conversations like in github is
 2 way email conversations won't without the [Helpdesk Mail Server](https://github.com/danleyb2/helpdesk_mail_server) to forward the emails to specific 
 tickets' conversation.  
 
+### Documentation
+For a more in-depth understanding of how the project is structured to work, setup the documentation
+
+- [install](https://www.mkdocs.org/#installation) [mkdocs](https://mkdocs.org)
+  ```bash
+     pip install mkdocs
+  ```
+- build documentation
+  ```bash
+     mkdocs build
+  ```
+- serve
+  ```bash
+     mkdoc serve
+  ```  
+  documentation will be accessible at http://127.0.0.1:8000/
