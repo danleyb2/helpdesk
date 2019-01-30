@@ -78,8 +78,14 @@ block scripts
 
               $('#sendMessage').click(sendNewMessage);
 
-              var messagesContainer = $('.msg_history')[0];
-              messagesContainer.scrollTop = messagesContainer.scrollHeight;
+              var messagesContainer = $('.msg_history');
+              messagesContainerScroll(1000);
+              
+              function messagesContainerScroll(animateDuration) {
+                  //messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                  messagesContainer.animate({ scrollTop: messagesContainer.prop("scrollHeight")}, animateDuration||500);
+
+              }
 
               function sendNewMessage() {
                   var userInput = $('.write_msg');
@@ -129,9 +135,8 @@ block scripts
                       </div>`);
                   }
 
-                  messagesContainer.finish().animate({
-                      scrollTop: messagesContainer.prop("scrollHeight")
-                  }, 250);
+                  messagesContainerScroll();
+
               }
           }
       });
