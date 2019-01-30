@@ -24,8 +24,9 @@ block content
                   .chat_ib
                     h5 
                       a(href='/m/'+conversation._id) Sender
-                      span.chat_date= dateFnsFormat(conversation.createdAt,'MMM D, h:m aa')
+                      span.chat_date= dateFnsFormat(conversation.latestMessage.createdAt,'MMM D, h:m aa')
                     p #{conversation.title}
+                    small #{conversation.latestMessage.body}
           else
             p No Active Conversations
             a(href='') Sim One Now
