@@ -69,7 +69,7 @@ block scripts
           if (CONVERSATION) {
               socket.on('chat message', function (msg) {
                   console.log(msg);
-                  appendMessage(msg, true);
+                  appendMessage(msg, msg['owner']['refModel']!=='Contact');
               });
 
               socket.on('connect', function () {
