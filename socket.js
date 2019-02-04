@@ -13,9 +13,14 @@ var mongoose = require('mongoose');
 
 module.exports = function (io) {
 
+    var clients = [];
+
 
     // nsp.emit('hi', 'everyone!');
     io.on("connection", async function (socket) {
+
+        clients.push(socket.id);
+
         // console.log("new connection");
         var sessionId = socket.request.sessionID;
         //console.log(sessionId);
@@ -23,7 +28,7 @@ module.exports = function (io) {
         if (socket.request.session.passport) {
             var userId = socket.request.session.passport.user;
             //console.log("Your User ID is", userId);
-            user = await Account.findOne({username: userId});
+            user = await Account.findOne({email: userId});
             socket.user = user;
 
             // todo save socket and user_id
