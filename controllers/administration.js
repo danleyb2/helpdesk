@@ -24,7 +24,7 @@ exports.index = function (req, res, next) {
 
 exports.members = function (req, res) {
 
-    Member.find({})
+    Member.find({property:req.params.pId})
         .populate('account')
         .exec(function (err, members) {
             if (err) {
