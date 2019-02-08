@@ -2,3 +2,13 @@ extends ./layout
 
 block tab
   div Tickets
+  if results.length
+    .list-group
+      for result in results
+        a.list-group-item.list-group-item-action(href='/t/'+result._id)
+          pre #{result}
+      
+  else
+    p No Results
+
+         
