@@ -23,8 +23,6 @@ router.post('/register', function (req, res, next) {
     //     if (user) return res.status(400).send({ msg: 'The email address you have entered is already associated with another account.' });
     //
 
-
-
     Account.register(new Account({
         username: req.body.username,
         email: req.body.email
@@ -32,8 +30,6 @@ router.post('/register', function (req, res, next) {
         if (err) {
             return res.render('register', {error: err.message});
         }
-
-
 
         passport.authenticate('local')(req, res, function () {
             // res.redirect('/');
@@ -99,9 +95,64 @@ router.get('/verify_email', async function (req, res, next) {
 
 });
 
-router.get('/forgot_password', function (req, res) {
-    res.send('TODO');
+router.get('/password_reset', function (req, res) {
+    res.render('forgot_password_form', {title:'Forgot Password'});
 });
+
+
+router.get('/password_reset/done/', function (req, res) {
+    res.render('forgot_password_done', {title:'Forgot Password'});
+});
+
+router.post('/password_reset', function (req, res,next) {
+
+    function sendEmail(token,account){
+        // Send the email
+        var mailOptions = {
+            from: 'no-reply@helpdesk.com',
+            to: account.email,
+            subject: 'Reset Password',
+            text: 'Hello,\n\n' + 'Please reset your HelpDesk account password by clicking the link: \nhttp:\/\/' + req.headers.host + '\/reset_password\/' + token.token + '.\n'
+        };
+        mailer.sendNotification(mailOptions,function (err,info) {
+            if (err) { return res.status(500).send({ msg: err.message }); }
+            console.log('Message sent: %s', info.messageId);
+        });
+    }
+
+    Account.findOne({'email':req.body.email},function (err, account) {
+        if (err) {
+            return next(err);
+        }
+        if (account) {
+            Token.findOne({account: account._id},function (err, token) {
+                if (!token) {
+                    // Create a verification token for this user
+                    Token.create({
+                        account: account._id,
+                        token: crypto.randomBytes(16).toString('hex')
+
+                    }, function (err, token) {
+                        if (err) {
+                           return next(err);
+                        }
+                        sendEmail(token,account);
+                    });
+
+                } else {
+                    // todo update expiry if will be soon
+                    sendEmail(token,account);
+                }
+            });
+
+        }
+
+    });
+
+    res.redirect('/password_reset/done/');
+});
+router.get('/reset_password/:token', accountController.resetPasswordGet);
+router.post('/reset_password/:token', accountController.resetPasswordDone);
 
 router.get('/login', function (req, res) {
     res.render('login', {});

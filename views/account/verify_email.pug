@@ -1,10 +1,14 @@
 extends ../application
 
 block main
-    .row
-        .col A verification email has been sent to 
-            strong #{user.email}
-    a(href='/') Home        
+    .container(style="padding-top:50px")
+        .row.d-flex.justify-content-center
+            .col-xl-5.col-lg-6.col-md-7.text-center
+                h3 HelpDesk
+                p.lead A verification email has been sent to 
+                strong #{user.email}
+                br 
+                a(href='/') Home        
 
 
 block scripts

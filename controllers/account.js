@@ -47,6 +47,60 @@ exports.confirmationPost = function (req, res) {
 
 };
 
+exports.resetPasswordGet = function (req, res) {
+    // Find a matching token
+    Token.findOne({ token: req.params.token }, function (err, token) {
+        if (!token) return res.status(400).send({
+            type: 'not-verified',
+            msg: 'We were unable to find a valid token. Your token my have expired or is invalid.'
+        });
+
+        // If we found a token, find a matching user
+        Account.findOne({ _id: token.account }, function (err, user) {
+            if (!user) return res.status(400).send({
+                msg: 'We were unable to find a user for this token.'
+            });
+
+            res.render('reset_password_form',{title:'Reset Password'})
+
+        });
+    });
+
+};
+
+exports.resetPasswordDone = function(req,res,next){
+
+    // Find a matching token
+    Token.findOne({ token: req.params.token }, function (err, token) {
+        if (!token) return res.status(400).send({
+            type: 'not-verified',
+            msg: 'We were unable to find a valid token. Your token my have expired or is invalid.'
+        });
+
+        // If we found a token, find a matching user
+        Account.findOne({ _id: token.account }, async function (err, user) {
+            if (!user) return res.status(400).send({
+                msg: 'We were unable to find a user for this token.'
+            });
+
+            if (req.body.password1 && (req.body.password1 === req.body.password1)){
+
+                await user.setPassword(req.body.password1);
+                await user.save();
+
+                res.render('reset_password_done',{title:'Reset Password Done'})
+
+            } else {
+                return res.status(400).send({
+                    msg: 'Passwords do not match.'
+                });
+            }
+
+        });
+    });
+
+};
+
 exports.resendTokenPost = function (req, res) {
     /* todo finish
     req.assert('email', 'Email is not valid').isEmail();

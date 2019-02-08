@@ -1,16 +1,20 @@
 extends application
 
 block main
-  .container
-    h1 Register Page
-    p.lead Account Details.
-    form(role='form', action="/register", method="post", style='max-width: 300px;')
-      .form-group
-          input.form-control(type='text', name="username", placeholder='Username')
-      .form-group
-          input.form-control(type='email', name="email", placeholder='Email')
-      .form-group
-        input.form-control(type='password', name="password", placeholder='Password')
-      button.btn.btn-default(type='submit') Submit &nbsp;
-      a(href='/')
-        button.btn.btn-primary(type="button") Cancel
+  .container(style="padding-top:50px")
+    .row.d-flex.justify-content-center
+      .col-xl-5.col-lg-6.col-md-7.text-center
+        h1 HelpDesk
+        p.lead Create a New Account.
+        form(role='form', action="/register", method="post")
+          .form-group
+              input.form-control(type='text', name="username", placeholder='Username')
+          .form-group
+              input.form-control(type='email', name="email", placeholder='Email', required='true')
+          .form-group
+            input.form-control(type='password', name="password", placeholder='Password', required='true')
+          .form-group
+            input.form-control.btn.btn-primary(type='submit' value='Register')
+          
+        a(href='/')
+          button.btn.btn-default(type="button") Cancel
