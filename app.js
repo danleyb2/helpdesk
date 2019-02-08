@@ -99,7 +99,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/chat', chatRouter);
 
-app.use('/api/mail', apiRouter);
+const ticketController = require('./controllers/api/ticket');
+app.use('/api/v1/mail/receive',ticketController.receive);
+
+app.use('/api',checkAuthentication, function(req,res,next){
+    //TODO add a local to differentiate API calls
+    next()
+}, apiRouter);
 
 app.use('/tos', function (req, res) {
 
@@ -112,11 +118,11 @@ app.use('/privacy', function (req, res) {
 
 var whitelist = ['http://example1.com', 'http://example2.com','http://localhost:63342'];
 var corsOptionsDelegate = function (req, callback) {
-    var corsOptions;
+    var corsOptions = {};
     if (whitelist.indexOf(req.header('Origin')) !== -1) {
-        corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+        corsOptions['origin']= true;  // reflect (enable) the requested origin in the CORS response
     } else {
-        corsOptions = { origin: false } // disable CORS for this request
+        corsOptions['origin'] = false; // disable CORS for this request
     }
 
     callback(null, corsOptions) // callback expects two parameters: error and options
