@@ -1,7 +1,7 @@
 var express = require('express');
 
 
-var router = express.Router();
+var router = express.Router({mergeParams: true});
 const propertyController = require('../controllers/property');
 
 propertyMessagingRouter = require('./messaging/property');
@@ -29,7 +29,7 @@ router.get('/create', propertyController.createForm);
 router.post('/create', propertyController.create);
 
 router.get('/:pId', propertyController.details);
-router.put('/:pId/update', propertyController.update);
+router.post('/:pId/update', propertyController.update);
 router.delete('/:pId/delete', propertyController.delete);
 
 router.use('/:pId/m', propertyMessagingRouter);

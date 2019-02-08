@@ -27,7 +27,7 @@ exports.create = function (req, res, next) {
     // const DEFAULT_TYPES = ['Issue', 'Task'];
     // const DEFAULT_PRIORITIES = ['Normal', 'Urgent', 'Critical'];
 
-    property.save(property.save(async function (err) {
+    property.save(async function (err) {
         if (err) {
             return next(err);
         }
@@ -61,20 +61,20 @@ exports.create = function (req, res, next) {
         await membership.save();
         res.redirect('/p')
 
-    }));
+    });
 
 };
 
 exports.details = function (req, res) {
     Property.findById(req.params.pId, function (err, property) {
         if (err) return next(err);
-        res.send(property);
+        res.render('property/detail',{'property':property});
     })
 };
 exports.update = function (req, res) {
     Property.findByIdAndUpdate(req.params.pId, {$set: req.body}, function (err, property) {
         if (err) return next(err);
-        res.send('Product updated.');
+        res.redirect(`/p/${property._id}`);
     });
 };
 
