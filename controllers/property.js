@@ -1,5 +1,6 @@
 var Property = require('../models/property');
 var Member = require('../models/member');
+var Department = require('../models/department');
 var Priority = require('../models/ticket/priority');
 var Type = require('../models/ticket/type');
 
@@ -20,8 +21,7 @@ exports.create = function (req, res, next) {
 
     let property = new Property({
         name: req.body.name,
-        type: req.body.type,
-        support_email: req.body.support_email
+        type: req.body.type
     });
 
     // const DEFAULT_TYPES = ['Issue', 'Task'];
@@ -58,8 +58,21 @@ exports.create = function (req, res, next) {
             account: req.user._id,
             property: property._id,
         });
-        await membership.save();
-        res.redirect('/p')
+        await membership.save(); // todo make async
+
+        Department.create({
+            name:'general',
+            property: property._id,
+            support_email: req.body.support_email,
+            members:[{
+                membership:membership._id,
+                role:'owner'
+            }]
+
+        },function (err, department) {
+            if (err)return next(err);
+            res.redirect('/p')
+        });
 
     });
 

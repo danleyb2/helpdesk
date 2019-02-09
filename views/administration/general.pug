@@ -1,19 +1,78 @@
-extends ./layout
+extends ../property/layout
 
 block tab
-  form(method='POST' action='/p/'+property._id+'/update')
-    div.form-group
-      label(for='name') Name:
-      input#name.form-control(type='text', placeholder='Property Name' name='name' required='true' value=(undefined === property ? '' : property.name) )
 
-    div.form-group
-      label(for='support_email') Support Email:
-      input#support_email.form-control(type='email', placeholder='Support Email' name='support_email' required='true' value=(undefined === property ? '' : property.support_email) )
+  .card.card-fluid
+    h6.card-header  General 
+    // .card-body
+    .card-body
+      // form
+      form(method='POST' action='/p/'+property._id+'/update')
+        // form row
+        .form-row
+          // form column
+          label.col-md-3(for='name') Name
+          // /form column
+          // form column
+          .col-md-9.mb-3
+            input#name.form-control(type='text', placeholder='Property Name' name='name' required='true' value=(undefined === property ? '' : property.name) )
+          // /form column
+        // /form row
+        // form row
+        .form-row
+          // form column
+          label.col-md-3(for='support_email') Support Email
+          // /form column
+          // form column
+          .col-md-9.mb-3
+            input#support_email.form-control(type='email', placeholder='Support Email' name='support_email' required='true' value=(undefined === property ? '' : property.support_email) )
+            small.text-muted General Support Email.
+          // /form column
+        // /form row
+        // form row
+        .form-row
+          // form column
+          label.col-md-3(for='type') Type
+          // /form column
+          // form column
+          .col-md-9.mb-3
+            select#type.form-control(type='select', placeholder='Select Type' name='type' required='true' )
+              option(value='Site' selected=(undefined === property || property.type != 'Site' ? false : 'selected')) Site
+              option(value='Page' selected=(undefined === property || property.type != 'Page' ? false : 'selected')) Page
 
-    div.form-group
-      label(for='type') Type:
-      select#type.form-control(type='select', placeholder='Select Type' name='type' required='true' )
-        option(value='Site' selected=(undefined === property || property.type != 'Site' ? false : 'selected')) Site
-        option(value='Page' selected=(undefined === property || property.type != 'Page' ? false : 'selected')) Page
-
-    button.btn.btn-primary(type='submit') Save
+          // /form column
+        // /form row
+        hr
+        // .form-actions
+        .form-actions
+          button.btn.btn-primary.ml-auto(type='submit') Update
+        // /.form-actions
+      // /form
+    // /.card-body
+  // /.card
+  // .card
+  .card.card-fluid
+    h6.card-header  Live Chat 
+    .card-body
+      .form
+        // form column
+        label.col-md-12(for='input03') Live Chat Plugin Script
+        // /form column
+        // form column
+        .col-md-12.mb-3
+          textarea#input03.form-control(contenteditable='false', rows=14)
+            | <!--Start of LiveChat Embed Script-->
+            | <script type="text/javascript">
+            | (function(){
+            | var s1=document.createElement("script"),
+            | s0=document.getElementsByTagName("script")[0];
+            | s1.async=true;
+            | s1.src='#{PROTOCOL}://#{HOST}:#{PORT}/livechat/#{property.id}/embed';
+            | s1.charset='UTF-8';
+            | s1.setAttribute('crossorigin','*');
+            | s0.parentNode.insertBefore(s1,s0);
+            | })();
+            | </script>
+            | <!--End of LiveChat Embed Script-->
+          
+          small.text-muted Paste before the end of the body tag.

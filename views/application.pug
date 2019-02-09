@@ -4,9 +4,19 @@ html
     title= title
     meta(charset="utf-8")
     meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
-    link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css' integrity='sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS', rel='stylesheet', crossorigin='anonymous')
-    link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous")
+    link(href='https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600' rel='stylesheet')
+    // End GOOGLE FONT
+    // BEGIN PLUGINS STYLES
+    link(rel='stylesheet' href='/vendor/open-iconic/css/open-iconic-bootstrap.min.css')
+    link(rel='stylesheet' href='/vendor/fontawesome/css/all.css')
+    block styles_plugin
+    // END PLUGINS STYLES
+    // BEGIN THEME STYLES
+    link(rel='stylesheet' href='/stylesheets/theme.min.css' data-skin='default')
+    //link(rel='stylesheet' href='assets/stylesheets/theme-dark.min.css' data-skin='dark')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    // END THEME STYLES
+    block styles
   body
 
     block main
@@ -15,7 +25,23 @@ html
       h4.error-msg= error
       br
 
-    script(src='https://code.jquery.com/jquery-3.2.1.min.js' crossorigin="anonymous")
-    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")
-    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous")
+    // BEGIN BASE JS
+    script(src='/vendor/jquery/jquery.min.js')
+    script(src='/vendor/bootstrap/js/popper.min.js')
+    script(src='/vendor/bootstrap/js/bootstrap.min.js')
+    // END BASE JS
+      
+    // BEGIN PLUGINS JS
+    script(src='/vendor/pace/pace.min.js')
+    script(src='/vendor/stacked-menu/stacked-menu.min.js')
+    script(src='/vendor/perfect-scrollbar/perfect-scrollbar.min.js')
+    block  scripts_plugin
+    // END PLUGINS JS
+      
+    // BEGIN THEME JS
+    script(src='/javascript/theme.min.js')
+    // END THEME JS
+    
+    // BEGIN PAGE LEVEL JS 
     block scripts
+    // END PAGE LEVEL JS  

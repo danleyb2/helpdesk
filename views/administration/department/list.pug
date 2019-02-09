@@ -1,0 +1,914 @@
+extends ../../property/layout
+
+block tab
+
+  .section-block
+    // grid row
+    .row.mb-4
+      // .col
+      .col
+        // .has-clearable
+        .has-clearable
+          button.close(type='button' aria-label='Close')
+            span(aria-hidden='true')
+              i.fa.fa-times-circle
+          input.form-control(type='text' placeholder='Search')
+        // /.has-clearable
+      // /.col
+      // .col-auto
+      .col-auto
+        button.btn.btn-primary Add Department
+      // /.col-auto
+    // /grid row
+    // grid row
+    .row
+      each department in departments
+        .col-lg-6
+          // .card
+          .card.card-fluid
+            // .card-header
+            header.card-header.border-0
+              .d-flex.justify-content-between.align-items-center
+                span.badge.bg-muted(data-toggle='tooltip' data-placement='bottom' title='Deadline')
+                  span.sr-only Deadline
+                  i.fa.fa-calendar-alt.text-muted.mr-1
+                  |  07 Aug 2018
+                .dropdown
+                  button.btn.btn-icon.btn-light(type='button' data-toggle='dropdown' aria-expanded='false')
+                    i.fa.fa-ellipsis-v
+                  .dropdown-arrow
+                  .dropdown-menu.dropdown-menu-right
+                    a.dropdown-item(href='#!') View Project
+                    a.dropdown-item(href='#!') Add Member
+                    a.dropdown-item(href='#!') Edit
+                    a.dropdown-item(href='#!') Remove
+            // /.card-header
+            // .card-body
+            .card-body.text-center
+              // avatars
+              a.tile.tile-lg.bg-purple.mb-2(href='page-project.html') LT
+              // /avatars
+              // /.media
+              h5.card-title
+                a(href='page-project.html') #{department.name}
+              p.card-subtitle.text-muted  Progress in 74% - Last update 1d 
+              // .my-3
+              .my-3
+                // team members
+                .avatar-group
+                  a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
+                    img(src='assets/images/avatars/uifaces6.jpg' alt='')
+                  a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Bryan Morgan')
+                    img(src='assets/images/avatars/uifaces8.jpg' alt='')
+                  a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Larry Robinson')
+                    img(src='assets/images/avatars/uifaces7.jpg' alt='')
+                  a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Beverly Simpson')
+                    img(src='assets/images/avatars/uifaces9.jpg' alt='')
+                  a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Robinson')
+                    img(src='assets/images/avatars/uifaces10.jpg' alt='')
+                  a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +21
+                // /team members
+              // /.my-3
+              // grid row
+              .row
+                // grid column
+                .col
+                  strong Budget
+                  span.d-block 40,000$
+                // /grid column
+                // grid column
+                .col
+                  strong Tasks
+                  span.d-block 775
+                // /grid column
+              // /grid row
+            // /.card-body
+            // .progress
+            .progress.progress-xs(data-toggle='tooltip' title='74%')
+              .progress-bar.bg-purple(role='progressbar' aria-valuenow='2181' aria-valuemin='0' aria-valuemax='100' style='width: 74%')
+                span.sr-only 74% Complete
+            // /.progress
+        // /.card
+              
+        
+      // grid column
+      .col-lg-6
+        // .card
+        .card.card-fluid
+          // .card-header
+          header.card-header.border-0
+            .d-flex.justify-content-between.align-items-center
+              span.badge.bg-muted(data-toggle='tooltip' data-placement='bottom' title='Deadline')
+                span.sr-only Deadline
+                i.fa.fa-calendar-alt.text-muted.mr-1
+                |  15 Sep 2018
+              .dropdown
+                button.btn.btn-icon.btn-light(type='button' data-toggle='dropdown' aria-expanded='false')
+                  i.fa.fa-ellipsis-v
+                .dropdown-arrow
+                .dropdown-menu.dropdown-menu-right
+                  a.dropdown-item(href='#!') View Project
+                  a.dropdown-item(href='#!') Add Member
+                  a.dropdown-item(href='#!') Edit
+                  a.dropdown-item(href='#!') Remove
+          // /.card-header
+          // .card-body
+          .card-body.text-center
+            // avatars
+            a.tile.tile-lg.bg-indigo.mb-2(href='page-project.html') SP
+            // /avatars
+            // /.media
+            h5.card-title
+              a(href='page-project.html') Smart Paper
+            p.card-subtitle.text-muted  Progress in 22% - Last update 2h 
+            // .my-3
+            .my-3
+              // team members
+              .avatar-group
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
+                  img(src='assets/images/avatars/uifaces6.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Bryan Morgan')
+                  img(src='assets/images/avatars/uifaces8.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Larry Robinson')
+                  img(src='assets/images/avatars/uifaces7.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Beverly Simpson')
+                  img(src='assets/images/avatars/uifaces9.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Robinson')
+                  img(src='assets/images/avatars/uifaces10.jpg' alt='')
+                a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +6
+              // /team members
+            // /.my-3
+            // grid row
+            .row
+              // grid column
+              .col
+                strong Budget
+                span.d-block 10,000$
+              // /grid column
+              // grid column
+              .col
+                strong Tasks
+                span.d-block 3090
+              // /grid column
+            // /grid row
+          // /.card-body
+          // .progress
+          .progress.progress-xs(data-toggle='tooltip' title='22%')
+            .progress-bar.bg-indigo(role='progressbar' aria-valuenow='867' aria-valuemin='0' aria-valuemax='100' style='width: 22%')
+              span.sr-only 22% Complete
+          // /.progress
+        // /.card
+      // /grid column
+      // grid column
+      .col-lg-6
+        // .card
+        .card.card-fluid
+          // .card-header
+          header.card-header.border-0
+            .d-flex.justify-content-between.align-items-center
+              span.badge.bg-muted(data-toggle='tooltip' data-placement='bottom' title='Deadline')
+                span.sr-only Deadline
+                i.fa.fa-calendar-alt.text-muted.mr-1
+                |  15 Jul 2018
+              .dropdown
+                button.btn.btn-icon.btn-light(type='button' data-toggle='dropdown' aria-expanded='false')
+                  i.fa.fa-ellipsis-v
+                .dropdown-arrow
+                .dropdown-menu.dropdown-menu-right
+                  a.dropdown-item(href='#!') View Project
+                  a.dropdown-item(href='#!') Add Member
+                  a.dropdown-item(href='#!') Edit
+                  a.dropdown-item(href='#!') Remove
+          // /.card-header
+          // .card-body
+          .card-body.text-center
+            // avatars
+            a.tile.tile-lg.bg-yellow.mb-2(href='page-project.html') OS
+            // /avatars
+            // /.media
+            h5.card-title
+              a(href='page-project.html') Online Store
+            p.card-subtitle.text-muted  Progress in 99% - Last update 2d 
+            // .my-3
+            .my-3
+              // team members
+              .avatar-group
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
+                  img(src='assets/images/avatars/uifaces6.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Bryan Morgan')
+                  img(src='assets/images/avatars/uifaces8.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Larry Robinson')
+                  img(src='assets/images/avatars/uifaces7.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Beverly Simpson')
+                  img(src='assets/images/avatars/uifaces9.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Robinson')
+                  img(src='assets/images/avatars/uifaces10.jpg' alt='')
+                a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +42
+              // /team members
+            // /.my-3
+            // grid row
+            .row
+              // grid column
+              .col
+                strong Budget
+                span.d-block 100,000$
+              // /grid column
+              // grid column
+              .col
+                strong Tasks
+                span.d-block 100
+              // /grid column
+            // /grid row
+          // /.card-body
+          // .progress
+          .progress.progress-xs(data-toggle='tooltip' title='99%')
+            .progress-bar.bg-yellow(role='progressbar' aria-valuenow='6683' aria-valuemin='0' aria-valuemax='100' style='width: 99%')
+              span.sr-only 99% Complete
+          // /.progress
+        // /.card
+      // /grid column
+      // grid column
+      .col-lg-6
+        // .card
+        .card.card-fluid
+          // .card-header
+          header.card-header.border-0
+            .d-flex.justify-content-between.align-items-center
+              span.badge.bg-muted(data-toggle='tooltip' data-placement='bottom' title='Deadline')
+                span.sr-only Deadline
+                i.fa.fa-calendar-alt.text-muted.mr-1
+                |  20 Sep 2018
+              .dropdown
+                button.btn.btn-icon.btn-light(type='button' data-toggle='dropdown' aria-expanded='false')
+                  i.fa.fa-ellipsis-v
+                .dropdown-arrow
+                .dropdown-menu.dropdown-menu-right
+                  a.dropdown-item(href='#!') View Project
+                  a.dropdown-item(href='#!') Add Member
+                  a.dropdown-item(href='#!') Edit
+                  a.dropdown-item(href='#!') Remove
+          // /.card-header
+          // .card-body
+          .card-body.text-center
+            // avatars
+            a.tile.tile-lg.bg-blue.mb-2(href='page-project.html') BA
+            // /avatars
+            // /.media
+            h5.card-title
+              a(href='page-project.html') Booking App
+            p.card-subtitle.text-muted  Progress in 35% - Last update 4h 
+            // .my-3
+            .my-3
+              // team members
+              .avatar-group
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
+                  img(src='assets/images/avatars/uifaces6.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Bryan Morgan')
+                  img(src='assets/images/avatars/uifaces8.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Larry Robinson')
+                  img(src='assets/images/avatars/uifaces7.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Beverly Simpson')
+                  img(src='assets/images/avatars/uifaces9.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Robinson')
+                  img(src='assets/images/avatars/uifaces10.jpg' alt='')
+                a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +8
+              // /team members
+            // /.my-3
+            // grid row
+            .row
+              // grid column
+              .col
+                strong Budget
+                span.d-block 5,000$
+              // /grid column
+              // grid column
+              .col
+                strong Tasks
+                span.d-block 209
+              // /grid column
+            // /grid row
+          // /.card-body
+          // .progress
+          .progress.progress-xs(data-toggle='tooltip' title='35%')
+            .progress-bar.bg-blue(role='progressbar' aria-valuenow='112' aria-valuemin='0' aria-valuemax='100' style='width: 35%')
+              span.sr-only 35% Complete
+          // /.progress
+        // /.card
+      // /grid column
+      // grid column
+      .col-lg-6
+        // .card
+        .card.card-fluid
+          // .card-header
+          header.card-header.border-0
+            .d-flex.justify-content-between.align-items-center
+              span.badge.bg-muted(data-toggle='tooltip' data-placement='bottom' title='Deadline')
+                span.sr-only Deadline
+                i.fa.fa-calendar-alt.text-muted.mr-1
+                |  15 Nov 2018
+              .dropdown
+                button.btn.btn-icon.btn-light(type='button' data-toggle='dropdown' aria-expanded='false')
+                  i.fa.fa-ellipsis-v
+                .dropdown-arrow
+                .dropdown-menu.dropdown-menu-right
+                  a.dropdown-item(href='#!') View Project
+                  a.dropdown-item(href='#!') Add Member
+                  a.dropdown-item(href='#!') Edit
+                  a.dropdown-item(href='#!') Remove
+          // /.card-header
+          // .card-body
+          .card-body.text-center
+            // avatars
+            a.tile.tile-lg.bg-teal.mb-2(href='page-project.html') SB
+            // /avatars
+            // /.media
+            h5.card-title
+              a(href='page-project.html') SVG Icon Bundle
+            p.card-subtitle.text-muted  Progress in 32% - Last update 1d 
+            // .my-3
+            .my-3
+              // team members
+              .avatar-group
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
+                  img(src='assets/images/avatars/uifaces6.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Bryan Morgan')
+                  img(src='assets/images/avatars/uifaces8.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Larry Robinson')
+                  img(src='assets/images/avatars/uifaces7.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Beverly Simpson')
+                  img(src='assets/images/avatars/uifaces9.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Robinson')
+                  img(src='assets/images/avatars/uifaces10.jpg' alt='')
+                a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +8
+              // /team members
+            // /.my-3
+            // grid row
+            .row
+              // grid column
+              .col
+                strong Budget
+                span.d-block 6,000$
+              // /grid column
+              // grid column
+              .col
+                strong Tasks
+                span.d-block 958
+              // /grid column
+            // /grid row
+          // /.card-body
+          // .progress
+          .progress.progress-xs(data-toggle='tooltip' title='32%')
+            .progress-bar.bg-teal(role='progressbar' aria-valuenow='461' aria-valuemin='0' aria-valuemax='100' style='width: 32%')
+              span.sr-only 32% Complete
+          // /.progress
+        // /.card
+      // /grid column
+      // grid column
+      .col-lg-6
+        // .card
+        .card.card-fluid
+          // .card-header
+          header.card-header.border-0
+            .d-flex.justify-content-between.align-items-center
+              span.badge.bg-muted(data-toggle='tooltip' data-placement='bottom' title='Deadline')
+                span.sr-only Deadline
+                i.fa.fa-calendar-alt.text-muted.mr-1
+                |  18 Aug 2018
+              .dropdown
+                button.btn.btn-icon.btn-light(type='button' data-toggle='dropdown' aria-expanded='false')
+                  i.fa.fa-ellipsis-v
+                .dropdown-arrow
+                .dropdown-menu.dropdown-menu-right
+                  a.dropdown-item(href='#!') View Project
+                  a.dropdown-item(href='#!') Add Member
+                  a.dropdown-item(href='#!') Edit
+                  a.dropdown-item(href='#!') Remove
+          // /.card-header
+          // .card-body
+          .card-body.text-center
+            // avatars
+            a.tile.tile-lg.bg-pink.mb-2(href='page-project.html') SP
+            // /avatars
+            // /.media
+            h5.card-title
+              a(href='page-project.html') Syrena Project
+            p.card-subtitle.text-muted  Progress in 93% - Last update 8h 
+            // .my-3
+            .my-3
+              // team members
+              .avatar-group
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
+                  img(src='assets/images/avatars/uifaces6.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Bryan Morgan')
+                  img(src='assets/images/avatars/uifaces8.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Larry Robinson')
+                  img(src='assets/images/avatars/uifaces7.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Beverly Simpson')
+                  img(src='assets/images/avatars/uifaces9.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Robinson')
+                  img(src='assets/images/avatars/uifaces10.jpg' alt='')
+                a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +32
+              // /team members
+            // /.my-3
+            // grid row
+            .row
+              // grid column
+              .col
+                strong Budget
+                span.d-block 50,000$
+              // /grid column
+              // grid column
+              .col
+                strong Tasks
+                span.d-block 314
+              // /grid column
+            // /grid row
+          // /.card-body
+          // .progress
+          .progress.progress-xs(data-toggle='tooltip' title='93%')
+            .progress-bar.bg-pink(role='progressbar' aria-valuenow='3981' aria-valuemin='0' aria-valuemax='100' style='width: 93%')
+              span.sr-only 93% Complete
+          // /.progress
+        // /.card
+      // /grid column
+      // grid column
+      .col-lg-6
+        // .card
+        .card.card-fluid
+          // .card-header
+          header.card-header.border-0
+            .d-flex.justify-content-between.align-items-center
+              span.badge.bg-muted(data-toggle='tooltip' data-placement='bottom' title='Finished')
+                span.sr-only Finished
+                i.fa.fa-fw.fa-check-circle.text-teal
+              .dropdown
+                button.btn.btn-icon.btn-light(type='button' data-toggle='dropdown' aria-expanded='false')
+                  i.fa.fa-ellipsis-v
+                .dropdown-arrow
+                .dropdown-menu.dropdown-menu-right
+                  a.dropdown-item(href='#!') View Project
+                  a.dropdown-item(href='#!') Add Member
+                  a.dropdown-item(href='#!') Edit
+                  a.dropdown-item(href='#!') Remove
+          // /.card-header
+          // .card-body
+          .card-body.text-center
+            // avatars
+            a.tile.tile-lg.bg-green.mb-2(href='page-project.html') MG
+            // /avatars
+            // /.media
+            h5.card-title
+              a(href='page-project.html') Mobile App Gex
+            p.card-subtitle.text-muted  Progress in 100% - Last update 1m 
+            // .my-3
+            .my-3
+              // team members
+              .avatar-group
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
+                  img(src='assets/images/avatars/uifaces6.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Bryan Morgan')
+                  img(src='assets/images/avatars/uifaces8.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Larry Robinson')
+                  img(src='assets/images/avatars/uifaces7.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Beverly Simpson')
+                  img(src='assets/images/avatars/uifaces9.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Robinson')
+                  img(src='assets/images/avatars/uifaces10.jpg' alt='')
+                a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +26
+              // /team members
+            // /.my-3
+            // grid row
+            .row
+              // grid column
+              .col
+                strong Budget
+                span.d-block 40,000$
+              // /grid column
+              // grid column
+              .col
+                strong Tasks
+                span.d-block 0
+              // /grid column
+            // /grid row
+          // /.card-body
+        // /.card
+      // /grid column
+      // grid column
+      .col-lg-6
+        // .card
+        .card.card-fluid
+          // .card-header
+          header.card-header.border-0
+            .d-flex.justify-content-between.align-items-center
+              span.badge.bg-muted(data-toggle='tooltip' data-placement='bottom' title='Finished')
+                span.sr-only Finished
+                i.fa.fa-fw.fa-check-circle.text-teal
+              .dropdown
+                button.btn.btn-icon.btn-light(type='button' data-toggle='dropdown' aria-expanded='false')
+                  i.fa.fa-ellipsis-v
+                .dropdown-arrow
+                .dropdown-menu.dropdown-menu-right
+                  a.dropdown-item(href='#!') View Project
+                  a.dropdown-item(href='#!') Add Member
+                  a.dropdown-item(href='#!') Edit
+                  a.dropdown-item(href='#!') Remove
+          // /.card-header
+          // .card-body
+          .card-body.text-center
+            // avatars
+            a.tile.tile-lg.bg-red.mb-2(href='page-project.html') LB
+            // /avatars
+            // /.media
+            h5.card-title
+              a(href='page-project.html') Landing Page Booster
+            p.card-subtitle.text-muted  Progress in 100% - Last update 1w 
+            // .my-3
+            .my-3
+              // team members
+              .avatar-group
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
+                  img(src='assets/images/avatars/uifaces6.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Bryan Morgan')
+                  img(src='assets/images/avatars/uifaces8.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Larry Robinson')
+                  img(src='assets/images/avatars/uifaces7.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Beverly Simpson')
+                  img(src='assets/images/avatars/uifaces9.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Robinson')
+                  img(src='assets/images/avatars/uifaces10.jpg' alt='')
+                a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +2
+              // /team members
+            // /.my-3
+            // grid row
+            .row
+              // grid column
+              .col
+                strong Budget
+                span.d-block 1,000$
+              // /grid column
+              // grid column
+              .col
+                strong Tasks
+                span.d-block 0
+              // /grid column
+            // /grid row
+          // /.card-body
+        // /.card
+      // /grid column
+      // grid column
+      .col-lg-6
+        // .card
+        .card.card-fluid
+          // .card-header
+          header.card-header.border-0
+            .d-flex.justify-content-between.align-items-center
+              span.badge.bg-muted(data-toggle='tooltip' data-placement='bottom' title='Finished')
+                span.sr-only Finished
+                i.fa.fa-fw.fa-check-circle.text-teal
+              .dropdown
+                button.btn.btn-icon.btn-light(type='button' data-toggle='dropdown' aria-expanded='false')
+                  i.fa.fa-ellipsis-v
+                .dropdown-arrow
+                .dropdown-menu.dropdown-menu-right
+                  a.dropdown-item(href='#!') View Project
+                  a.dropdown-item(href='#!') Add Member
+                  a.dropdown-item(href='#!') Edit
+                  a.dropdown-item(href='#!') Remove
+          // /.card-header
+          // .card-body
+          .card-body.text-center
+            // avatars
+            a.tile.tile-lg.bg-orange.mb-2(href='page-project.html') SB
+            // /avatars
+            // /.media
+            h5.card-title
+              a(href='page-project.html') Stilearn Branding
+            p.card-subtitle.text-muted  Progress in 100% - Last update 2m 
+            // .my-3
+            .my-3
+              // team members
+              .avatar-group
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
+                  img(src='assets/images/avatars/uifaces6.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Bryan Morgan')
+                  img(src='assets/images/avatars/uifaces8.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Larry Robinson')
+                  img(src='assets/images/avatars/uifaces7.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Beverly Simpson')
+                  img(src='assets/images/avatars/uifaces9.jpg' alt='')
+                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Robinson')
+                  img(src='assets/images/avatars/uifaces10.jpg' alt='')
+                a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +12
+              // /team members
+            // /.my-3
+            // grid row
+            .row
+              // grid column
+              .col
+                strong Budget
+                span.d-block 20,000$
+              // /grid column
+              // grid column
+              .col
+                strong Tasks
+                span.d-block 0
+              // /grid column
+            // /grid row
+          // /.card-body
+        // /.card
+      // /grid column
+    // /grid row
+  // /.section-block
+  // Modal Members List
+  // .modal
+  #membersModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='membersModalLabel' aria-hidden='true')
+    // .modal-dialog
+    .modal-dialog.modal-dialog-overflow(role='document')
+      // .modal-content
+      .modal-content
+        // .modal-header
+        .modal-header
+          // .input-group
+          .input-group.has-clearable
+            button.close(type='button' aria-label='Close')
+              i.fa.fa-times-circle
+            .input-group-prepend
+              span.input-group-text
+                span.oi.oi-magnifying-glass
+            input.form-control(type='text' placeholder='Search Members')
+          // /.input-group
+        // /.modal-header
+        // .modal-body
+        .modal-body.px-0
+          // .list-group
+          .list-group.list-group-flush
+            // .list-group-item
+            .list-group-item
+              // .list-group-item-figure
+              .list-group-item-figure
+                a.user-avatar(href='#!')
+                  img(src='assets/images/avatars/uifaces5.jpg' alt='Craig Hansen')
+              // /.list-group-item-figure
+              // .list-group-item-body
+              .list-group-item-body
+                h4.list-group-item-title
+                  a(href='#!') Craig Hansen
+                p.list-group-item-text  Software Developer 
+              // /.list-group-item-body
+              // .list-group-item-figure
+              .list-group-item-figure.dropdown
+                button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                  i.fa.fa-fw.fa-ellipsis-v
+                .dropdown-arrow.dropdown-arrow-left
+                .dropdown-menu.dropdown-menu-right
+                  button.dropdown-item(type='button') Message
+                  button.dropdown-item(type='button') Invite to a team
+                  button.dropdown-item(type='button') Copy member ID
+                  .dropdown-divider
+                  button.dropdown-item(type='button') Remove
+              // /.list-group-item-figure
+            // /.list-group-item
+            // .list-group-item
+            .list-group-item
+              // .list-group-item-figure
+              .list-group-item-figure
+                a.user-avatar(href='#!')
+                  img(src='assets/images/avatars/uifaces9.jpg' alt='Jane Barnes')
+              // /.list-group-item-figure
+              // .list-group-item-body
+              .list-group-item-body
+                h4.list-group-item-title
+                  a(href='#!') Jane Barnes
+                p.list-group-item-text  Social Worker 
+              // /.list-group-item-body
+              // .list-group-item-figure
+              .list-group-item-figure.dropdown
+                button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                  i.fa.fa-fw.fa-ellipsis-v
+                .dropdown-arrow.dropdown-arrow-left
+                .dropdown-menu.dropdown-menu-right
+                  button.dropdown-item(type='button') Message
+                  button.dropdown-item(type='button') Invite to a team
+                  button.dropdown-item(type='button') Copy member ID
+                  .dropdown-divider
+                  button.dropdown-item(type='button') Remove
+              // /.list-group-item-figure
+            // /.list-group-item
+            // .list-group-item
+            .list-group-item
+              // .list-group-item-figure
+              .list-group-item-figure
+                a.user-avatar(href='#!')
+                  img(src='assets/images/avatars/uifaces4.jpg' alt='Nicole Barnett')
+              // /.list-group-item-figure
+              // .list-group-item-body
+              .list-group-item-body
+                h4.list-group-item-title
+                  a(href='#!') Nicole Barnett
+                p.list-group-item-text  Marketing Manager 
+              // /.list-group-item-body
+              // .list-group-item-figure
+              .list-group-item-figure.dropdown
+                button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                  i.fa.fa-fw.fa-ellipsis-v
+                .dropdown-arrow.dropdown-arrow-left
+                .dropdown-menu.dropdown-menu-right
+                  button.dropdown-item(type='button') Message
+                  button.dropdown-item(type='button') Invite to a team
+                  button.dropdown-item(type='button') Copy member ID
+                  .dropdown-divider
+                  button.dropdown-item(type='button') Remove
+              // /.list-group-item-figure
+            // /.list-group-item
+            // .list-group-item
+            .list-group-item
+              // .list-group-item-figure
+              .list-group-item-figure
+                a.user-avatar(href='#!')
+                  img(src='assets/images/avatars/uifaces6.jpg' alt='Michael Ward')
+              // /.list-group-item-figure
+              // .list-group-item-body
+              .list-group-item-body
+                h4.list-group-item-title
+                  a(href='#!') Michael Ward
+                p.list-group-item-text  Lawyer 
+              // /.list-group-item-body
+              // .list-group-item-figure
+              .list-group-item-figure.dropdown
+                button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                  i.fa.fa-fw.fa-ellipsis-v
+                .dropdown-arrow.dropdown-arrow-left
+                .dropdown-menu.dropdown-menu-right
+                  button.dropdown-item(type='button') Message
+                  button.dropdown-item(type='button') Invite to a team
+                  button.dropdown-item(type='button') Copy member ID
+                  .dropdown-divider
+                  button.dropdown-item(type='button') Remove
+              // /.list-group-item-figure
+            // /.list-group-item
+            // .list-group-item
+            .list-group-item
+              // .list-group-item-figure
+              .list-group-item-figure
+                a.user-avatar(href='#!')
+                  img(src='assets/images/avatars/uifaces8.jpg' alt='Juan Fuller')
+              // /.list-group-item-figure
+              // .list-group-item-body
+              .list-group-item-body
+                h4.list-group-item-title
+                  a(href='#!') Juan Fuller
+                p.list-group-item-text  Budget analyst 
+              // /.list-group-item-body
+              // .list-group-item-figure
+              .list-group-item-figure.dropdown
+                button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                  i.fa.fa-fw.fa-ellipsis-v
+                .dropdown-arrow.dropdown-arrow-left
+                .dropdown-menu.dropdown-menu-right
+                  button.dropdown-item(type='button') Message
+                  button.dropdown-item(type='button') Invite to a team
+                  button.dropdown-item(type='button') Copy member ID
+                  .dropdown-divider
+                  button.dropdown-item(type='button') Remove
+              // /.list-group-item-figure
+            // /.list-group-item
+            // .list-group-item
+            .list-group-item
+              // .list-group-item-figure
+              .list-group-item-figure
+                a.user-avatar(href='#!')
+                  img(src='assets/images/avatars/uifaces7.jpg' alt='Julia Silva')
+              // /.list-group-item-figure
+              // .list-group-item-body
+              .list-group-item-body
+                h4.list-group-item-title
+                  a(href='#!') Julia Silva
+                p.list-group-item-text  Photographer 
+              // /.list-group-item-body
+              // .list-group-item-figure
+              .list-group-item-figure.dropdown
+                button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                  i.fa.fa-fw.fa-ellipsis-v
+                .dropdown-arrow.dropdown-arrow-left
+                .dropdown-menu.dropdown-menu-right
+                  button.dropdown-item(type='button') Message
+                  button.dropdown-item(type='button') Invite to a team
+                  button.dropdown-item(type='button') Copy member ID
+                  .dropdown-divider
+                  button.dropdown-item(type='button') Remove
+              // /.list-group-item-figure
+            // /.list-group-item
+            // .list-group-item
+            .list-group-item
+              // .list-group-item-figure
+              .list-group-item-figure
+                a.user-avatar(href='#!')
+                  img(src='assets/images/avatars/uifaces10.jpg' alt='Joe Hanson')
+              // /.list-group-item-figure
+              // .list-group-item-body
+              .list-group-item-body
+                h4.list-group-item-title
+                  a(href='#!') Joe Hanson
+                p.list-group-item-text  Logistician 
+              // /.list-group-item-body
+              // .list-group-item-figure
+              .list-group-item-figure.dropdown
+                button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                  i.fa.fa-fw.fa-ellipsis-v
+                .dropdown-arrow.dropdown-arrow-left
+                .dropdown-menu.dropdown-menu-right
+                  button.dropdown-item(type='button') Message
+                  button.dropdown-item(type='button') Invite to a team
+                  button.dropdown-item(type='button') Copy member ID
+                  .dropdown-divider
+                  button.dropdown-item(type='button') Remove
+              // /.list-group-item-figure
+            // /.list-group-item
+            // .list-group-item
+            .list-group-item
+              // .list-group-item-figure
+              .list-group-item-figure
+                a.user-avatar(href='#!')
+                  img(src='assets/images/avatars/uifaces11.jpg' alt='Brenda Griffin')
+              // /.list-group-item-figure
+              // .list-group-item-body
+              .list-group-item-body
+                h4.list-group-item-title
+                  a(href='#!') Brenda Griffin
+                p.list-group-item-text  Medical Assistant 
+              // /.list-group-item-body
+              // .list-group-item-figure
+              .list-group-item-figure.dropdown
+                button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                  i.fa.fa-fw.fa-ellipsis-v
+                .dropdown-arrow.dropdown-arrow-left
+                .dropdown-menu.dropdown-menu-right
+                  button.dropdown-item(type='button') Message
+                  button.dropdown-item(type='button') Invite to a team
+                  button.dropdown-item(type='button') Copy member ID
+                  .dropdown-divider
+                  button.dropdown-item(type='button') Remove
+              // /.list-group-item-figure
+            // /.list-group-item
+            // .list-group-item
+            .list-group-item
+              // .list-group-item-figure
+              .list-group-item-figure
+                a.user-avatar(href='#!')
+                  img(src='assets/images/avatars/uifaces12.jpg' alt='Ryan Jimenez')
+              // /.list-group-item-figure
+              // .list-group-item-body
+              .list-group-item-body
+                h4.list-group-item-title
+                  a(href='#!') Ryan Jimenez
+                p.list-group-item-text  Photographer 
+              // /.list-group-item-body
+              // .list-group-item-figure
+              .list-group-item-figure.dropdown
+                button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                  i.fa.fa-fw.fa-ellipsis-v
+                .dropdown-arrow.dropdown-arrow-left
+                .dropdown-menu.dropdown-menu-right
+                  button.dropdown-item(type='button') Message
+                  button.dropdown-item(type='button') Invite to a team
+                  button.dropdown-item(type='button') Copy member ID
+                  .dropdown-divider
+                  button.dropdown-item(type='button') Remove
+              // /.list-group-item-figure
+            // /.list-group-item
+            // .list-group-item
+            .list-group-item
+              // .list-group-item-figure
+              .list-group-item-figure
+                a.user-avatar(href='#!')
+                  img(src='assets/images/avatars/uifaces13.jpg' alt='Bryan Hayes')
+              // /.list-group-item-figure
+              // .list-group-item-body
+              .list-group-item-body
+                h4.list-group-item-title
+                  a(href='#!') Bryan Hayes
+                p.list-group-item-text  Computer Systems Analyst 
+              // /.list-group-item-body
+              // .list-group-item-figure
+              .list-group-item-figure.dropdown
+                button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                  i.fa.fa-fw.fa-ellipsis-v
+                .dropdown-arrow.dropdown-arrow-left
+                .dropdown-menu.dropdown-menu-right
+                  button.dropdown-item(type='button') Message
+                  button.dropdown-item(type='button') Invite to a team
+                  button.dropdown-item(type='button') Copy member ID
+                  .dropdown-divider
+                  button.dropdown-item(type='button') Remove
+              // /.list-group-item-figure
+            // /.list-group-item
+          // /.list-group
+        // /.modal-body
+        // .modal-footer
+        .modal-footer
+          button.btn.btn-light(type='button' data-dismiss='modal') Close
+        // /.modal-footer
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
+  

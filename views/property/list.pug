@@ -1,50 +1,149 @@
 extends ../layout
 
 block content
-  a.btn.btn-success.mb-2(href='/p/create') Create New Property
-  
-  if memberships.length
-    ul.list-group
-      each membership in memberships
-        li.list-group-item
-          .row
-            .col
-              a(href='/p/'+membership.property.id) #{membership.property.name} 
-              br
-              strong Type:
-              span 
-              | #{membership.property.type}
-              br
-              strong Support Email:
-              span  
-              | #{membership.property.support_email}
-            .col
-              if membership.status === 'Pending'
-                button.btn.btn-primary.mb-2.float-right(data-whatever=membership.property.name data-toggle='modal' data-target='#exampleModal') Manage Invite
-              else  
-                a.btn.btn-primary.float-right(href='/p/'+membership.property.id+'/s') Settings
-              // a(href='/p/'+property.id+'/update') Edit
-              // a(href='/p/'+property.id+'/delete') Delete
-  else
-    p No properties, Create one or Wait for an Invite
-    
-  #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalTitle' aria-hidden='true')
-    .modal-dialog(role='document')
-      .modal-content
-        form(action='' method='post')
-          .modal-header
-            h5#exampleModalCenterTitle.modal-title Invite
-            button.close(type='button' data-dismiss='modal' aria-label='Close')
-              span(aria-hidden='true') &times;
-          .modal-body
-            p Accept or Decline Invite to 
-              span 
+    .page
+        // .page-inner
+        .page-inner
+            // .page-title-bar
+            header.page-title-bar
+                .d-flex.justify-content-between
+                    h1.page-title  Properties 
+                    .btn-toolbar
+                        a.btn.btn-primary(href='/p/create') Add property
+            // /.page-title-bar
+            // .page-section
+            .page-section
+                // .card
+                section.card.card-fluid
+                    // .card-header
+                    header.card-header.nav-scroller
+                        // .nav-tabs
+                        ul.nav.nav-tabs.card-header-tabs
+                            li.nav-item
+                                a.nav-link.active.show(data-toggle='tab' href='#project-myteams') All
+                            li.nav-item
+                                a.nav-link(data-toggle='tab' href='#project-explore-teams') Owner
+                        // /.nav-tabs
+                    // /.card-header
+                    // .card-body
+                    .card-body
+                        // grid row
+                        .row
+                            // .col
+                            .col
+                                // .input-group
+                                .input-group.has-clearable
+                                    button.close(type='button' aria-label='Close')
+                                        span(aria-hidden='true')
+                                            i.fa.fa-times-circle
+                                    .input-group-prepend
+                                        span.input-group-text
+                                            span.oi.oi-magnifying-glass
+                                    input.form-control(type='text' placeholder='Search')
+                                // /.input-group
+                            // /.col
+                            // .col
+                            .col-auto.d-none.d-sm-flex
+                                // .dropdown
+                                .dropdown
+                                    button.btn.btn-secondary(data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                                        | Last updated 
+                                        span.fa.fa-caret-down
+                                    .dropdown-arrow
+                                    // .dropdown-menu
+                                    .dropdown-menu.dropdown-menu-right.stop-propagation
+                                        h6.dropdown-header  Sort By 
+                                        label.custom-control.custom-radio
+                                            input.custom-control-input(type='radio' name='sortTeamsBy' value='0')
+                                            span.custom-control-label Name
+                                        label.custom-control.custom-radio
+                                            input.custom-control-input(type='radio' name='sortTeamsBy' value='1')
+                                            span.custom-control-label
+                                                | Name 
+                                                span.text-muted (Decs)
+                                        label.custom-control.custom-radio
+                                            input.custom-control-input(type='radio' name='sortTeamsBy' value='2' checked='')
+                                            span.custom-control-label Last updated
+                                        label.custom-control.custom-radio
+                                            input.custom-control-input(type='radio' name='sortTeamsBy' value='3')
+                                            span.custom-control-label Oldest updated
+                                        label.custom-control.custom-radio
+                                            input.custom-control-input(type='radio' name='sortTeamsBy' value='4')
+                                            span.custom-control-label Last created
+                                        label.custom-control.custom-radio
+                                            input.custom-control-input(type='radio' name='sortTeamsBy' value='5')
+                                            span.custom-control-label Oldest created
+                                    // /.dropdown-menu
+                                // /.dropdown
+                            // /.col
+                        // /grid row
+                    // /.card-body
+                    .text-muted.px-3.mb-2  Showing 10 to 18 of 18 entries 
+                    // .tab-content
+                    .tab-content
+                        // .tab-pane
+                        #project-myteams.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='project-myteams-tab')
+                            // .list-group
+                            .list-group.list-group-flush.list-group-divider
+                                each membership in memberships
+                                    // .list-group-item
+                                    .list-group-item
+                                        .list-group-item-figure
+                                            a.user-avatar.user-avatar-md(href='/p/'+membership.property.id)
+                                                img(src='assets/images/avatars/team4.jpg' alt='')
+                                        .list-group-item-body
+                                            .d-sm-flex.justify-content-sm-between.align-items-sm-center
+                                                .team
+                                                    h4.list-group-item-title
+                                                        a(href='/p/'+membership.property.id) #{membership.property.name}
+                                                        a.mention.ml-1(href='page-team.html') Owner
+                                                    p.list-group-item-text  Updated 1 hour ago 
+                                                ul.list-inline.text-muted.mb-0
+                                                    li.list-inline-item.mr-3(data-toggle='tooltip' title='Members' data-placement='bottom')
+                                                        i.fas.fa-users.text-teal
+                                                        |  8
+                                                    li.list-inline-item.mr-3(data-toggle='tooltip' title='Clients' data-placement='bottom')
+                                                        i.fas.fa-user-tie.text-pink
+                                                        |  3
+                                                    li.list-inline-item.mr-3(data-toggle='tooltip' title='Projects' data-placement='bottom')
+                                                        i.fa.fa-bookmark.text-yellow
+                                                        |  4
+                                                    li.list-inline-item(data-toggle='tooltip' title='Private')
+                                                        i.fa.fa-lock
+                                        .list-group-item-figure
+                                            a.btn.btn-sm.btn-icon.btn-secondary.stop-propagation(href='#!')
+                                                i.fas.fa-ellipsis-h
+                                    // /.list-group-item
+                                    
+                            // /.list-group
+                            // .pagination
+                            ul.pagination.justify-content-center.mt-4
+                                li.page-item
+                                    a.page-link(href='#!' tabindex='-1')
+                                        i.fa.fa-angle-double-left
+                                li.page-item
+                                    a.page-link(href='#!' tabindex='-1') Prev
+                                li.page-item
+                                    a.page-link(href='#!') 1
+                                li.page-item.active
+                                    a.page-link(href='#!') 2
+                                li.page-item.disabled
+                                    a.page-link(href='#!') Next
+                                li.page-item.disabled
+                                    a.page-link(href='#!')
+                                        i.fa.fa-angle-double-right
+                            // /.pagination
+                        // /.tab-pane
+                        // .tab-pane
+                        #project-explore-teams.tab-pane.fade(role='tabpanel' aria-labelledby='project-explore-teams-tab')
+                            .alert.alert-warning.mx-3  You can search for public teams only! 
+                        // /.tab-pane
+                    // /.tab-content
+                // /.card
+            // /.page-section
+        // /.page-inner
 
-          .modal-footer
-            button#decline.btn.btn-danger(type='button') Decline
-            button#accept.btn.btn-primary(type='submit') Accept    
-            
-            
+
 block scripts
   script.
       $('#exampleModal').on('show.bs.modal', function (event) {

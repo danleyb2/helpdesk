@@ -1,20 +1,55 @@
 extends application
 
 block main
-  .container(style="padding-top:50px")
-    .row.d-flex.justify-content-center
-      .col-xl-5.col-lg-6.col-md-7.text-center
-        h1 HelpDesk
-        p.lead Create a New Account.
-        form(role='form', action="/register", method="post")
-          .form-group
-              input.form-control(type='text', name="username", placeholder='Username')
-          .form-group
-              input.form-control(type='email', name="email", placeholder='Email', required='true')
-          .form-group
-            input.form-control(type='password', name="password", placeholder='Password', required='true')
-          .form-group
-            input.form-control.btn.btn-primary(type='submit' value='Register')
-          
-        a(href='/')
-          button.btn.btn-default(type="button") Cancel
+  main.auth
+    header#auth-header.auth-header(style='background-image: url(/images/illustration/img-1.png);')
+      h1
+        img(src='/images/brand-inverse.png' alt='' height='72')
+        span.sr-only Sign Up
+      p
+        | Already have an account? please 
+        a(href='/login') Sign In
+    // form
+    form.auth-form(role='form', action="/register", method="post")
+      if info
+        p #{info.message}
+      // .form-group
+      .form-group
+        .form-label-group
+          input#inputEmail.form-control(type='email' placeholder='Email' name="email", required='' autofocus='')
+          label(for='inputEmail') Email
+      // /.form-group
+      // .form-group
+      .form-group
+        .form-label-group
+          input#inputUser.form-control(type='text' placeholder='Username' name="username")
+          label(for='inputUser') Username
+      // /.form-group
+      // .form-group
+      .form-group
+        .form-label-group
+          input#inputPassword.form-control(type='password' name='password' placeholder='Password' required='')
+          label(for='inputPassword') Password
+      // /.form-group
+      // .form-group
+      .form-group
+        button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign Up
+      // /.form-group
+      // .form-group
+      .form-group.text-center
+        .custom-control.custom-control-inline.custom-checkbox
+          input#newsletter.custom-control-input(type='checkbox')
+          label.custom-control-label(for='newsletter') Sign me up for the newsletter
+      // /.form-group
+      // recovery links
+      p.text-center.text-muted.mb-0
+        | By creating an account you agree to the 
+        a(href='/tos') Terms of Use
+        |  and 
+        a(href='/privacy') Privacy Policy
+        | .
+      // /recovery links
+    // /.auth-form
+    // copyright
+    footer.auth-footer  &copy; 2019 All Rights Reserved. 
+    

@@ -1,27 +1,27 @@
 extends ../layout
 
 block content
-  h1=title
-
-  form(method='POST' action='')
-
-    div.form-group
-      label(for='name') Name:
-      input#name.form-control(type='text', placeholder='Property Name' name='name' required='true' value=(undefined===instance ? '' : instance.name) )
-
-    div.form-group
-      label(for='support_email') Support Email:
-      input#support_email.form-control(type='email', placeholder='Support Email' name='support_email' required='true' value=(undefined===instance ? '' : instance.support_email) )
-
-    div.form-group
-      label(for='type') Type:
-      select#type.form-control(type='select', placeholder='Select Type' name='type' required='true' )
-        option(value='Site' selected=(undefined===instance || instance.type!='Site' ? false:'selected')) Site
-        option(value='Page' selected=(undefined===instance || instance.type!='Page' ? false:'selected')) Page
-
-    button.btn.btn-primary(type='submit') Submit
-
-  if errors
-    ul
-      for error in errors
-        li!= error.msg
+  .page
+    .page-inner
+      h3 Create New Property
+      form(method='POST' action='')
+        div.form-group
+          label(for='name') Name:
+          input#name.form-control(type='text', placeholder='Property Name' name='name' required='true' value=(undefined===instance ? '' : instance.name) )
+    
+        div.form-group
+          label(for='support_email') Support Email:
+          input#support_email.form-control(type='email', placeholder='Support Email' name='support_email' required='true' value=(undefined===instance ? '' : instance.support_email) )
+    
+        div.form-group
+          label(for='type') Type:
+          select#type.form-control(type='select', placeholder='Select Type' name='type' required='true' )
+            option(value='Site' selected=(undefined===instance || instance.type!='Site' ? false:'selected')) Site
+            option(value='Page' selected=(undefined===instance || instance.type!='Page' ? false:'selected')) Page
+    
+        button.btn.btn-primary(type='submit') Submit
+    
+      if errors
+        ul
+          for error in errors
+            li!= error.msg

@@ -1,6 +1,82 @@
-extends ../layout
+extends ../../property/layout
 
 block tab
+
+  .section-block
+    // grid row
+    .row.mb-4
+      // .col
+      .col
+        // .has-clearable
+        .has-clearable
+          button.close(type='button' aria-label='Close')
+            span(aria-hidden='true')
+              i.fa.fa-times-circle
+          input.form-control(type='text' placeholder='Search')
+        // /.has-clearable
+      // /.col
+      // .col-auto
+      .col-auto
+        // invite members
+        .dropdown
+          button.btn.btn-primary(data-toggle='dropdown' data-display='static' aria-haspoppup='true' aria-expanded='false')
+            i.fas.fa-user-plus.mr-1
+            |  Invite
+          .dropdown-arrow
+          // .dropdown-menu
+          .dropdown-menu.dropdown-menu-right.dropdown-menu-rich.stop-propagation
+            .dropdown-header  Add members 
+            .form-group.px-3.py-2.m-0
+              input.form-control(type='text' placeholder='e.g. @bent10' data-toggle='tribute' data-remote='assets/data/tribute.json' data-menu-container='#people-list' data-item-template='true' autofocus='')
+              small.form-text.text-muted Search people by username or email address to invite them.
+            #people-list.tribute-inline.stop-propagation
+            a.dropdown-footer(href='#!')
+              | Invite member by link 
+              i.far.fa-clone
+          // /.dropdown-menu
+        // /invite members
+      // /.col-auto
+    // /grid row
+    each member in members
+      section.card.card-fluid.mb-2
+        // .card-body
+        .card-body
+          // grid row
+          .row.align-items-center
+            // grid column
+            .col-auto
+              a.user-avatar.user-avatar-lg(href='#!')
+                img(src='/images/avatars/uifaces5.jpg' alt='')
+                span.avatar-badge.online(title='online')
+            // /grid column
+            // grid column
+            .col
+              h3.card-title
+                a(href='user-profile.html') #{member.account.name}
+                small.text-muted #{member.account.username} #{member.status}
+              h6.card-subtitle.text-muted  #{member.role} 
+            // /grid column
+            // /grid column
+            .col-auto
+              button.btn.btn-icon.btn-secondary.mr-1(type='button' data-toggle='tooltip' title='Private message')
+                i.far.fa-comment-alt
+              // .dropdown
+              .dropdown.d-inline-block
+                button.btn.btn-icon.btn-secondary(data-toggle='dropdown')
+                  i.fa.fa-fw.fa-ellipsis-h
+                .dropdown-arrow
+                .dropdown-menu.dropdown-menu-right
+                  button.dropdown-item(type='button') Invite to a team
+                  button.dropdown-item(type='button') Copy member ID
+                  .dropdown-divider
+                  button.dropdown-item(type='button') Remove
+              // /.dropdown
+            // /grid column
+          // /grid row
+        // /.card-body
+      // /.card
+    
+
   button.btn.btn-primary.mb-2(type='button' data-toggle='modal' data-target='#exampleModalCenter')
     | Invite New
   if members.length

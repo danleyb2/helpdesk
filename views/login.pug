@@ -1,27 +1,56 @@
 extends application
 
-block main
-  .container(style="padding-top:50px")
-    .row.d-flex.justify-content-center
-      .col-xl-5.col-lg-6.col-md-7.text-center
-        h3 HelpDesk
-        if info
-          pre #{info.message}
-        p.lead Log in to your account.
-        form(role='form', action="/login", method="post")
-          .form-group
-            input.form-control#username(type='text', name="email", placeholder='Username or Email' value='' required='true')
-          .form-group
-            input.form-control(type='password', name="password", placeholder='Password', value='' required='true')
-          .form-group
-            input.form-control.btn.btn-primary(type='submit', value='Log In')
-          
-            
-        a(href='/register') Register
-        | 
-        a(href='/password_reset') Forgot Password?
-      
 
-block scripts
-  script.  
-      let a = '';
+block main
+  main.auth
+    header#auth-header.auth-header(style='background-image: url(/images/illustration/img-1.png);')
+      h1
+        img(src='/images/brand-inverse.png' alt='' height='72')
+        span.sr-only Sign In
+      p
+        | Don&apos;t have a account? 
+        a(href='/register') Create One
+    // form
+      
+    form.auth-form(role='form', action="/login", method="post")
+      if info
+        p #{info.message}
+      // .form-group
+      .form-group
+        .form-label-group
+          input#inputUser.form-control(type='text' name="email", placeholder='Username or Email' required='' autofocus='')
+          label(for='inputUser') Username or Email
+      // /.form-group
+      // .form-group
+      .form-group
+        .form-label-group
+          input#inputPassword.form-control(type='password' name="password" placeholder='Password' required='')
+          label(for='inputPassword') Password
+      // /.form-group
+      // .form-group
+      .form-group
+        button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign In
+      // /.form-group
+      // .form-group
+      .form-group.text-center
+        .custom-control.custom-control-inline.custom-checkbox
+          input#remember-me.custom-control-input(type='checkbox')
+          label.custom-control-label(for='remember-me') Keep me sign in
+      // /.form-group
+      // recovery links
+      .text-center.pt-3
+        a.link(href='auth-recovery-username.html') Forgot Username?
+        span.mx-2 &middot;
+        a.link(href='/password_reset') Forgot Password?
+      // /recovery links
+    // /.auth-form
+    // copyright
+    footer.auth-footer
+      | &copy; 2019 All Rights Reserved. 
+      a(href='/privacy') Privacy
+      |  and 
+      a(href='/tos') Terms
+  // /.auth
+    
+        
+

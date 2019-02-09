@@ -1,17 +1,303 @@
 extends ../layout
 
 block content
-  br
-  br
-  h4 Conversations
-  if conversations.length
-    each conversation in conversations
-      h5
-        a(href='m/' + conversation.id) #{conversation.title} 
-        span.chat_date #{conversation.createdAt}
-  else
-    p No Active Conversations
-    a(href='') Sim One Now
+  .page
+    // .page-navs
+    nav.page-navs
+      // .nav-scroller
+      .nav-scroller
+        // .nav
+        .nav.nav-tabs
+          a.nav-link.active.show(data-toggle='tab' href='#tab1')
+            | All 
+            span.badge (7)
+          a.nav-link(data-toggle='tab' href='#tab2') Starred
+          a.nav-link(data-toggle='tab' href='#tab3') Trash
+        // /.nav
+      // /.nav-scroller
+    // /.page-navs
+    // .page-inner
+    .page-inner
+      // .page-title-bar
+      header.page-title-bar
+        .d-flex.justify-content-between
+          .d-md-inline-block
+            // .input-group
+            .input-group.input-group-alt
+              // .input-group
+              .input-group
+                .input-group-prepend
+                  span.input-group-text
+                    span.oi.oi-magnifying-glass
+                input.form-control(type='text' placeholder='Search message')
+              // /.input-group
+              // .input-group-append
+              .input-group-append
+                select.custom-select
+                  option(selected='')  Filter By 
+                  option(value='1')  Team 
+                  option(value='3')  Project 
+                  option(value='2')  People 
+              // /.input-group-append
+            // /.input-group
+          button.btn.btn-success.d-none.d-sm-inline-block(type='button') New Message
+        button.btn.btn-success.btn-floated.d-block.d-sm-none(type='button')
+          span.fa.fa-plus
+      // /.page-title-bar
+      // .page-section
+      .page-section
+        // .card
+        section.card
+          // .list-group-messages
+          .list-group.list-group-messages.list-group-flush.list-group-bordered
+            each conversation in conversations
+              .list-group-item.unread
+                // message figure
+                .list-group-item-figure
+                  span.rating.rating-sm.mr-3
+                    input#star1(type='checkbox' value='1')
+                    label(for='star1')
+                      span.fa.fa-star
+                  // .avatar
+                  .avatar.has-badge
+                    a.user-avatar(href='/m/'+conversation._id)
+                      img(src='assets/images/avatars/team2.png' alt='')
+                    span.tile.tile-xs.tile-circle.bg-red 2
+                  // /.avatar
+                // /message figure
+                // message body
+                .list-group-item-body.pl-md-2
+                  // grid row
+                  .row
+                    // grid column
+                    .col-12.col-lg-3.d-none.d-lg-block
+                      h4.list-group-item-title.text-truncate
+                        a(href='/m/'+conversation._id) Creative Division
+                      p.list-group-item-text  16 minutes ago 
+                    // /grid column
+                    // grid column
+                    .col-12.col-lg-9
+                      h4.list-group-item-title.text-truncate
+                        a(href='/m/'+conversation._id) #{conversation.title}
+                      p.list-group-item-text.text-truncate  #{conversation.latestMessage.body}. 
+                    // /grid column
+                    // grid column
+                    .col-12.d-lg-none
+                      p.list-group-item-text  16 minutes ago 
+                    // /grid column
+                  // /grid row
+                // /message body
+                // message actions
+                .list-group-item-figure
+                  // .dropdown
+                  .dropdown
+                    button.btn.btn-sm.btn-icon.btn-secondary(data-toggle='dropdown')
+                      i.fa.fa-ellipsis-h
+                    .dropdown-arrow
+                    // .dropdown-menu
+                    .dropdown-menu.dropdown-menu-right
+                      a.dropdown-item(href='#!') Mark as read
+                      a.dropdown-item(href='#!') Mark as unread
+                      a.dropdown-item(href='#!') Toggle star
+                      a.dropdown-item(href='#!') Trash
+                    // /.dropdown-menu
+                  // /.dropdown
+                // /message actions
+              // /message item
+             
+            // message item
+            .list-group-item.unread
+              // message figure
+              .list-group-item-figure
+                span.rating.rating-sm.mr-3
+                  input#star3(type='checkbox' value='1' checked='')
+                  label(for='star3')
+                    span.fa.fa-star
+                // .avatar
+                .avatar.has-badge
+                  a.user-avatar(href='page-conversations.html')
+                    img(src='assets/images/avatars/team1.jpg' alt='')
+                  span.tile.tile-xs.tile-circle.bg-red 4
+                // /.avatar
+              // /message figure
+              // message body
+              .list-group-item-body.pl-md-2
+                // grid row
+                .row
+                  // grid column
+                  .col-12.col-lg-3.d-none.d-lg-block
+                    h4.list-group-item-title.text-truncate
+                      a(href='page-conversations.html') Stilearning
+                    p.list-group-item-text  2 hours ago 
+                  // /grid column
+                  // grid column
+                  .col-12.col-lg-9
+                    h4.list-group-item-title.text-truncate
+                      a(href='page-conversations.html') Invitation: Joe&apos;s Dinner @ Fri Aug 22
+                    p.list-group-item-text.text-truncate  Sorry, I can&apos;t aspernatur debitis explicabo expedita eos, consequatur. 
+                  // /grid column
+                  // grid column
+                  .col-12.d-lg-none
+                    p.list-group-item-text  2 hours ago 
+                  // /grid column
+                // /grid row
+              // /message body
+              // message actions
+              .list-group-item-figure
+                // .dropdown
+                .dropdown
+                  button.btn.btn-sm.btn-icon.btn-secondary(data-toggle='dropdown')
+                    i.fa.fa-ellipsis-h
+                  .dropdown-arrow
+                  // .dropdown-menu
+                  .dropdown-menu.dropdown-menu-right
+                    a.dropdown-item(href='#!') Mark as read
+                    a.dropdown-item(href='#!') Mark as unread
+                    a.dropdown-item(href='#!') Toggle star
+                    a.dropdown-item(href='#!') Trash
+                  // /.dropdown-menu
+                // /.dropdown
+              // /message actions
+            // /message item
+            // message item
+            .list-group-item.read
+              // message figure
+              .list-group-item-figure
+                span.rating.rating-sm.mr-3
+                  input#star4(type='checkbox' value='1')
+                  label(for='star4')
+                    span.fa.fa-star
+                // .avatar
+                .avatar
+                  a.user-avatar(href='page-conversations.html')
+                    img(src='assets/images/avatars/team3.png' alt='')
+                // /.avatar
+              // /message figure
+              // message body
+              .list-group-item-body.pl-md-2
+                // grid row
+                .row
+                  // grid column
+                  .col-12.col-lg-3.d-none.d-lg-block
+                    h4.list-group-item-title.text-truncate
+                      a(href='page-conversations.html') Openlane
+                    p.list-group-item-text  23 hours ago 
+                  // /grid column
+                  // grid column
+                  .col-12.col-lg-9
+                    h4.list-group-item-title.text-truncate
+                      a(href='page-conversations.html') Final reminder: Upgrade to Pro
+                    p.list-group-item-text.text-truncate  Follow up this reminder asap, quam error praesentium asperiores a quidem. 
+                  // /grid column
+                  // grid column
+                  .col-12.d-lg-none
+                    p.list-group-item-text  23 hours ago 
+                  // /grid column
+                // /grid row
+              // /message body
+              // message actions
+              .list-group-item-figure
+                // .dropdown
+                .dropdown
+                  button.btn.btn-sm.btn-icon.btn-secondary(data-toggle='dropdown')
+                    i.fa.fa-ellipsis-h
+                  .dropdown-arrow
+                  // .dropdown-menu
+                  .dropdown-menu.dropdown-menu-right
+                    a.dropdown-item(href='#!') Mark as read
+                    a.dropdown-item(href='#!') Mark as unread
+                    a.dropdown-item(href='#!') Toggle star
+                    a.dropdown-item(href='#!') Trash
+                  // /.dropdown-menu
+                // /.dropdown
+              // /message actions
+            // /message item
+            // message item
+            .list-group-item.read
+              // message figure
+              .list-group-item-figure
+                span.rating.rating-sm.mr-3
+                  input#star5(type='checkbox' value='1')
+                  label(for='star5')
+                    span.fa.fa-star
+                // .avatar
+                .avatar
+                  a.tile.tile-circle.bg-green(href='page-conversations.html') GZ
+                // /.avatar
+              // /message figure
+              // message body
+              .list-group-item-body.pl-md-2
+                // grid row
+                .row
+                  // grid column
+                  .col-12.col-lg-3.d-none.d-lg-block
+                    h4.list-group-item-title.text-truncate
+                      a(href='page-conversations.html') Gogo Zoom
+                    p.list-group-item-text  1 day ago 
+                  // /grid column
+                  // grid column
+                  .col-12.col-lg-9
+                    h4.list-group-item-title.text-truncate
+                      a(href='page-conversations.html') Live healthy with this wireless sensor.
+                    p.list-group-item-text.text-truncate  Hi all, eveniet magnam fugiat odio nemo vero! 
+                  // /grid column
+                  // grid column
+                  .col-12.d-lg-none
+                    p.list-group-item-text  1 day ago 
+                  // /grid column
+                // /grid row
+              // /message body
+              // message actions
+              .list-group-item-figure
+                // .dropdown
+                .dropdown
+                  button.btn.btn-sm.btn-icon.btn-secondary(data-toggle='dropdown')
+                    i.fa.fa-ellipsis-h
+                  .dropdown-arrow
+                  // .dropdown-menu
+                  .dropdown-menu.dropdown-menu-right
+                    a.dropdown-item(href='#!') Mark as read
+                    a.dropdown-item(href='#!') Mark as unread
+                    a.dropdown-item(href='#!') Toggle star
+                    a.dropdown-item(href='#!') Trash
+                  // /.dropdown-menu
+                // /.dropdown
+              // /message actions
+            // /message item
+            
+          // /.list-group-messages
+        // /.card
+        // .section-block
+        .section-block
+          // record sumary
+          p.text-muted  Showing 1 to 10 of 1,000 entries 
+          // /record sumary
+          // .pagination
+          ul.pagination.justify-content-center.mb-5.mb-sm-0
+            li.page-item.disabled
+              a.page-link(href='#!' tabindex='-1')
+                i.fa.fa-lg.fa-angle-left
+            li.page-item
+              a.page-link(href='#!') 1
+            li.page-item.disabled
+              a.page-link(href='#!' tabindex='-1') ...
+            li.page-item
+              a.page-link(href='#!') 13
+            li.page-item.active
+              a.page-link(href='#!') 14
+            li.page-item
+              a.page-link(href='#!') 15
+            li.page-item.disabled
+              a.page-link(href='#!' tabindex='-1') ...
+            li.page-item
+              a.page-link(href='#!') 24
+            li.page-item
+              a.page-link(href='#!')
+                i.fa.fa-lg.fa-angle-right
+          // /.pagination
+        // /.section-block
+      // /.page-section
+    // /.page-inner
      
 block scripts
   script.

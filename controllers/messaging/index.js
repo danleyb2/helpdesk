@@ -21,7 +21,7 @@ exports.details = function (req, res) {
             Conversation.findById(req.params.id, function (err, conversation) {
                 if (err) return next(err);
                 conversation.recentMessages(function (err, messages) {
-                    res.render('messaging/conversations', {
+                    res.render('messaging/detail', {
                         title: 'Conversation',
                         'conversations': conversations,
                         'currentConversation': conversation,
@@ -32,7 +32,7 @@ exports.details = function (req, res) {
             });
 
         } else {
-            res.render('messaging/conversations', {
+            res.render('messaging/detail', {
                 title: 'Conversation',
                 'conversations': conversations,
                 'currentConversation': undefined,

@@ -1,77 +1,311 @@
 extends application
 
+
 block main
-  style(type='text/css').
-    .notification-indicator {
-      color: hsla(0, 0%, 100%, .75);
-    }
+  .app
     
-    .notification-indicator .mail-status.unread {
-      display: inline-block;
-    }
-    
-    .notification-indicator .mail-status {
-      background-clip: padding-box;
-      background-image: linear-gradient(#54a3ff, #006eed);
-      /*border: 2px solid #24292e;*/
-      border-radius: 50%;
-      color: #fff;
-      display: none;
-      height: 14px;
-      left: 22px;
-      position: relative;
-      top: -9px;
-      width: 14px;
-      z-index: 2;
-    }
-    
-  .container  
-    if !req.user.isVerified  
-      .alert.alert-secondary.mt-2(role='alert')
-        | Please take a moment to 
-        a.alert-link(href='/verify_email') Verify Your Email Address
-        | . To be able to create properties and tickets.
-      
-    nav.navbar.navbar-light.bg-light.justify-content-between.mb-2.navbar-expand-lg
-      a.navbar-brand(href='/') HelpDesk
-      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
-        span.navbar-toggler-icon
-      #navbarNav.collapse.navbar-collapse
-        .navbar-nav.mr-auto
-          ul.navbar-nav
-            li.nav-item.active
-              a.nav-link(href='/m')
-                | Messaging 
-                span.badge.badge-pill.badge-primary #{active_conversations_count}
-            li.nav-item
-              a.nav-link(href='/t') Tickets 
-                span.badge.badge-pill.badge-primary #{open_tickets_count}
-            li.nav-item
-              a.nav-link(href='/p') Properties
-            //li.nav-item
-            //  a.nav-link.disabled(href='#') Disabled        
-        form.form-inline.col-md-5(action='/search' method='get')
-          input.form-control.col-md-12(type='search', name='q' placeholder='Search Tickets, Contacts, Conversations' value=req.query.q?req.query.q:'')
-        ul.navbar-nav
-          li.nav-item
-            span.d-inline-block
-              a.nav-link.notification-indicator(href='/n' aria-label='Notifications')
-                span.mail-status(class=unread_notifications?'unread':'')
-                i.fas.fa-bell.fa-lg
-              
-          li.nav-item.dropdown
-            a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') #{req.user.username}
-            .dropdown-menu.dropdown-menu-right(aria-labelledby='navbarDropdownMenuLink')
-              a.dropdown-item(href='/profile') Profile
-              a.dropdown-item(href='/s') Settings
-              a.dropdown-item(href='/logout') Logout
+    // .app-header
+    header.app-header.app-header-dark
+      // .top-bar
+      .top-bar
+        // .top-bar-brand
+        .top-bar-brand
+          a(href='index.html')
+            img(src='/images/brand-inverse.png' alt='' style='height: 32px;width: auto;')
+        // /.top-bar-brand
+        // .top-bar-list
+        .top-bar-list
+          // .top-bar-item
+          .top-bar-item.px-2.d-md-none.d-lg-none.d-xl-none
+            // toggle menu
+            button.hamburger.hamburger-squeeze(type='button' data-toggle='aside' aria-label='toggle menu')
+              span.hamburger-box
+                span.hamburger-inner
+            // /toggle menu
+          // /.top-bar-item
+          // .top-bar-item
+          .top-bar-item.top-bar-item-full
+            // .top-bar-search
+            form.form-inline.col-md-5(action='/search' method='get')
+              .top-bar-search
+                .input-group.input-group-search
+                  .input-group-prepend
+                    span.input-group-text
+                      span.oi.oi-magnifying-glass
+                  input.form-control(type='text' aria-label='Search' name='q' placeholder='Search' value=req.query.q?req.query.q:'')
+            // /.top-bar-search
+          // /.top-bar-item
+          // .top-bar-item
+          .top-bar-item.top-bar-item-right.px-0.d-none.d-sm-flex
+            // .nav
+            ul.header-nav.nav
+              // .nav-item
+              li.nav-item.dropdown.header-nav-dropdown.has-notified
+                a.nav-link(href='#!' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                  span.oi.oi-pulse
+                .dropdown-arrow
+                // .dropdown-menu
+                .dropdown-menu.dropdown-menu-rich.dropdown-menu-right
+                  h6.dropdown-header.stop-propagation
+                    span
+                      | Activities 
+                      span.badge (2)
+                  // .dropdown-scroll
+                  .dropdown-scroll.perfect-scrollbar
+                    // .dropdown-item
+                    a.dropdown-item.unread(href='#!')
+                      .user-avatar
+                        img(src='assets/images/avatars/uifaces15.jpg' alt='')
+                      .dropdown-item-body
+                        p.text  Jeffrey Wells created a schedule 
+                        span.date Just now
+                    // /.dropdown-item
+                    // .dropdown-item
+                    a.dropdown-item.unread(href='#!')
+                      .user-avatar
+                        img(src='assets/images/avatars/uifaces16.jpg' alt='')
+                      .dropdown-item-body
+                        p.text  Anna Vargas logged a chat 
+                        span.date 3 hours ago
+                    // /.dropdown-item
+                    // .dropdown-item
+                    a.dropdown-item(href='#!')
+                      .user-avatar
+                        img(src='assets/images/avatars/uifaces17.jpg' alt='')
+                      .dropdown-item-body
+                        p.text  Sara Carr invited to Stilearn Admin 
+                        span.date 5 hours ago
+                    // /.dropdown-item
+                    // .dropdown-item
+                    a.dropdown-item(href='#!')
+                      .user-avatar
+                        img(src='assets/images/avatars/uifaces18.jpg' alt='')
+                      .dropdown-item-body
+                        p.text  Arthur Carroll updated a project 
+                        span.date 1 day ago
+                    // /.dropdown-item
+                    // .dropdown-item
+                    a.dropdown-item(href='#!')
+                      .user-avatar
+                        img(src='assets/images/avatars/uifaces19.jpg' alt='')
+                      .dropdown-item-body
+                        p.text  Hannah Romero created a task 
+                        span.date 1 day ago
+                    // /.dropdown-item
+                    // .dropdown-item
+                    a.dropdown-item(href='#!')
+                      .user-avatar
+                        img(src='assets/images/avatars/uifaces20.jpg' alt='')
+                      .dropdown-item-body
+                        p.text  Angela Peterson assign a task to you 
+                        span.date 2 days ago
+                    // /.dropdown-item
+                    // .dropdown-item
+                    a.dropdown-item(href='#!')
+                      .user-avatar
+                        img(src='assets/images/avatars/uifaces21.jpg' alt='')
+                      .dropdown-item-body
+                        p.text  Shirley Mason and 3 others followed you 
+                        span.date 2 days ago
+                    // /.dropdown-item
+                  // /.dropdown-scroll
+                  a.dropdown-footer(href='user-activities.html')
+                    | All activities 
+                    i.fas.fa-fw.fa-long-arrow-alt-right
+                // /.dropdown-menu
+              // /.nav-item
+              // .nav-item
+              li.nav-item.dropdown.header-nav-dropdown.has-notified
+                a.nav-link(href='#!' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                  span.oi.oi-envelope-open
+                .dropdown-arrow
+                // .dropdown-menu
+                .dropdown-menu.dropdown-menu-rich.dropdown-menu-right
+                  h6.dropdown-header.stop-propagation
+                    span Messages
+                    a(href='#!') Mark all as read
+                  // .dropdown-scroll
+                  .dropdown-scroll.perfect-scrollbar
+                    // .dropdown-item
+                    a.dropdown-item.unread(href='#!')
+                      .user-avatar
+                        img(src='assets/images/avatars/team1.jpg' alt='')
+                      .dropdown-item-body
+                        p.subject  Stilearning 
+                        p.text.text-truncate  Invitation: Joe&apos;s Dinner @ Fri Aug 22 
+                        span.date 2 hours ago
+                    // /.dropdown-item
+                    // .dropdown-item
+                    a.dropdown-item(href='#!')
+                      .user-avatar
+                        img(src='assets/images/avatars/team3.png' alt='')
+                      .dropdown-item-body
+                        p.subject  Openlane 
+                        p.text.text-truncate  Final reminder: Upgrade to Pro 
+                        span.date 23 hours ago
+                    // /.dropdown-item
+                    // .dropdown-item
+                    a.dropdown-item(href='#!')
+                      .tile.tile-circle.bg-green  GZ 
+                      .dropdown-item-body
+                        p.subject  Gogo Zoom 
+                        p.text.text-truncate  Live healthy with this wireless sensor. 
+                        span.date 1 day ago
+                    // /.dropdown-item
+                    // .dropdown-item
+                    a.dropdown-item(href='#!')
+                      .tile.tile-circle.bg-teal  GD 
+                      .dropdown-item-body
+                        p.subject  Gold Dex 
+                        p.text.text-truncate  Invitation: Design Review @ Mon Jul 7 
+                        span.date 1 day ago
+                    // /.dropdown-item
+                    // .dropdown-item
+                    a.dropdown-item(href='#!')
+                      .user-avatar
+                        img(src='assets/images/avatars/team2.png' alt='')
+                      .dropdown-item-body
+                        p.subject  Creative Division 
+                        p.text.text-truncate  Need some feedback on this please 
+                        span.date 2 days ago
+                    // /.dropdown-item
+                    // .dropdown-item
+                    a.dropdown-item(href='#!')
+                      .tile.tile-circle.bg-pink  LD 
+                      .dropdown-item-body
+                        p.subject  Lab Drill 
+                        p.text.text-truncate  Our UX exercise is ready 
+                        span.date 6 days ago
+                    // /.dropdown-item
+                  // /.dropdown-scroll
+                  a.dropdown-footer(href='page-messages.html')
+                    | All messages 
+                    i.fas.fa-fw.fa-long-arrow-alt-right
+                // /.dropdown-menu
+              // /.nav-item
+            // /.nav
+            // .btn-account
+            .dropdown
+              button.btn-account.d-none.d-md-flex(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                span.user-avatar.user-avatar-md
+                  img(src='/images/avatars/profile.jpg' alt='')
+                span.account-summary.pr-lg-4.d-none.d-lg-block
+                  span.account-name #{req.user.username}
+                  span.account-description #{req.user.email}
+              .dropdown-arrow.dropdown-arrow-left
+              // .dropdown-menu
+              .dropdown-menu
+                h6.dropdown-header.d-none.d-md-block.d-lg-none  #{req.user.username} 
+                a.dropdown-item(href='/profile')
+                  span.dropdown-icon.oi.oi-person
+                  |  Profile
+                a.dropdown-item(href='/s')
+                  span.dropdown-icon.oi.oi-cog
+                  |  Settings
+                a.dropdown-item(href='/logout')
+                  span.dropdown-icon.oi.oi-account-logout
+                  |  Logout
+                .dropdown-divider
+                a.dropdown-item(href='/tos') Terms of Service
+                a.dropdown-item(href='/privacy') Privacy Policy  
+                a.dropdown-item(href='#!') Help Center
+                a.dropdown-item(href='#!') Ask Forum
+                a.dropdown-item(href='#!') Keyboard Shortcuts
+              // /.dropdown-menu
+            // /.btn-account
+          // /.top-bar-item
+        // /.top-bar-list
+      // /.top-bar
+    // /.app-header
+    // .app-aside
+    aside.app-aside.app-aside-expand-md.app-aside-light
+      // .aside-content
+      .aside-content
+        // .aside-header
+        header.aside-header.d-block.d-md-none
+          // .btn-account
+          button.btn-account(type='button' data-toggle='collapse' data-target='#dropdown-aside')
+            span.user-avatar.user-avatar-lg
+              img(src='assets/images/avatars/profile.jpg' alt='')
+            span.account-icon
+              span.fa.fa-caret-down.fa-lg
+            span.account-summary
+              span.account-name Beni Arisandi
+              span.account-description Marketing Manager
+          // /.btn-account
+          // .dropdown-aside
+          #dropdown-aside.dropdown-aside.collapse
+            // dropdown-items
+            .pb-3
+              a.dropdown-item(href='user-profile.html')
+                span.dropdown-icon.oi.oi-person
+                |  Profile
+              a.dropdown-item(href='auth-signin-v1.html')
+                span.dropdown-icon.oi.oi-account-logout
+                |  Logout
               .dropdown-divider
-              a.dropdown-item(href='/tos') Terms of Service
-              a.dropdown-item(href='/privacy') Privacy Policy
-    
-    
-    .card
-      .card-body
+              a.dropdown-item(href='#!') Help Center
+              a.dropdown-item(href='#!') Ask Forum
+              a.dropdown-item(href='#!') Keyboard Shortcuts
+            // /dropdown-items
+          // /.dropdown-aside
+        // /.aside-header
+        // .aside-menu
+        section.aside-menu.overflow-hidden
+          // .stacked-menu
+          nav#stacked-menu.stacked-menu
+            // .menu
+            ul.menu
+              // .menu-item
+              li.menu-item
+                a.menu-link(href='/')
+                  span.menu-icon.fa.fa-home
+                  span.menu-text Dashboard
+              // /.menu-item
+              // .menu-item
+              li.menu-item
+                a.menu-link(href='/m')
+                  span.menu-icon.fa.fa-inbox
+                  span.menu-text Inbox
+              // /.menu-item
+              // .menu-item
+              li.menu-item
+                a.menu-link(href='/t')
+                  span.menu-icon.fa.fa-home
+                  span.menu-text Tickets
+              // /.menu-item
+              // .menu-item
+              li.menu-item
+                a.menu-link(href='/p')
+                  span.menu-icon.fa.fa-home
+                  span.menu-text Properties
+              // /.menu-item
+              
+                            
+            // /.menu
+          // /.stacked-menu
+        // /.aside-menu
+        // Skin changer
+        .aside-footer.border-top.p-3
+          button.btn.btn-light.btn-block(data-toggle='skin')
+            | Night mode 
+            i.fas.fa-moon.ml-1
+        // /Skin changer
+      // /.aside-content
+    // /.app-aside
+    // .app-main
+    main.app-main
+      // .wrapper
+      .wrapper
+        if !req.user.isVerified
+          .page-message(role='alert')
+            i.fa.fa-fw.fa-wrench
+            | Please take a moment to
+            a.btn.btn-sm.btn-warning.circle.ml-3(href='/verify_email') Verify Your Email Address 
+            |  to create properties and tickets.
+            a.btn.btn-sm.btn-icon.btn-warning.ml-1(href='#!' aria-label='Close' onclick='$(this).parent().fadeOut()')
+              span(aria-hidden='true')
+                i.fa.fa-times
+
         block content
-          
-    
+      

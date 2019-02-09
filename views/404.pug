@@ -1,0 +1,21 @@
+extends application
+
+
+block main
+  section.empty-state
+    // .empty-state-container
+    .empty-state-container
+      .state-figure
+        img.img-fluid(src='/images/illustration/img-2.png' alt='' style='max-width: 320px')
+      h3.state-header  Page Not found! 
+      p.state-description.lead.text-muted
+        | Sorry, we&apos;ve misplaced that URL or it&apos;s pointing to something that doesn&apos;t exist.
+      .state-action
+        a.btn.btn-lg.btn-light(href='/')
+          i.fa.fa-angle-right
+          |  Home
+    // /.empty-state-container
+  
+    
+        
+

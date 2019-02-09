@@ -3,6 +3,7 @@ var express = require('express');
 
 var router = express.Router({mergeParams: true});
 const propertyController = require('../controllers/property');
+administrationController = require('../controllers/administration');
 
 propertyMessagingRouter = require('./messaging/property');
 propertyAdministrationRouter = require('./administration');
@@ -34,6 +35,11 @@ router.delete('/:pId/delete', propertyController.delete);
 
 router.use('/:pId/m', propertyMessagingRouter);
 router.use('/:pId/s', propertyAdministrationRouter);
+
+router.get('/:pId/members', administrationController.members);
+router.post('/:pId/members', administrationController.memberCreate);
+
+router.get('/:pId/departments', administrationController.departments);
 
 router.get('/', propertyController.list);
 

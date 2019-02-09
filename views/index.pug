@@ -1,5 +1,532 @@
 extends layout
 
 block content
-  h4 Dashboard
+  .page
+    // .page-inner
+    .page-inner
+      // .page-title-bar
+      header.page-title-bar
+        p.lead
+          span.font-weight-bold Hi, #{req.user.username}.
+          span.d-block.text-muted Here&rsquo;s what&rsquo;s happening with your business today.
+      // /.page-title-bar
+      // .page-section
+      .page-section
+        // .section-block
+        .section-block
+          // metric row
+          .metric-row
+            .col-lg-9
+              .metric-row.metric-flush
+                // metric column
+                .col
+                  // .metric
+                  a.metric.metric-bordered.align-items-center(href='user-teams.html')
+                    h2.metric-label  Teams 
+                    p.metric-value.h3
+                      sub
+                        i.oi.oi-people
+                      span.value 8
+                  // /.metric
+                // /metric column
+                // metric column
+                .col
+                  // .metric
+                  a.metric.metric-bordered.align-items-center(href='user-projects.html')
+                    h2.metric-label  Projects 
+                    p.metric-value.h3
+                      sub
+                        i.oi.oi-fork
+                      span.value 12
+                  // /.metric
+                // /metric column
+                // metric column
+                .col
+                  // .metric
+                  a.metric.metric-bordered.align-items-center(href='user-tasks.html')
+                    h2.metric-label  Active Tasks 
+                    p.metric-value.h3
+                      sub
+                        i.fa.fa-tasks
+                      span.value 64
+                  // /.metric
+                // /metric column
+            // metric column
+            .col-lg-3
+              // .metric
+              a.metric.metric-bordered(href='user-tasks.html')
+                .metric-badge
+                  span.badge.badge-lg.badge-success
+                    span.oi.oi-media-record.pulse.mr-1
+                    |  ONGOING TASKS
+                p.metric-value.h3
+                  sub
+                    i.oi.oi-timer
+                  span.value 8
+              // /.metric
+            // /metric column
+          // /metric row
+        // /.section-block
+        // grid row
+        .row
+          // grid column
+          .col-12.col-lg-12.col-xl-4
+            // .card
+            section.card.card-fluid
+              // .card-body
+              .card-body
+                // .d-flex
+                .d-flex.align-items-center.mb-4
+                  h3.card-title.mb-0  Completion Tasks 
+                  // .card-title-control
+                  .card-title-control.ml-auto
+                    // .dropdown
+                    .dropdown
+                      button.btn.btn-light(data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                        span This Week
+                        i.fa.fa-fw.fa-caret-down
+                      .dropdown-arrow.dropdown-arrow-right
+                      // .dropdown-menu
+                      .dropdown-menu.dropdown-menu-right.dropdown-menu-md.stop-propagation
+                        // .custom-control
+                        .custom-control.custom-radio
+                          input#dpToday.custom-control-input(type='radio' name='dpFilter' value='0')
+                          label.custom-control-label.d-flex.justify-content-between(for='dpToday')
+                            span Today
+                            span.text-muted Mar 27
+                        // /.custom-control
+                        // .custom-control
+                        .custom-control.custom-radio
+                          input#dpYesterday.custom-control-input(type='radio' name='dpFilter' value='1')
+                          label.custom-control-label.d-flex.justify-content-between(for='dpYesterday')
+                            span Yesterday
+                            span.text-muted Mar 26
+                        // /.custom-control
+                        // .custom-control
+                        .custom-control.custom-radio
+                          input#dpWeek.custom-control-input(type='radio' name='dpFilter' value='2' checked='')
+                          label.custom-control-label.d-flex.justify-content-between(for='dpWeek')
+                            span This Week
+                            span.text-muted Mar 21-27
+                        // /.custom-control
+                        // .custom-control
+                        .custom-control.custom-radio
+                          input#dpMonth.custom-control-input(type='radio' name='dpFilter' value='3')
+                          label.custom-control-label.d-flex.justify-content-between(for='dpMonth')
+                            span This Month
+                            span.text-muted Mar 1-31
+                        // /.custom-control
+                        // .custom-control
+                        .custom-control.custom-radio
+                          input#dpYear.custom-control-input(type='radio' name='dpFilter' value='4')
+                          label.custom-control-label.d-flex.justify-content-between(for='dpYear')
+                            span This Year
+                            span.text-muted 2018
+                        // /.custom-control
+                        // .custom-control
+                        .custom-control.custom-radio
+                          input#dpCustom.custom-control-input(type='radio' name='dpFilter' value='5')
+                          label.custom-control-label(for='dpCustom') Custom
+                          .custom-control-hint.my-1(for='dpCustom')
+                            // datepicker:range
+                            input.form-control(type='text' data-toggle='flatpickr' data-mode='range' data-disable-mobile='true' data-date-format='Y-m-d')
+                            // /datepicker:range
+                        // /.custom-control
+                      // /.dropdown-menu
+                    // /.dropdown
+                  // /.card-title-control
+                // /.d-flex
+                .chartjs(style='height: 291px')
+                  canvas#completion-tasks
+              // /.card-body
+            // /.card
+          // /grid column
+          // grid column
+          .col-12.col-lg-6.col-xl-4
+            // .card
+            section.card.card-fluid
+              // .card-body
+              .card-body
+                h3.card-title  Tasks Performance 
+                // easy-pie-chart
+                .text-center.pt-3
+                  .chart-inline-group(style='height:214px')
+                    .easypiechart(data-toggle='easypiechart' data-percent='60' data-size='214' data-bar-color='#346CB0' data-track-color='false' data-scale-color='false' data-rotate='225')
+                    .easypiechart(data-toggle='easypiechart' data-percent='50' data-size='174' data-bar-color='#00A28A' data-track-color='false' data-scale-color='false' data-rotate='225')
+                    .easypiechart(data-toggle='easypiechart' data-percent='75' data-size='134' data-bar-color='#5F4B8B' data-track-color='false' data-scale-color='false' data-rotate='225')
+                // /easy-pie-chart
+              // /.card-body
+              // .card-footer
+              .card-footer
+                .card-footer-item
+                  i.fa.fa-fw.fa-circle.text-indigo
+                  |  100% 
+                  .text-muted.small  Assigned 
+                .card-footer-item
+                  i.fa.fa-fw.fa-circle.text-purple
+                  |  75% 
+                  .text-muted.small  Completed 
+                .card-footer-item
+                  i.fa.fa-fw.fa-circle.text-teal
+                  |  60% 
+                  .text-muted.small  Active 
+              // /.card-footer
+            // /.card
+          // /grid column
+          // grid column
+          .col-12.col-lg-6.col-xl-4
+            // .card
+            section.card.card-fluid
+              // .card-body
+              .card-body.pb-0
+                h3.card-title  Leaderboard 
+                // legend
+                ul.list-inline.small
+                  li.list-inline-item
+                    i.fa.fa-fw.fa-circle.text-light
+                    |  Tasks
+                  li.list-inline-item
+                    i.fa.fa-fw.fa-circle.text-purple
+                    |  Completed
+                  li.list-inline-item
+                    i.fa.fa-fw.fa-circle.text-teal
+                    |  Active
+                  li.list-inline-item
+                    i.fa.fa-fw.fa-circle.text-red
+                    |  Overdue
+                // /legend
+              // /.card-body
+              // .list-group
+              .list-group.list-group-flush
+                // .list-group-item
+                .list-group-item
+                  // .list-group-item-figure
+                  .list-group-item-figure
+                    a.user-avatar(href='user-profile.html' data-toggle='tooltip' title='Martha Myers')
+                      img(src='assets/images/avatars/uifaces16.jpg' alt='')
+                  // /.list-group-item-figure
+                  // .list-group-item-body
+                  .list-group-item-body
+                    // .progress
+                    .progress.progress-animated.bg-transparent.rounded-0(data-toggle='tooltip' data-html='true' title='<div class="text-left small"><i class="fa fa-fw fa-circle text-purple"></i> 2065<br><i class="fa fa-fw fa-circle text-teal"></i> 231<br><i class="fa fa-fw fa-circle text-red"></i> 54</div>')
+                      .progress-bar.bg-purple(role='progressbar' aria-valuenow='73.46140163642832' aria-valuemin='0' aria-valuemax='100' style='width: 73.46140163642832%')
+                        span.sr-only 73.46140163642832% Complete
+                      .progress-bar.bg-teal(role='progressbar' aria-valuenow='8.217716115261473' aria-valuemin='0' aria-valuemax='100' style='width: 8.217716115261473%')
+                        span.sr-only 8.217716115261473% Complete
+                      .progress-bar.bg-red(role='progressbar' aria-valuenow='1.92102454642476' aria-valuemin='0' aria-valuemax='100' style='width: 1.92102454642476%')
+                        span.sr-only 1.92102454642476% Complete
+                    // /.progress
+                  // /.list-group-item-body
+                // /.list-group-item
+                // .list-group-item
+                .list-group-item
+                  // .list-group-item-figure
+                  .list-group-item-figure
+                    a.user-avatar(href='user-profile.html' data-toggle='tooltip' title='Tammy Beck')
+                      img(src='assets/images/avatars/uifaces15.jpg' alt='')
+                  // /.list-group-item-figure
+                  // .list-group-item-body
+                  .list-group-item-body
+                    // .progress
+                    .progress.progress-animated.bg-transparent.rounded-0(data-toggle='tooltip' data-html='true' title='<div class="text-left small"><i class="fa fa-fw fa-circle text-purple"></i> 1432<br><i class="fa fa-fw fa-circle text-teal"></i> 406<br><i class="fa fa-fw fa-circle text-red"></i> 49</div>')
+                      .progress-bar.bg-purple(role='progressbar' aria-valuenow='54.180855088914115' aria-valuemin='0' aria-valuemax='100' style='width: 54.180855088914115%')
+                        span.sr-only 54.180855088914115% Complete
+                      .progress-bar.bg-teal(role='progressbar' aria-valuenow='15.361331819901627' aria-valuemin='0' aria-valuemax='100' style='width: 15.361331819901627%')
+                        span.sr-only 15.361331819901627% Complete
+                      .progress-bar.bg-red(role='progressbar' aria-valuenow='1.853953840332955' aria-valuemin='0' aria-valuemax='100' style='width: 1.853953840332955%')
+                        span.sr-only 1.853953840332955% Complete
+                    // /.progress
+                  // /.list-group-item-body
+                // /.list-group-item
+                // .list-group-item
+                .list-group-item
+                  // .list-group-item-figure
+                  .list-group-item-figure
+                    a.user-avatar(href='user-profile.html' data-toggle='tooltip' title='Susan Kelley')
+                      img(src='assets/images/avatars/uifaces17.jpg' alt='')
+                  // /.list-group-item-figure
+                  // .list-group-item-body
+                  .list-group-item-body
+                    // .progress
+                    .progress.progress-animated.bg-transparent.rounded-0(data-toggle='tooltip' data-html='true' title='<div class="text-left small"><i class="fa fa-fw fa-circle text-purple"></i> 1271<br><i class="fa fa-fw fa-circle text-teal"></i> 87<br><i class="fa fa-fw fa-circle text-red"></i> 82</div>')
+                      .progress-bar.bg-purple(role='progressbar' aria-valuenow='52.13289581624282' aria-valuemin='0' aria-valuemax='100' style='width: 52.13289581624282%')
+                        span.sr-only 52.13289581624282% Complete
+                      .progress-bar.bg-teal(role='progressbar' aria-valuenow='3.568498769483183' aria-valuemin='0' aria-valuemax='100' style='width: 3.568498769483183%')
+                        span.sr-only 3.568498769483183% Complete
+                      .progress-bar.bg-red(role='progressbar' aria-valuenow='3.3634126333059884' aria-valuemin='0' aria-valuemax='100' style='width: 3.3634126333059884%')
+                        span.sr-only 3.3634126333059884% Complete
+                    // /.progress
+                  // /.list-group-item-body
+                // /.list-group-item
+                // .list-group-item
+                .list-group-item
+                  // .list-group-item-figure
+                  .list-group-item-figure
+                    a.user-avatar(href='user-profile.html' data-toggle='tooltip' title='Albert Newman')
+                      img(src='assets/images/avatars/uifaces18.jpg' alt='')
+                  // /.list-group-item-figure
+                  // .list-group-item-body
+                  .list-group-item-body
+                    // .progress
+                    .progress.progress-animated.bg-transparent.rounded-0(data-toggle='tooltip' data-html='true' title='<div class="text-left small"><i class="fa fa-fw fa-circle text-purple"></i> 1527<br><i class="fa fa-fw fa-circle text-teal"></i> 205<br><i class="fa fa-fw fa-circle text-red"></i> 151</div>')
+                      .progress-bar.bg-purple(role='progressbar' aria-valuenow='75.18463810930577' aria-valuemin='0' aria-valuemax='100' style='width: 75.18463810930577%')
+                        span.sr-only 75.18463810930577% Complete
+                      .progress-bar.bg-teal(role='progressbar' aria-valuenow='10.093549975381585' aria-valuemin='0' aria-valuemax='100' style='width: 10.093549975381585%')
+                        span.sr-only 10.093549975381585% Complete
+                      .progress-bar.bg-red(role='progressbar' aria-valuenow='7.434761201378631' aria-valuemin='0' aria-valuemax='100' style='width: 7.434761201378631%')
+                        span.sr-only 7.434761201378631% Complete
+                    // /.progress
+                  // /.list-group-item-body
+                // /.list-group-item
+                // .list-group-item
+                .list-group-item
+                  // .list-group-item-figure
+                  .list-group-item-figure
+                    a.user-avatar(href='user-profile.html' data-toggle='tooltip' title='Kyle Grant')
+                      img(src='assets/images/avatars/uifaces19.jpg' alt='')
+                  // /.list-group-item-figure
+                  // .list-group-item-body
+                  .list-group-item-body
+                    // .progress
+                    .progress.progress-animated.bg-transparent.rounded-0(data-toggle='tooltip' data-html='true' title='<div class="text-left small"><i class="fa fa-fw fa-circle text-purple"></i> 643<br><i class="fa fa-fw fa-circle text-teal"></i> 265<br><i class="fa fa-fw fa-circle text-red"></i> 127</div>')
+                      .progress-bar.bg-purple(role='progressbar' aria-valuenow='36.89041881812966' aria-valuemin='0' aria-valuemax='100' style='width: 36.89041881812966%')
+                        span.sr-only 36.89041881812966% Complete
+                      .progress-bar.bg-teal(role='progressbar' aria-valuenow='15.203671830177854' aria-valuemin='0' aria-valuemax='100' style='width: 15.203671830177854%')
+                        span.sr-only 15.203671830177854% Complete
+                      .progress-bar.bg-red(role='progressbar' aria-valuenow='7.286288009179575' aria-valuemin='0' aria-valuemax='100' style='width: 7.286288009179575%')
+                        span.sr-only 7.286288009179575% Complete
+                    // /.progress
+                  // /.list-group-item-body
+                // /.list-group-item
+              // /.list-group
+            // /.card
+          // /grid column
+        // /grid row
+        // section-deck
+        .section-deck
+          // .card
+          .card.card-fluid.pb-3
+            header.card-header  Active Projects 
+            // .lits-group
+            .lits-group.list-group-flush
+              // .lits-group-item
+              .list-group-item
+                // .lits-group-item-figure
+                .list-group-item-figure
+                  .has-badge
+                    a.tile.tile-md.bg-purple(href='page-project.html') LT
+                    a.user-avatar.user-avatar-xs(href='#team')
+                      img(src='assets/images/avatars/team4.jpg' alt='')
+                // .lits-group-item-figure
+                // .lits-group-item-body
+                .list-group-item-body
+                  h5.card-title
+                    a(href='page-project.html') Looper Admin Theme
+                  p.card-subtitle.text-muted.mb-1  Progress in 74% - Last update 1d 
+                  // .progress
+                  .progress.progress-xs.bg-transparent
+                    .progress-bar.bg-purple(role='progressbar' aria-valuenow='2181' aria-valuemin='0' aria-valuemax='100' style='width: 74%')
+                      span.sr-only 74% Complete
+                  // /.progress
+                // .lits-group-item-body
+              // /.lits-group-item
+              // .lits-group-item
+              .list-group-item
+                // .lits-group-item-figure
+                .list-group-item-figure
+                  .has-badge
+                    a.tile.tile-md.bg-indigo(href='page-project.html') SP
+                    a.user-avatar.user-avatar-xs(href='#team')
+                      img(src='assets/images/avatars/team1.jpg' alt='')
+                // .lits-group-item-figure
+                // .lits-group-item-body
+                .list-group-item-body
+                  h5.card-title
+                    a(href='page-project.html') Smart Paper
+                  p.card-subtitle.text-muted.mb-1  Progress in 22% - Last update 2h 
+                  // .progress
+                  .progress.progress-xs.bg-transparent
+                    .progress-bar.bg-indigo(role='progressbar' aria-valuenow='867' aria-valuemin='0' aria-valuemax='100' style='width: 22%')
+                      span.sr-only 22% Complete
+                  // /.progress
+                // .lits-group-item-body
+              // /.lits-group-item
+              // .lits-group-item
+              .list-group-item
+                // .lits-group-item-figure
+                .list-group-item-figure
+                  .has-badge
+                    a.tile.tile-md.bg-yellow(href='page-project.html') OS
+                    a.user-avatar.user-avatar-xs(href='#team')
+                      img(src='assets/images/avatars/team2.png' alt='')
+                // .lits-group-item-figure
+                // .lits-group-item-body
+                .list-group-item-body
+                  h5.card-title
+                    a(href='page-project.html') Online Store
+                  p.card-subtitle.text-muted.mb-1  Progress in 99% - Last update 2d 
+                  // .progress
+                  .progress.progress-xs.bg-transparent
+                    .progress-bar.bg-yellow(role='progressbar' aria-valuenow='6683' aria-valuemin='0' aria-valuemax='100' style='width: 99%')
+                      span.sr-only 99% Complete
+                  // /.progress
+                // .lits-group-item-body
+              // /.lits-group-item
+              // .lits-group-item
+              .list-group-item
+                // .lits-group-item-figure
+                .list-group-item-figure
+                  .has-badge
+                    a.tile.tile-md.bg-blue(href='page-project.html') BA
+                    a.user-avatar.user-avatar-xs(href='#team')
+                      img(src='assets/images/avatars/bootstrap.svg' alt='')
+                // .lits-group-item-figure
+                // .lits-group-item-body
+                .list-group-item-body
+                  h5.card-title
+                    a(href='page-project.html') Booking App
+                  p.card-subtitle.text-muted.mb-1  Progress in 35% - Last update 4h 
+                  // .progress
+                  .progress.progress-xs.bg-transparent
+                    .progress-bar.bg-blue(role='progressbar' aria-valuenow='112' aria-valuemin='0' aria-valuemax='100' style='width: 35%')
+                      span.sr-only 35% Complete
+                  // /.progress
+                // .lits-group-item-body
+              // /.lits-group-item
+              // .lits-group-item
+              .list-group-item
+                // .lits-group-item-figure
+                .list-group-item-figure
+                  .has-badge
+                    a.tile.tile-md.bg-teal(href='page-project.html') SB
+                    a.user-avatar.user-avatar-xs(href='#team')
+                      img(src='assets/images/avatars/sketch.svg' alt='')
+                // .lits-group-item-figure
+                // .lits-group-item-body
+                .list-group-item-body
+                  h5.card-title
+                    a(href='page-project.html') SVG Icon Bundle
+                  p.card-subtitle.text-muted.mb-1  Progress in 32% - Last update 1d 
+                  // .progress
+                  .progress.progress-xs.bg-transparent
+                    .progress-bar.bg-teal(role='progressbar' aria-valuenow='461' aria-valuemin='0' aria-valuemax='100' style='width: 32%')
+                      span.sr-only 32% Complete
+                  // /.progress
+                // .lits-group-item-body
+              // /.lits-group-item
+              // .lits-group-item
+              .list-group-item
+                // .lits-group-item-figure
+                .list-group-item-figure
+                  .has-badge
+                    a.tile.tile-md.bg-pink(href='page-project.html') SP
+                    a.user-avatar.user-avatar-xs(href='#team')
+                      img(src='assets/images/avatars/team4.jpg' alt='')
+                // .lits-group-item-figure
+                // .lits-group-item-body
+                .list-group-item-body
+                  h5.card-title
+                    a(href='page-project.html') Syrena Project
+                  p.card-subtitle.text-muted.mb-1  Progress in 93% - Last update 8h 
+                  // .progress
+                  .progress.progress-xs.bg-transparent
+                    .progress-bar.bg-pink(role='progressbar' aria-valuenow='3981' aria-valuemin='0' aria-valuemax='100' style='width: 93%')
+                      span.sr-only 93% Complete
+                  // /.progress
+                // .lits-group-item-body
+              // /.lits-group-item
+            // /.lits-group
+          // /.card
+          // .card
+          .card.card-fluid
+            header.card-header  Active Tasks: To-Dos 
+            // .card-body
+            .card-body
+              // .todo-list
+              .todo-list
+                // .todo-header
+                .todo-header  Looper Admin Theme (1/3) 
+                // /.todo-header
+                // .todo
+                .todo
+                  // .custom-control
+                  .custom-control.custom-checkbox
+                    input#todo1.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='todo1') Eat corn on the cob
+                  // /.custom-control
+                // /.todo
+                // .todo
+                .todo
+                  // .custom-control
+                  .custom-control.custom-checkbox
+                    input#todo2.custom-control-input(type='checkbox' checked='')
+                    label.custom-control-label(for='todo2') Mix up a pitcher of sangria
+                  // /.custom-control
+                // /.todo
+                // .todo
+                .todo
+                  // .custom-control
+                  .custom-control.custom-checkbox
+                    input#todo3.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='todo3') Have a barbecue
+                  // /.custom-control
+                // /.todo
+                // .todo
+                .todo
+                  // .custom-control
+                  .custom-control.custom-checkbox
+                    input#todo4.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='todo4')
+                      | Ride a roller coaster &mdash; 
+                      span.text-red.small Overdue in 3 days
+                  // /.custom-control
+                // /.todo
+                // .todo-header
+                .todo-header  Smart Paper (0/2) 
+                // /.todo-header
+                // .todo
+                .todo
+                  // .custom-control
+                  .custom-control.custom-checkbox
+                    input#todo5.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='todo5') Bring a blanket and lie on the grass at an outdoor concert
+                  // /.custom-control
+                // /.todo
+                // .todo
+                .todo
+                  // .custom-control
+                  .custom-control.custom-checkbox
+                    input#todo6.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='todo6') Collect seashells at the beach
+                  // /.custom-control
+                // /.todo
+                // .todo
+                .todo
+                  // .custom-control
+                  .custom-control.custom-checkbox
+                    input#todo7.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='todo7') Swim in a lake
+                  // /.custom-control
+                // /.todo
+                // .todo
+                .todo
+                  // .custom-control
+                  .custom-control.custom-checkbox
+                    input#todo8.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='todo8') Get enough sleep!
+                  // /.custom-control
+                // /.todo
+              // /.todo-list
+            // /.card-body
+            // .card-footer
+            footer.card-footer
+              a.card-footer-item(href='#!')
+                | View all 
+                i.fa.fa-fw.fa-angle-right
+            // /.card-footer
+          // /.card
+        // /section-deck
+      // /.page-section
+    // /.page-inner
+  
 

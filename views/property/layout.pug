@@ -1,0 +1,327 @@
+extends ../layout
+
+
+block styles_plugin
+  block styles_plugin_tab
+
+    
+block content
+  .page.has-sidebar.has-sidebar-expand-xl
+    // .page-inner
+    .page-inner
+      // .page-title-bar
+      header.page-title-bar
+        // .d-flex
+        .d-flex.justify-content-between.align-items-center
+          // .breadcrumb
+          nav(aria-label='breadcrumb')
+            ol.breadcrumb
+              li.breadcrumb-item.active
+                a(href='/p')
+                  i.breadcrumb-icon.fa.fa-angle-left.mr-2
+                  | Properties
+          // /.breadcrumb
+          button.btn.btn-light.btn-icon.d-xl-none(type='button' data-toggle='sidebar')
+            i.fa.fa-angle-double-left
+        // /.d-flex
+        // grid row
+        .row.text-center.text-sm-left
+          // grid column
+          .col-sm-auto.col-12.mb-2
+            // .has-badge
+            .has-badge.has-badge-bottom
+              a.user-avatar.user-avatar-xl(href='#!')
+                img(src='assets/images/avatars/team4.jpg' alt='')
+              span.tile.tile-circle.tile-xs(data-toggle='tooltip' title='Public')
+                i.fas.fa-globe
+            // /.has-badge
+          // /grid column
+          // grid column
+          .col
+            h1.page-title  #{property.name} 
+            p.text-muted
+              | #{property.support_email} We make stunning and cool responsive web and app design which suitable for any project purpose for your business.
+          // /grid column
+        // /grid row
+        // .nav-scroller
+        .nav-scroller.border-bottom
+          // .nav
+          .nav.nav-tabs
+            a.nav-link(href='/p/'+property._id class=('/p/'+property._id) === (req.baseUrl+req.path)? 'active' : '') Overview
+            a.nav-link(href='/p/'+property._id+'/departments' class=('/p/'+property._id+'/departments') === (req.baseUrl+req.path)? 'active' : '') Departments
+            a.nav-link(href='/p/'+property._id+'/members' class=('/p/'+property._id+'/members') === (req.baseUrl+req.path)? 'active' : '') Members
+            a.nav-link(href='/p/'+property._id+'/s', class=('/p/'+property._id+'/s/') === (req.baseUrl+req.path)? 'active' : '') Settings
+          // /.nav
+        // /.nav-scroller
+      // /.page-title-bar
+      // .page-section
+      .page-section
+        block tab
+      // /.page-section
+    // /.page-inner
+    // .page-sidebar
+    .page-sidebar
+      // .sidebar-header
+      header.sidebar-header.d-sm-none
+        nav(aria-label='breadcrumb')
+          ol.breadcrumb
+            li.breadcrumb-item.active
+              a(href='#!' onclick='Looper.toggleSidebar()')
+                i.breadcrumb-icon.fa.fa-angle-left.mr-2
+                | Back
+      // /.sidebar-header
+      // .sidebar-section-fill
+      .sidebar-section-fill
+        // .card
+        .card.card-reflow
+          // .card-body
+          .card-body
+            h4.card-title  Summary 
+            // grid row
+            .row
+              // grid column
+              .col-6
+                // .metric
+                .metric
+                  h6.metric-value  $83,743 
+                  p.metric-label.mt-1  Incomes 
+                // /.metric
+              // /grid column
+              // grid column
+              .col-6
+                // .metric
+                .metric
+                  h6.metric-value  $18,821 
+                  p.metric-label.mt-1  Expenses 
+                // /.metric
+              // /grid column
+              // grid column
+              .col-6
+                // .metric
+                .metric
+                  h6.metric-value  2,630 
+                  p.metric-label.mt-1  Leads 
+                // /.metric
+              // /grid column
+              // grid column
+              .col-6
+                // .metric
+                .metric
+                  h6.metric-value  40 
+                  p.metric-label.mt-1  Clients 
+                // /.metric
+              // /grid column
+            // /grid row
+          // /.card-body
+          // .card-body
+          .card-body.border-top.pb-1
+            h4.card-title  Leads source 
+            // .progress
+            .progress.mb-2
+              .progress-bar.bg-teal(role='progressbar' aria-valuenow='33.84' aria-valuemin='0' aria-valuemax='100' style='width: 33.84%')
+                span.sr-only 33.84% Complete
+              .progress-bar.bg-indigo(role='progressbar' aria-valuenow='24.71' aria-valuemin='0' aria-valuemax='100' style='width: 24.71%')
+                span.sr-only 24.71% Complete
+              .progress-bar.bg-pink(role='progressbar' aria-valuenow='26.29' aria-valuemin='0' aria-valuemax='100' style='width: 26.29%')
+                span.sr-only 26.29% Complete
+              .progress-bar.bg-purple(role='progressbar' aria-valuenow='15.15' aria-valuemin='0' aria-valuemax='100' style='width: 15.15%')
+                span.sr-only 15.15% Complete
+            // /.progress
+          // /.card
+          // .list-group
+          .list-group.list-group-bordered.list-group-reflow
+            // .list-group-item
+            .list-group-item.justify-content-between.align-items-center
+              span
+                i.fas.fa-square.text-teal.mr-2
+                |  Mailchimp
+              span.text-muted 890 result
+            // /.list-group-item
+            // .list-group-item
+            .list-group-item.justify-content-between.align-items-center
+              span
+                i.fas.fa-square.text-indigo.mr-2
+                |  Facebook
+              span.text-muted 650 result
+            // /.list-group-item
+            // .list-group-item
+            .list-group-item.justify-content-between.align-items-center
+              span
+                i.fas.fa-square.text-pink.mr-2
+                |  Google
+              span.text-muted 692 result
+            // /.list-group-item
+            // .list-group-item
+            .list-group-item.justify-content-between.align-items-center
+              span
+                i.fas.fa-square.text-purple.mr-2
+                |  Linkedin
+              span.text-muted 398 result
+            // /.list-group-item
+          // /.list-group
+          // .card-body
+          .card-body.border-top
+            .d-flex.justify-content-between.my-3
+              h4.card-title  Recent activity 
+              a(href='#!') View all
+            // .timeline
+            ul.timeline.timeline-fluid.mb-0
+              // .timeline-item
+              li.timeline-item
+                // .timeline-figure
+                .timeline-figure
+                  span.tile.tile-circle.tile-sm
+                    i.far.fa-calendar-alt.fa-lg
+                // /.timeline-figure
+                // .timeline-body
+                .timeline-body
+                  // .media
+                  .media
+                    // .media-body
+                    .media-body
+                      p.mb-0
+                        a(href='#!') Jeffrey Wells
+                        |  created a 
+                        a(href='#!') schedule
+                      span.timeline-date About a minute ago
+                    // /.media-body
+                  // /.media
+                // /.timeline-body
+              // /.timeline-item
+              // .timeline-item
+              li.timeline-item
+                // .timeline-figure
+                .timeline-figure
+                  span.tile.tile-circle.tile-sm
+                    i.oi.oi-chat.fa-lg
+                // /.timeline-figure
+                // .timeline-body
+                .timeline-body
+                  // .media
+                  .media
+                    // .media-body
+                    .media-body
+                      p.mb-0
+                        a(href='#!') Anna Vargas
+                        |  logged a 
+                        a(href='#!') chat
+                        |  with team
+                      span.timeline-date 3 hours ago
+                    // /.media-body
+                  // /.media
+                // /.timeline-body
+              // /.timeline-item
+              // .timeline-item
+              li.timeline-item
+                // .timeline-figure
+                .timeline-figure
+                  span.tile.tile-circle.tile-sm
+                    i.fa.fa-tasks.fa-lg
+                // /.timeline-figure
+                // .timeline-body
+                .timeline-body
+                  // .media
+                  .media
+                    // .media-body
+                    .media-body
+                      p.mb-0
+                        a(href='#!') Arthur Carroll
+                        |  created a 
+                        a(href='#!') task
+                      span.timeline-date 8:14pm
+                    // /.media-body
+                  // /.media
+                // /.timeline-body
+              // /.timeline-item
+              // .timeline-item
+              li.timeline-item
+                // .timeline-figure
+                .timeline-figure
+                  span.tile.tile-circle.tile-sm
+                    i.fas.fa-user-plus.fa-lg
+                // /.timeline-figure
+                // .timeline-body
+                .timeline-body
+                  // .media
+                  .media
+                    // .media-body
+                    .media-body
+                      p.mb-0
+                        a(href='#!') Sara Carr
+                        |  invited to 
+                        a(href='#!') Stilearn Admin
+                        |  project
+                      span.timeline-date 7:21pm
+                    // /.media-body
+                  // /.media
+                // /.timeline-body
+              // /.timeline-item
+              // .timeline-item
+              li.timeline-item
+                // .timeline-figure
+                .timeline-figure
+                  span.tile.tile-circle.tile-sm
+                    i.fa.fa-folder.fa-lg
+                // /.timeline-figure
+                // .timeline-body
+                .timeline-body
+                  // .media
+                  .media
+                    // .media-body
+                    .media-body
+                      p.mb-0
+                        a(href='#!') Angela Peterson
+                        |  added 
+                        a(href='#!') Looper Admin
+                        |  to collection
+                      span.timeline-date 5:21pm
+                    // /.media-body
+                  // /.media
+                // /.timeline-body
+              // /.timeline-item
+              // .timeline-item
+              li.timeline-item
+                // .timeline-figure
+                .timeline-figure
+                  span.tile.tile-circle.tile-sm
+                    i.oi.oi-person.fa-lg
+                // /.timeline-figure
+                // .timeline-body
+                .timeline-body
+                  // .media
+                  .media
+                    // .media-body
+                    .media-body
+                      .avatar-group.mb-2
+                        a.user-avatar.user-avatar-sm(href='#!')
+                          img(src='assets/images/avatars/uifaces4.jpg' alt='')
+                        a.user-avatar.user-avatar-sm(href='#!')
+                          img(src='assets/images/avatars/uifaces5.jpg' alt='')
+                        a.user-avatar.user-avatar-sm(href='#!')
+                          img(src='assets/images/avatars/uifaces6.jpg' alt='')
+                        a.user-avatar.user-avatar-sm(href='#!')
+                          img(src='assets/images/avatars/uifaces7.jpg' alt='')
+                      p.mb-0
+                        a(href='#!') Willie Dixon
+                        |  and 3 others followed you
+                      span.timeline-date 4:32pm
+                    // /.media-body
+                  // /.media
+                // /.timeline-body
+              // /.timeline-item
+            // /.timeline
+          // /.card-body
+        // /.card
+      // /.sidebar-section-fill
+    // /.page-sidebar
+      
+block scripts_plugin
+  block scripts_plugin_tab  
+
+block scripts
+  script.
+      $(document).ready(function () {
+
+      });
+      
+  block scripts_tab    

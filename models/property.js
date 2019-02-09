@@ -9,8 +9,7 @@ const TYPE_PAGE = 1;
 
 var PropertySchema = new Schema({
     name : {type:String,required: true},
-    type: {type: String, required: true, enum:['Site', 'Page'], default:'Site'},
-    support_email:{ type: String, required: true, unique: true },
+    type: {type: String, required: true, enum:['Site', 'Page'], default:'Site'}
 
 }, {timestamps: true});
 

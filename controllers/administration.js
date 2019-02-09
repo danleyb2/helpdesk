@@ -1,24 +1,18 @@
 var Member = require('../models/member');
+var Department = require('../models/department');
 var Account = require('../models/account');
 var Property = require('../models/property');
 var Notification  = require('../models/notification');
 const mailer = require('../mailer/index');
 
 
-exports.liveChat = function (req, res, next) {
+exports.index = function (req, res, next) {
 
-    res.render('administration/livechat',{
+    res.render('administration/general',{
         PROTOCOL:process.env.PROTOCOL,
         HOST:process.env.HOST,
         PORT:process.env.PORT,
     });
-
-};
-
-
-exports.index = function (req, res, next) {
-
-    res.render('administration/general');
 
 };
 
@@ -34,6 +28,20 @@ exports.members = function (req, res) {
             res.render('administration/member/list', {title: 'Members', 'members': members});
         });
 
+
+};
+
+exports.departments = function (req, res) {
+
+    Department.find({property:req.params.pId})
+        // .populate('account')
+        .exec(function (err, departments) {
+            if (err) {
+                return next(err);
+            }
+
+            res.render('administration/department/list', {title: 'Departments', 'departments': departments});
+        });
 
 };
 

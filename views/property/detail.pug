@@ -1,12 +1,312 @@
-extends ../layout
+extends ./layout
 
-block content
-    .row
-        .col-xl-5.col-lg-6.col-md-7
-            h4 #{property.name}
-            p.lead #{property.support_email}
-                
-block scripts
+
+block styles_plugin_tab
+    link(rel='stylesheet' href='/vendor/flatpickr/flatpickr.min.css')
+
+
+block tab
+    // .section-block
+    .section-block
+        // .metric-row
+        .metric-row.metric-flush
+            // metric column
+            .col
+                // .metric
+                a.metric.metric-bordered.align-items-center(href='page-team-members.html')
+                    h2.metric-label  Members 
+                    p.metric-value.h3
+                        sub
+                            i.oi.oi-people
+                        span.value 12
+                // /.metric
+            // /metric column
+            // metric column
+            .col
+                // .metric
+                a.metric.metric-bordered.align-items-center(href='page-team-projects.html')
+                    h2.metric-label  Projects 
+                    p.metric-value.h3
+                        sub
+                            i.oi.oi-fork
+                        span.value 26
+                // /.metric
+            // /metric column
+            // metric column
+            .col
+                // .metric
+                a.metric.metric-bordered.align-items-center(href='page-team-projects.html')
+                    h2.metric-label  Active Projects 
+                    p.metric-value.h3
+                        sub
+                            i.oi.oi-timer.fa-lg
+                        span.value 5
+                // /.metric
+            // /metric column
+        // /.metric-row
+    // /.section-block
+    // .section-block
+    .section-block.d-flex.justify-content-between.align-items-center.my-3
+        h1.section-title.mb-0  Achievement 
+        // .dropdown
+        .dropdown
+            button.btn.btn-secondary(data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                span This Month
+                i.fa.fa-fw.fa-caret-down
+            .dropdown-arrow.dropdown-arrow-right
+            // .dropdown-menu
+            .dropdown-menu.dropdown-menu-right.dropdown-menu-md.stop-propagation
+                // .custom-control
+                .custom-control.custom-radio
+                    input#dpToday.custom-control-input(type='radio' name='dpFilter' value='0')
+                    label.custom-control-label.d-flex.justify-content-between(for='dpToday')
+                        span Today
+                        span.text-muted Mar 27
+                // /.custom-control
+                // .custom-control
+                .custom-control.custom-radio
+                    input#dpYesterday.custom-control-input(type='radio' name='dpFilter' value='1')
+                    label.custom-control-label.d-flex.justify-content-between(for='dpYesterday')
+                        span Yesterday
+                        span.text-muted Mar 26
+                // /.custom-control
+                // .custom-control
+                .custom-control.custom-radio
+                    input#dpWeek.custom-control-input(type='radio' name='dpFilter' value='2')
+                    label.custom-control-label.d-flex.justify-content-between(for='dpWeek')
+                        span This Week
+                        span.text-muted Mar 21-27
+                // /.custom-control
+                // .custom-control
+                .custom-control.custom-radio
+                    input#dpMonth.custom-control-input(type='radio' name='dpFilter' value='3' checked='')
+                    label.custom-control-label.d-flex.justify-content-between(for='dpMonth')
+                        span This Month
+                        span.text-muted Mar 1-31
+                // /.custom-control
+                // .custom-control
+                .custom-control.custom-radio
+                    input#dpYear.custom-control-input(type='radio' name='dpFilter' value='4')
+                    label.custom-control-label.d-flex.justify-content-between(for='dpYear')
+                        span This Year
+                        span.text-muted 2018
+                // /.custom-control
+                // .custom-control
+                .custom-control.custom-radio
+                    input#dpCustom.custom-control-input(type='radio' name='dpFilter' value='5')
+                    label.custom-control-label(for='dpCustom') Custom
+                    .custom-control-hint.my-1(for='dpCustom')
+                        // datepicker:range
+                        input.form-control(type='text' data-toggle='flatpickr' data-mode='range' data-date-format='Y-m-d')
+                        // /datepicker:range
+                // /.custom-control
+            // /.dropdown-menu
+        // /.dropdown
+    // /.section-block
+    // .card
+    .card.card-body
+        // legend
+        ul.list-inline.small
+            li.list-inline-item
+                i.fa.fa-fw.fa-circle.text-teal
+                |  Projects
+            li.list-inline-item
+                i.fa.fa-fw.fa-circle.text-purple
+                |  Completed
+        // /legend
+        .chartjs
+            canvas#canvas-achievement
+    // /.card
+    // .section-deck
+    .section-deck
+        // .card
+        section.card
+            // .card-body
+            .card-body
+                h3.card-title  Leads Funnel 
+                h6.h2.mb-3  2,630 
+                // .progress
+                .progress.progress-animated.rounded-0
+                    .progress-bar.bg-purple(role='progressbar' style='width: 30%' aria-valuenow='30' aria-valuemin='0' aria-valuemax='100')
+                    .progress-bar.bg-pink(role='progressbar' style='width: 20.5%' aria-valuenow='20.5' aria-valuemin='0' aria-valuemax='100')
+                    .progress-bar.bg-yellow(role='progressbar' style='width: 13%' aria-valuenow='13' aria-valuemin='0' aria-valuemax='100')
+                    .progress-bar.bg-green(role='progressbar' style='width: 8.75%' aria-valuenow='8.75' aria-valuemin='0' aria-valuemax='100')
+                    .progress-bar.bg-teal(role='progressbar' style='width: 1.5%' aria-valuenow='1.5' aria-valuemin='0' aria-valuemax='100')
+                // /.progress
+            // /.card-body
+            // .list-group
+            .list-group.list-group-bordered.list-group-reflow
+                .list-group-item.justify-content-between.align-items-center
+                    span
+                        i.fas.fa-square.text-purple.mr-2
+                        |  New
+                    span.text-muted 30%
+                .list-group-item.justify-content-between.align-items-center
+                    span
+                        i.fas.fa-square.text-pink.mr-2
+                        |  Initial Contact
+                    span.text-muted 20.5%
+                .list-group-item.justify-content-between.align-items-center
+                    span
+                        i.fas.fa-square.text-yellow.mr-2
+                        |  Qualified
+                    span.text-muted 13%
+                .list-group-item.justify-content-between.align-items-center
+                    span
+                        i.fas.fa-square.text-green.mr-2
+                        |  Proposal
+                    span.text-muted 9.75%
+                .list-group-item.justify-content-between.align-items-center
+                    span
+                        i.fas.fa-square.text-teal.mr-2
+                        |  Conversion to clients
+                    span.text-muted 1.5%
+            // /.list-group
+        // /.card
+        // .card
+        section.card
+            // .card-body
+            .card-body.pb-0
+                h3.card-title  Leaderboards 
+                // legend
+                ul.list-inline.small
+                    li.list-inline-item
+                        i.fa.fa-fw.fa-square.text-teal
+                        |  Mailchimp
+                    li.list-inline-item
+                        i.fa.fa-fw.fa-square.text-indigo
+                        |  Facebook
+                    li.list-inline-item
+                        i.fa.fa-fw.fa-square.text-pink
+                        |  Google
+                    li.list-inline-item
+                        i.fa.fa-fw.fa-square.text-purple
+                        |  Linkedin
+                // /legend
+            // /.card-body
+            // .list-group
+            .list-group.list-group-flush
+                // .list-group-item
+                .list-group-item
+                    // .list-group-item-figure
+                    .list-group-item-figure
+                        a.user-avatar(href='user-profile.html' data-toggle='tooltip' title='Martha Myers')
+                            img(src='assets/images/avatars/uifaces19.jpg' alt='')
+                    // /.list-group-item-figure
+                    // .list-group-item-body
+                    .list-group-item-body
+                        // .progress
+                        .progress.progress-animated.rounded-0(data-toggle='tooltip' data-html='true' title='<div class="text-left small"><i class="fa fa-fw fa-square text-teal"></i> 275<br><i class="fa fa-fw fa-square text-indigo"></i> 614<br><i class="fa fa-fw fa-square text-pink"></i> 534<br><i class="fa fa-fw fa-square text-purple"></i> 388</div>')
+                            .progress-bar.bg-teal(role='progressbar' aria-valuenow='15.184980673660961' aria-valuemin='0' aria-valuemax='100' style='width: 15.184980673660961%')
+                                span.sr-only 15.184980673660961% Complete
+                            .progress-bar.bg-indigo(role='progressbar' aria-valuenow='33.90392048591938' aria-valuemin='0' aria-valuemax='100' style='width: 33.90392048591938%')
+                                span.sr-only 33.90392048591938% Complete
+                            .progress-bar.bg-pink(role='progressbar' aria-valuenow='29.486471562672556' aria-valuemin='0' aria-valuemax='100' style='width: 29.486471562672556%')
+                                span.sr-only 29.486471562672556% Complete
+                            .progress-bar.bg-purple(role='progressbar' aria-valuenow='21.424627277747103' aria-valuemin='0' aria-valuemax='100' style='width: 21.424627277747103%')
+                                span.sr-only 21.424627277747103% Complete
+                        // /.progress
+                    // /.list-group-item-body
+                // /.list-group-item
+                // .list-group-item
+                .list-group-item
+                    // .list-group-item-figure
+                    .list-group-item-figure
+                        a.user-avatar(href='user-profile.html' data-toggle='tooltip' title='Tammy Beck')
+                            img(src='assets/images/avatars/uifaces15.jpg' alt='')
+                    // /.list-group-item-figure
+                    // .list-group-item-body
+                    .list-group-item-body
+                        // .progress
+                        .progress.progress-animated.rounded-0(data-toggle='tooltip' data-html='true' title='<div class="text-left small"><i class="fa fa-fw fa-square text-teal"></i> 556<br><i class="fa fa-fw fa-square text-indigo"></i> 406<br><i class="fa fa-fw fa-square text-pink"></i> 432<br><i class="fa fa-fw fa-square text-purple"></i> 249</div>')
+                            .progress-bar.bg-teal(role='progressbar' aria-valuenow='33.84053560559951' aria-valuemin='0' aria-valuemax='100' style='width: 33.84053560559951%')
+                                span.sr-only 33.84053560559951% Complete
+                            .progress-bar.bg-indigo(role='progressbar' aria-valuenow='24.71089470480828' aria-valuemin='0' aria-valuemax='100' style='width: 24.71089470480828%')
+                                span.sr-only 24.71089470480828% Complete
+                            .progress-bar.bg-pink(role='progressbar' aria-valuenow='26.29336579427876' aria-valuemin='0' aria-valuemax='100' style='width: 26.29336579427876%')
+                                span.sr-only 26.29336579427876% Complete
+                            .progress-bar.bg-purple(role='progressbar' aria-valuenow='15.15520389531345' aria-valuemin='0' aria-valuemax='100' style='width: 15.15520389531345%')
+                                span.sr-only 15.15520389531345% Complete
+                        // /.progress
+                    // /.list-group-item-body
+                // /.list-group-item
+                // .list-group-item
+                .list-group-item
+                    // .list-group-item-figure
+                    .list-group-item-figure
+                        a.user-avatar(href='user-profile.html' data-toggle='tooltip' title='Susan Kelley')
+                            img(src='assets/images/avatars/uifaces17.jpg' alt='')
+                    // /.list-group-item-figure
+                    // .list-group-item-body
+                    .list-group-item-body
+                        // .progress
+                        .progress.progress-animated.rounded-0(data-toggle='tooltip' data-html='true' title='<div class="text-left small"><i class="fa fa-fw fa-square text-teal"></i> 98<br><i class="fa fa-fw fa-square text-indigo"></i> 587<br><i class="fa fa-fw fa-square text-pink"></i> 271<br><i class="fa fa-fw fa-square text-purple"></i> 482</div>')
+                            .progress-bar.bg-teal(role='progressbar' aria-valuenow='6.815020862308762' aria-valuemin='0' aria-valuemax='100' style='width: 6.815020862308762%')
+                                span.sr-only 6.815020862308762% Complete
+                            .progress-bar.bg-indigo(role='progressbar' aria-valuenow='40.82058414464534' aria-valuemin='0' aria-valuemax='100' style='width: 40.82058414464534%')
+                                span.sr-only 40.82058414464534% Complete
+                            .progress-bar.bg-pink(role='progressbar' aria-valuenow='18.845618915159946' aria-valuemin='0' aria-valuemax='100' style='width: 18.845618915159946%')
+                                span.sr-only 18.845618915159946% Complete
+                            .progress-bar.bg-purple(role='progressbar' aria-valuenow='33.51877607788595' aria-valuemin='0' aria-valuemax='100' style='width: 33.51877607788595%')
+                                span.sr-only 33.51877607788595% Complete
+                        // /.progress
+                    // /.list-group-item-body
+                // /.list-group-item
+                // .list-group-item
+                .list-group-item
+                    // .list-group-item-figure
+                    .list-group-item-figure
+                        a.user-avatar(href='user-profile.html' data-toggle='tooltip' title='Albert Newman')
+                            img(src='assets/images/avatars/uifaces18.jpg' alt='')
+                    // /.list-group-item-figure
+                    // .list-group-item-body
+                    .list-group-item-body
+                        // .progress
+                        .progress.progress-animated.rounded-0(data-toggle='tooltip' data-html='true' title='<div class="text-left small"><i class="fa fa-fw fa-square text-teal"></i> 248<br><i class="fa fa-fw fa-square text-indigo"></i> 205<br><i class="fa fa-fw fa-square text-pink"></i> 427<br><i class="fa fa-fw fa-square text-purple"></i> 151</div>')
+                            .progress-bar.bg-teal(role='progressbar' aria-valuenow='24.05431619786615' aria-valuemin='0' aria-valuemax='100' style='width: 24.05431619786615%')
+                                span.sr-only 24.05431619786615% Complete
+                            .progress-bar.bg-indigo(role='progressbar' aria-valuenow='19.88360814742968' aria-valuemin='0' aria-valuemax='100' style='width: 19.88360814742968%')
+                                span.sr-only 19.88360814742968% Complete
+                            .progress-bar.bg-pink(role='progressbar' aria-valuenow='41.41610087293889' aria-valuemin='0' aria-valuemax='100' style='width: 41.41610087293889%')
+                                span.sr-only 41.41610087293889% Complete
+                            .progress-bar.bg-purple(role='progressbar' aria-valuenow='14.645974781765277' aria-valuemin='0' aria-valuemax='100' style='width: 14.645974781765277%')
+                                span.sr-only 14.645974781765277% Complete
+                        // /.progress
+                    // /.list-group-item-body
+                // /.list-group-item
+                // .list-group-item
+                .list-group-item
+                    // .list-group-item-figure
+                    .list-group-item-figure
+                        a.user-avatar(href='user-profile.html' data-toggle='tooltip' title='Kyle Grant')
+                            img(src='assets/images/avatars/uifaces16.jpg' alt='')
+                    // /.list-group-item-figure
+                    // .list-group-item-body
+                    .list-group-item-body
+                        // .progress
+                        .progress.progress-animated.rounded-0(data-toggle='tooltip' data-html='true' title='<div class="text-left small"><i class="fa fa-fw fa-square text-teal"></i> 108<br><i class="fa fa-fw fa-square text-indigo"></i> 265<br><i class="fa fa-fw fa-square text-pink"></i> 443<br><i class="fa fa-fw fa-square text-purple"></i> 127</div>')
+                            .progress-bar.bg-teal(role='progressbar' aria-valuenow='11.452810180275716' aria-valuemin='0' aria-valuemax='100' style='width: 11.452810180275716%')
+                                span.sr-only 11.452810180275716% Complete
+                            .progress-bar.bg-indigo(role='progressbar' aria-valuenow='28.101802757158005' aria-valuemin='0' aria-valuemax='100' style='width: 28.101802757158005%')
+                                span.sr-only 28.101802757158005% Complete
+                            .progress-bar.bg-pink(role='progressbar' aria-valuenow='46.977730646871684' aria-valuemin='0' aria-valuemax='100' style='width: 46.977730646871684%')
+                                span.sr-only 46.977730646871684% Complete
+                            .progress-bar.bg-purple(role='progressbar' aria-valuenow='13.467656415694591' aria-valuemin='0' aria-valuemax='100' style='width: 13.467656415694591%')
+                                span.sr-only 13.467656415694591% Complete
+                        // /.progress
+                    // /.list-group-item-body
+                // /.list-group-item
+            // /.list-group
+        // /.card
+    // /.section-deck
+        
+block scripts_plugin_tab
+    script(src='/vendor/flatpickr/flatpickr.min.js')
+    script(src='/vendor/chart.js/Chart.min.js')
+
+
+block scripts_tab
+    script(src='/javascript/pages/team-overview-demo.js')
     script.
         $(document).ready(function () {
 

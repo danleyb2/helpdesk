@@ -1,102 +1,989 @@
 extends ../layout
 
+block styles_plugin
+    link(rel='stylesheet' href='/vendor/tributejs/tribute.css')
+    link(rel='stylesheet' href='/vendor/photoswipe/photoswipe.css')
+    link(rel='stylesheet' href='/vendor/photoswipe/photoswipe-skin/default-skin.css')
+
+
 block content    
-  strong Date: 
-    span #{conversation.createdAt}
-  br
-  strong Title: 
-    span #{conversation.title}
-  br      
-  strong Participants:
-    each participant in conversation.participants
-        span #{participant} ,
-  br
-  h3 messages
-  ul.messages(style='overflow-y:scroll;height:300px;')
-      if messages.length
-          each message in messages
-              li
-                  strong Sender: 
-                  if message.owner.refModel === 'Member'
-                      span #{message.owner.modelRef.role}
-                  else
-                      span #{message.owner.modelRef.email}
-                  br
-                  strong Date: 
-                  span #{message.createdAt}
-                  br
-                  strong Body: 
-                  span #{message.body}
-                  br
-      else
-          li There are no messages yet
-      
-  .type_msg
-    .input_msg_write
-      input.text-box(type='text', placeholder="Type a message")
-      button.btn#sendMessage
-        i.fa.fa-paper-plane
+    .page.has-sidebar.has-sidebar-expand-xl
+        // .page-inner
+        .page-inner.page-inner-fill
+            // .message
+            article.message
+                // message header
+                header.message-header
+                    .d-flex
+                        a.btn.btn-light.btn-icon(href='page-messages.html')
+                            i.fa.fa-flip-horizontal.fa-share
+                    h4.message-title  Invitation: Joe&apos;s Dinner @ Fri Aug 22 
+                    .message-header-actions
+                        // invite members
+                        .dropdown.d-inline-block
+                            button.btn.btn-light.btn-icon(type='button' title='Invite members' data-toggle='dropdown' data-display='static' aria-haspoppup='true' aria-expanded='false')
+                                i.fas.fa-user-plus
+                            .dropdown-arrow
+                            // .dropdown-menu
+                            .dropdown-menu.dropdown-menu-right.dropdown-menu-rich.stop-propagation
+                                .dropdown-header  Add members 
+                                .form-group.px-3.py-2.m-0
+                                    input.form-control(type='text' placeholder='e.g. @bent10' data-toggle='tribute' data-remote='assets/data/tribute.json' data-menu-container='#people-list' data-item-template='true' autofocus='')
+                                    small.form-text.text-muted Search people by username or email address to invite them.
+                                #people-list.tribute-inline.stop-propagation
+                                a.dropdown-footer(href='#!')
+                                    | Invite member by link 
+                                    i.far.fa-clone
+                            // /.dropdown-menu
+                        // /invite members
+                        button.btn.btn-light.btn-icon.d-xl-none(type='button' data-toggle='sidebar')
+                            i.fa.fa-angle-double-left
+                // /message header
+                // message body
+                section.message-body
+                    // .card
+                    .card.card-fluid.mb-0
+                        // .conversations
+                        section.conversations(role='log')
+                            // .conversation-list
+                            ul.conversation-list
+                                // .conversation-divider
+                                li.log-divider
+                                    span
+                                        i.far.fa-fw.fa-comment-alt
+                                        |  Chat started by 
+                                        strong Diane Peters
+                                        |  &middot; Wed, Feb 14, 2018
+                                // /.conversation-divider
+                                // .conversation-inbound
+                                li.conversation-inbound
+                                    .conversation-avatar
+                                        a.tile.tile-circle.bg-muted(href='#!')
+                                            i.oi.oi-person
+                                    .conversation-message
+                                        .conversation-message-text  Fuga quis quod voluptas mollitia aliquid alias tenetur. 
+                                    .conversation-actions.dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-h
+                                        .dropdown-arrow
+                                        .dropdown-menu
+                                            button.dropdown-item(type='button') Copy text
+                                            button.dropdown-item(type='button') Edit
+                                            button.dropdown-item(type='button') Reply
+                                            button.dropdown-item(type='button') Remove
+                                // /.conversation-inbound
+                                // .conversation-inbound
+                                li.conversation-inbound.conversation-faux
+                                    .conversation-message.conversation-message-skip-avatar
+                                        .conversation-message-text  Laboriosam asperiores cupiditate aperiam! 
+                                        .conversation-meta  Diane Peters &middot; 20m 
+                                    .conversation-actions.dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-h
+                                        .dropdown-arrow
+                                        .dropdown-menu
+                                            button.dropdown-item(type='button') Copy text
+                                            button.dropdown-item(type='button') Edit
+                                            button.dropdown-item(type='button') Reply
+                                            button.dropdown-item(type='button') Remove
+                                // /.conversation-inbound
+                                // .conversation-outbound
+                                li.conversation-outbound
+                                    .conversation-actions.dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-h
+                                        .dropdown-arrow
+                                        .dropdown-menu
+                                            button.dropdown-item(type='button') Copy text
+                                            button.dropdown-item(type='button') Edit
+                                            button.dropdown-item(type='button') Reply
+                                            button.dropdown-item(type='button') Remove
+                                    .conversation-message
+                                        .conversation-message-text  Expedita officiis delectus perspiciatis a dolores. 
+                                // /.conversation-outbound
+                                // .conversation-outbound
+                                li.conversation-outbound.conversation-faux
+                                    .conversation-actions.dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-h
+                                        .dropdown-arrow
+                                        .dropdown-menu
+                                            button.dropdown-item(type='button') Copy text
+                                            button.dropdown-item(type='button') Edit
+                                            button.dropdown-item(type='button') Reply
+                                            button.dropdown-item(type='button') Remove
+                                    .conversation-message
+                                        .conversation-message-text  Consectetur quis. 
+                                        .conversation-meta  Beni Arisandi &middot; 14m 
+                                // /.conversation-outbound
+                                // .conversation-divider
+                                li.log-divider
+                                    span
+                                        i.fa.fa-fw.fa-user-plus
+                                        strong Jennifer
+                                        |  and 
+                                        strong 2 others
+                                        |  invited to the chat &middot; 5:06 PM
+                                // /.conversation-divider
+                                // .conversation-inbound
+                                li.conversation-inbound
+                                    .conversation-avatar
+                                        a.user-avatar(href='#!')
+                                            img(src='assets/images/avatars/uifaces11.jpg' alt='')
+                                            span.avatar-badge.online
+                                    .conversation-message
+                                        .conversation-message-text  Officiis numquam, repellat nam tempore sit nostrum autem excepturi quis nihil. 
+                                    .conversation-actions.dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-h
+                                        .dropdown-arrow
+                                        .dropdown-menu
+                                            button.dropdown-item(type='button') Copy text
+                                            button.dropdown-item(type='button') Edit
+                                            button.dropdown-item(type='button') Reply
+                                            button.dropdown-item(type='button') Remove
+                                // /.conversation-inbound
+                                // .conversation-inbound
+                                li.conversation-inbound.conversation-faux
+                                    .conversation-message.conversation-message-skip-avatar
+                                        .conversation-message-text.has-attachment
+                                            .pswp-gallery
+                                                // .card-figure
+                                                section.card.card-figure
+                                                    // .card-figure
+                                                    figure.figure
+                                                        // .figure-img
+                                                        .figure-img.figure-attachment
+                                                            img(src='assets/images/dummy/img-5.jpg' alt='Card image cap')
+                                                            a.img-link(href='assets/images/dummy/img-5.jpg' data-size='600x450')
+                                                                span.tile.tile-circle.bg-danger
+                                                                    span.oi.oi-eye
+                                                                span.img-caption.d-none Card image cap
+                                                        // /.figure-img
+                                                        figcaption.figure-caption
+                                                            ul.list-inline.d-flex.text-muted.mb-0
+                                                                li.list-inline-item.text-truncate.mr-auto Cajun Chicken Egg Pasta 
+                                                                li.list-inline-item
+                                                                    button.btn.btn-reset(type='button' title='Download')
+                                                                        span.oi.oi-data-transfer-download
+                                                    // /.card-figure
+                                                // /.card-figure
+                                        .conversation-meta  Jennifer Gray &middot; 13m 
+                                    .conversation-actions.dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-h
+                                        .dropdown-arrow
+                                        .dropdown-menu
+                                            button.dropdown-item(type='button') Copy text
+                                            button.dropdown-item(type='button') Edit
+                                            button.dropdown-item(type='button') Reply
+                                            button.dropdown-item(type='button') Remove
+                                // /.conversation-inbound
+                                // .conversation-outbound
+                                li.conversation-outbound
+                                    .conversation-actions.dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-h
+                                        .dropdown-arrow
+                                        .dropdown-menu
+                                            button.dropdown-item(type='button') Copy text
+                                            button.dropdown-item(type='button') Edit
+                                            button.dropdown-item(type='button') Reply
+                                            button.dropdown-item(type='button') Remove
+                                    .conversation-message
+                                        .conversation-message-text.has-attachment
+                                            .media.align-items-center
+                                                span.fa-stack.fa-lg.mr-1
+                                                    i.fa.fa-square.fa-stack-2x.text-white
+                                                    i.fa.fa-file-pdf.fa-stack-1x.text-muted
+                                                a.media-body(href='#!') double-broccoli-quinoa.pdf
+                                        .conversation-meta  Beni Arisandi &middot; 5m 
+                                // /.conversation-outbound
+                                // .conversation-inbound
+                                li.conversation-inbound
+                                    .conversation-avatar
+                                        a.tile.tile-circle.bg-teal(href='#!') ZF
+                                    .conversation-message
+                                        .conversation-message-text  Ad earum dolore excepturi itaque officia vel fugiat quo. 
+                                        .conversation-meta  Zachary Fowler &middot; 3m 
+                                    .conversation-actions.dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-h
+                                        .dropdown-arrow
+                                        .dropdown-menu
+                                            button.dropdown-item(type='button') Copy text
+                                            button.dropdown-item(type='button') Edit
+                                            button.dropdown-item(type='button') Reply
+                                            button.dropdown-item(type='button') Remove
+                                // /.conversation-inbound
+                                // .conversation-divider
+                                li.log-divider
+                                    span.text-danger
+                                        i.oi.oi-ban.fa-fw
+                                        |  The file sent by 
+                                        strong Zachary Fowler
+                                        |  is too large &middot; 2m
+                                // /.conversation-divider
+                                // .conversation-inbound
+                                li.conversation-inbound
+                                    .conversation-avatar
+                                        a.tile.tile-circle.bg-teal(href='#!') ZF
+                                    .conversation-message
+                                        .conversation-message-text.has-attachment
+                                            .media.align-items-center
+                                                span.fa-stack.fa-lg.mr-1
+                                                    i.fa.fa-square.fa-stack-2x.text-muted
+                                                    i.fa.fa-file-pdf.fa-stack-1x.text-white
+                                                a.media-body(href='#!') Baked-Chicken-and-Spinach-Flautas.pdf
+                                        .conversation-meta  Zachary Fowler &middot; Just now 
+                                    .conversation-actions.dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-h
+                                        .dropdown-arrow
+                                        .dropdown-menu
+                                            button.dropdown-item(type='button') Copy text
+                                            button.dropdown-item(type='button') Edit
+                                            button.dropdown-item(type='button') Reply
+                                            button.dropdown-item(type='button') Remove
+                                // /.conversation-inbound
+                                // .conversation-inbound
+                                li.conversation-inbound
+                                    .conversation-avatar
+                                        a.user-avatar(href='#!')
+                                            img(src='assets/images/avatars/uifaces11.jpg' alt='')
+                                            span.avatar-badge.online
+                                    .conversation-message
+                                        .conversation-message-text
+                                            .typing.mr-1
+                                                span.dot
+                                                span.dot
+                                                span.dot
+                                            em Jennifer Gray is typing
+                                // /.conversation-inbound
+                            // /.conversation-list
+                        // /.conversations
+                        // PhotoSwipe (.pswp) element
+                        #gallery.pswp(tabindex='-1' role='dialog' aria-hidden='true')
+                            // .pswp__bg
+                            .pswp__bg
+                            // .pswp__scroll-wrap
+                            .pswp__scroll-wrap
+                                // .pswp__container
+                                .pswp__container
+                                    .pswp__item
+                                    .pswp__item
+                                    .pswp__item
+                                // /.pswp__container
+                                // .pswp__ui pswp__ui--hidden
+                                .pswp__ui.pswp__ui--hidden
+                                    // .pswp__top-bar
+                                    .pswp__top-bar
+                                        .pswp__counter
+                                        button.pswp__button.pswp__button--close(title='Close (Esc)')
+                                        button.pswp__button.pswp__button--share(title='Share')
+                                        button.pswp__button.pswp__button--fs(title='Toggle fullscreen')
+                                        button.pswp__button.pswp__button--zoom(title='Zoom in/out')
+                                        .pswp__preloader
+                                            .pswp__preloader__icn
+                                                .pswp__preloader__cut
+                                                    .pswp__preloader__donut
+                                    // /.pswp__top-bar
+                                    // .pswp__share-modal
+                                    .pswp__share-modal.pswp__share-modal--hidden.pswp__single-tap
+                                        .pswp__share-tooltip
+                                    // /.pswp__share-modal
+                                    button.pswp__button.pswp__button--arrow--left(title='Previous (arrow left)')
+                                    button.pswp__button.pswp__button--arrow--right(title='Next (arrow right)')
+                                    .pswp__caption
+                                        .pswp__caption__center
+                                // /.pswp__ui pswp__ui--hidden
+                            // /.pswp__scroll-wrap
+                        // /PhotoSwipe (.pswp) element
+                    // /.card
+                // /message body
+                // message publisher
+                footer.message-publisher
+                    // form
+                    form
+                        // .media
+                        .media.mb-1
+                            button.btn.btn-light.btn-icon.fileinput-button(type='button')
+                                i.fa.fa-paperclip
+                                input#message-attachment(type='file' name='attachment[]' multiple='')
+                            .media-body
+                                input.form-control.border-0.shadow-none(type='text' name='messageText' placeholder='Type a message')
+                            div
+                                button.btn.btn-light.btn-icon(type='button')
+                                    i.far.fa-smile
+                                button.btn.btn-light.btn-icon(type='submit')
+                                    i.far.fa-paper-plane
+                        // /.media
+                    // /form
+                // /message publisher
+            // /.message
+        // /.page-inner
+        // .page-sidebar
+        .page-sidebar
+            // .sidebar-header
+            header.sidebar-header.d-sm-none
+                ol.breadcrumb.mb-0
+                    li.breadcrumb-item
+                        a.prevent-default(href='#!' onclick='Looper.toggleSidebar()')
+                            i.breadcrumb-icon.fa.fa-angle-left.mr-2
+                            | Back
+            // /.sidebar-header
+            // .nav-tabs
+            ul.nav.nav-tabs.nav-fill
+                li.nav-item
+                    a.nav-link.active(data-toggle='tab' href='#team-profile' role='tab' aria-controls='team-profile' aria-selected='true') Team Profile
+                li.nav-item
+                    a.nav-link(data-toggle='tab' href='#message-files' role='tab' aria-controls='message-files' aria-selected='false') Files
+            // /.nav-tabs
+            // .sidebar-section-fill
+            .sidebar-section-fill
+                // Tab panes
+                .tab-content
+                    // #team-profile
+                    #team-profile.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='team-profile')
+                        // .card
+                        section.card.card-reflow.border-bottom
+                            // .card-body
+                            .card-body.text-center
+                                // team avatar
+                                a.user-avatar.user-avatar-xl.my-3(href='#!')
+                                    img(src='assets/images/avatars/team4.jpg' alt='')
+                                // /team avatar
+                                h3.card-title.text-truncate
+                                    a(href='#!') Creative Division
+                                h6.card-subtitle.text-muted.mb-3  London &middot; Mar 10, 2018 
+                                // grid row
+                                .row
+                                    // grid column
+                                    .col-4
+                                        // .metric
+                                        .metric
+                                            h6.metric-value  42 
+                                            p.metric-label.mt-1  Projects 
+                                        // /.metric
+                                    // /grid column
+                                    // grid column
+                                    .col-4
+                                        // .metric
+                                        .metric
+                                            h6.metric-value  34 
+                                            p.metric-label.mt-1  Completed 
+                                        // /.metric
+                                    // /grid column
+                                    // grid column
+                                    .col-4
+                                        // .metric
+                                        .metric
+                                            h6.metric-value  8 
+                                            p.metric-label.mt-1  On Going 
+                                        // /.metric
+                                    // /grid column
+                                // /grid row
+                            // /.card-body
+                            // .card-footer
+                            footer.card-footer
+                                // .card-footer-item
+                                .card-footer-item.card-footer-item-bordered
+                                    // .metric
+                                    .metric
+                                        p.metric-label.mb-1  Clients 
+                                        h6.metric-value  29 
+                                    // /.metric
+                                // /.card-footer-item
+                                // .card-footer-item
+                                .card-footer-item.card-footer-item-bordered
+                                    // .metric
+                                    .metric
+                                        p.metric-label.mb-1  Revenue 
+                                        h6.metric-value  634.43K 
+                                    // /.metric
+                                // /.card-footer-item
+                            // /.card-footer
+                        // /.card
+                        // .list-group
+                        .list-group.list-group-reflow.list-group-flush.list-group-divider
+                            // .list-group-header
+                            .list-group-header  8 Members 
+                            // /.list-group-header
+                            // .list-group-item
+                            .list-group-item
+                                // .list-group-item-figure
+                                .list-group-item-figure.align-items-start
+                                    a.user-avatar(href='#!')
+                                        img(src='assets/images/avatars/uifaces11.jpg' alt='Brenda Griffin')
+                                        span.avatar-badge.online(title='online')
+                                // /.list-group-item-figure
+                                // .list-group-item-body
+                                .list-group-item-body
+                                    h4.list-group-item-title
+                                        a(href='#!') Brenda Griffin
+                                    p.list-group-item-text  Medical Assistant 
+                                // /.list-group-item-body
+                                // .list-group-item-figure
+                                .list-group-item-figure.align-items-start
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Message
+                                            button.dropdown-item(type='button') Invite to a team
+                                            button.dropdown-item(type='button') Copy member ID
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                                // /.list-group-item-figure
+                            // /.list-group-item
+                            // .list-group-item
+                            .list-group-item
+                                // .list-group-item-figure
+                                .list-group-item-figure.align-items-start
+                                    a.user-avatar(href='#!')
+                                        img(src='assets/images/avatars/uifaces12.jpg' alt='Ryan Jimenez')
+                                        span.avatar-badge.online(title='online')
+                                // /.list-group-item-figure
+                                // .list-group-item-body
+                                .list-group-item-body
+                                    h4.list-group-item-title
+                                        a(href='#!') Ryan Jimenez
+                                    p.list-group-item-text  Photographer 
+                                // /.list-group-item-body
+                                // .list-group-item-figure
+                                .list-group-item-figure.align-items-start
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Message
+                                            button.dropdown-item(type='button') Invite to a team
+                                            button.dropdown-item(type='button') Copy member ID
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                                // /.list-group-item-figure
+                            // /.list-group-item
+                            // .list-group-item
+                            .list-group-item
+                                // .list-group-item-figure
+                                .list-group-item-figure.align-items-start
+                                    a.user-avatar(href='#!')
+                                        img(src='assets/images/avatars/uifaces13.jpg' alt='Bryan Hayes')
+                                        span.avatar-badge.busy(title='busy')
+                                // /.list-group-item-figure
+                                // .list-group-item-body
+                                .list-group-item-body
+                                    h4.list-group-item-title
+                                        a(href='#!') Bryan Hayes
+                                    p.list-group-item-text  Computer Systems Analyst 
+                                // /.list-group-item-body
+                                // .list-group-item-figure
+                                .list-group-item-figure.align-items-start
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Message
+                                            button.dropdown-item(type='button') Invite to a team
+                                            button.dropdown-item(type='button') Copy member ID
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                                // /.list-group-item-figure
+                            // /.list-group-item
+                            // .list-group-item
+                            .list-group-item
+                                // .list-group-item-figure
+                                .list-group-item-figure.align-items-start
+                                    a.user-avatar(href='#!')
+                                        img(src='assets/images/avatars/uifaces14.jpg' alt='Cynthia Clark')
+                                        span.avatar-badge.idle(title='idle')
+                                // /.list-group-item-figure
+                                // .list-group-item-body
+                                .list-group-item-body
+                                    h4.list-group-item-title
+                                        a(href='#!') Cynthia Clark
+                                    p.list-group-item-text  Web Developer 
+                                // /.list-group-item-body
+                                // .list-group-item-figure
+                                .list-group-item-figure.align-items-start
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Message
+                                            button.dropdown-item(type='button') Invite to a team
+                                            button.dropdown-item(type='button') Copy member ID
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                                // /.list-group-item-figure
+                            // /.list-group-item
+                            // .list-group-item
+                            .list-group-item
+                                // .list-group-item-figure
+                                .list-group-item-figure.align-items-start
+                                    a.user-avatar(href='#!')
+                                        img(src='assets/images/avatars/uifaces16.jpg' alt='Martha Myers')
+                                        span.avatar-badge.online(title='online')
+                                // /.list-group-item-figure
+                                // .list-group-item-body
+                                .list-group-item-body
+                                    h4.list-group-item-title
+                                        a(href='#!') Martha Myers
+                                    p.list-group-item-text  Writer 
+                                // /.list-group-item-body
+                                // .list-group-item-figure
+                                .list-group-item-figure.align-items-start
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Message
+                                            button.dropdown-item(type='button') Invite to a team
+                                            button.dropdown-item(type='button') Copy member ID
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                                // /.list-group-item-figure
+                            // /.list-group-item
+                            // .list-group-item
+                            .list-group-item
+                                // .list-group-item-figure
+                                .list-group-item-figure.align-items-start
+                                    a.user-avatar(href='#!')
+                                        img(src='assets/images/avatars/uifaces15.jpg' alt='Tammy Beck')
+                                        span.avatar-badge.online(title='online')
+                                // /.list-group-item-figure
+                                // .list-group-item-body
+                                .list-group-item-body
+                                    h4.list-group-item-title
+                                        a(href='#!') Tammy Beck
+                                    p.list-group-item-text  Designer 
+                                // /.list-group-item-body
+                                // .list-group-item-figure
+                                .list-group-item-figure.align-items-start
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Message
+                                            button.dropdown-item(type='button') Invite to a team
+                                            button.dropdown-item(type='button') Copy member ID
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                                // /.list-group-item-figure
+                            // /.list-group-item
+                            // .list-group-item
+                            .list-group-item
+                                // .list-group-item-figure
+                                .list-group-item-figure.align-items-start
+                                    a.user-avatar(href='#!')
+                                        img(src='assets/images/avatars/uifaces17.jpg' alt='Susan Kelley')
+                                        span.avatar-badge.busy(title='busy')
+                                // /.list-group-item-figure
+                                // .list-group-item-body
+                                .list-group-item-body
+                                    h4.list-group-item-title
+                                        a(href='#!') Susan Kelley
+                                    p.list-group-item-text  Web Developer 
+                                // /.list-group-item-body
+                                // .list-group-item-figure
+                                .list-group-item-figure.align-items-start
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Message
+                                            button.dropdown-item(type='button') Invite to a team
+                                            button.dropdown-item(type='button') Copy member ID
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                                // /.list-group-item-figure
+                            // /.list-group-item
+                            // .list-group-item
+                            .list-group-item
+                                // .list-group-item-figure
+                                .list-group-item-figure.align-items-start
+                                    a.user-avatar(href='#!')
+                                        img(src='assets/images/avatars/uifaces18.jpg' alt='Albert Newman')
+                                        span.avatar-badge.offline(title='offline')
+                                // /.list-group-item-figure
+                                // .list-group-item-body
+                                .list-group-item-body
+                                    h4.list-group-item-title
+                                        a(href='#!') Albert Newman
+                                    p.list-group-item-text  Web Developer 
+                                // /.list-group-item-body
+                                // .list-group-item-figure
+                                .list-group-item-figure.align-items-start
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Message
+                                            button.dropdown-item(type='button') Invite to a team
+                                            button.dropdown-item(type='button') Copy member ID
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                                // /.list-group-item-figure
+                            // /.list-group-item
+                        // /.list-group
+                    // /#team-profile
+                    // #message-files
+                    #message-files.tab-pane.fade(role='tabpanel' aria-labelledby='message-files')
+                        // .list-group
+                        .list-group.list-group-reflow.list-group-flush.list-group-divider
+                            // .list-group-header
+                            .list-group-header  Today 
+                            // /.list-group-header
+                            // .list-group-item
+                            .list-group-item.align-items-start
+                                .list-group-item-figure
+                                    a.tile.tile-circle.bg-teal(href='#!')
+                                        span.fa.fa-file-pdf
+                                .list-group-item-body
+                                    h4.list-group-item-title.text-truncate
+                                        a(href='#!') double-broccoli-quinoa.pdf
+                                    p.list-group-item-text  1.07 MB by Emma Griffin 
+                                    p.list-group-item-text.small  12:20pm 
+                                .list-group-item-figure
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Download
+                                            button.dropdown-item(type='button') View details
+                                            button.dropdown-item(type='button') Share file
+                                            button.dropdown-item(type='button') Copy link file
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                            // /.list-group-item
+                            // .list-group-item
+                            .list-group-item.align-items-start
+                                .list-group-item-figure
+                                    a.tile.tile-circle.bg-teal(href='#!')
+                                        span.fa.fa-file-pdf
+                                .list-group-item-body
+                                    h4.list-group-item-title.text-truncate
+                                        a(href='#!') Baked-Chicken-and-Spinach-Flautas.pdf
+                                    p.list-group-item-text  0.39 MB by Peter Willis 
+                                    p.list-group-item-text.small  5:22pm 
+                                .list-group-item-figure
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Download
+                                            button.dropdown-item(type='button') View details
+                                            button.dropdown-item(type='button') Share file
+                                            button.dropdown-item(type='button') Copy link file
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                            // /.list-group-item
+                            // .list-group-item
+                            .list-group-item.align-items-start
+                                .list-group-item-figure
+                                    a.tile.tile-circle.bg-pink(href='#!')
+                                        span.fa.fa-file-image
+                                .list-group-item-body
+                                    h4.list-group-item-title.text-truncate
+                                        a(href='#!') Cajun Chicken Egg Pasta.jpg
+                                    p.list-group-item-text  0.93 MB by Danielle Garza 
+                                    p.list-group-item-text.small  9:32pm 
+                                .list-group-item-figure
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Download
+                                            button.dropdown-item(type='button') View details
+                                            button.dropdown-item(type='button') Share file
+                                            button.dropdown-item(type='button') Copy link file
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                            // /.list-group-item
+                            // .list-group-header
+                            .list-group-header  Jan 28, 2018 
+                            // /.list-group-header
+                            // .list-group-item
+                            .list-group-item.align-items-start
+                                .list-group-item-figure
+                                    a.tile.tile-circle.bg-purple(href='#!')
+                                        span.fa.fa-file-archive
+                                .list-group-item-body
+                                    h4.list-group-item-title.text-truncate
+                                        a(href='#!') looper_build-1209.zip
+                                    p.list-group-item-text  0.53 MB by Rose McCoy 
+                                    p.list-group-item-text.small  3:13am 
+                                .list-group-item-figure
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Download
+                                            button.dropdown-item(type='button') View details
+                                            button.dropdown-item(type='button') Share file
+                                            button.dropdown-item(type='button') Copy link file
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                            // /.list-group-item
+                            // .list-group-item
+                            .list-group-item.align-items-start
+                                .list-group-item-figure
+                                    a.tile.tile-circle.bg-purple(href='#!')
+                                        span.fa.fa-file-archive
+                                .list-group-item-body
+                                    h4.list-group-item-title.text-truncate
+                                        a(href='#!') looper_design-brief.zip
+                                    p.list-group-item-text  2.04 MB by Rose McCoy 
+                                    p.list-group-item-text.small  11:27pm 
+                                .list-group-item-figure
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Download
+                                            button.dropdown-item(type='button') View details
+                                            button.dropdown-item(type='button') Share file
+                                            button.dropdown-item(type='button') Copy link file
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                            // /.list-group-item
+                            // .list-group-header
+                            .list-group-header  Jan 21, 2018 
+                            // /.list-group-header
+                            // .list-group-item
+                            .list-group-item.align-items-start
+                                .list-group-item-figure
+                                    a.tile.tile-circle.bg-teal(href='#!')
+                                        span.fa.fa-file-pdf
+                                .list-group-item-body
+                                    h4.list-group-item-title.text-truncate
+                                        a(href='#!') Usulan Beasiswa Tahun 2018.pdf
+                                    p.list-group-item-text  1.1 MB by Peter Willis 
+                                    p.list-group-item-text.small  6:20pm 
+                                .list-group-item-figure
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Download
+                                            button.dropdown-item(type='button') View details
+                                            button.dropdown-item(type='button') Share file
+                                            button.dropdown-item(type='button') Copy link file
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                            // /.list-group-item
+                            // .list-group-item
+                            .list-group-item.align-items-start
+                                .list-group-item-figure
+                                    a.tile.tile-circle.bg-green(href='#!')
+                                        span.fa.fa-file-excel
+                                .list-group-item-body
+                                    h4.list-group-item-title.text-truncate
+                                        a(href='#!') Daftar Peserta Ujian.xlsx
+                                    p.list-group-item-text  0.37 MB by Peter Willis 
+                                    p.list-group-item-text.small  1:32pm 
+                                .list-group-item-figure
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Download
+                                            button.dropdown-item(type='button') View details
+                                            button.dropdown-item(type='button') Share file
+                                            button.dropdown-item(type='button') Copy link file
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                            // /.list-group-item
+                            // .list-group-item
+                            .list-group-item.align-items-start
+                                .list-group-item-figure
+                                    a.tile.tile-circle.bg-blue(href='#!')
+                                        span.fa.fa-file-word
+                                .list-group-item-body
+                                    h4.list-group-item-title.text-truncate
+                                        a(href='#!') data_not_verified.docx
+                                    p.list-group-item-text  0.94 MB by Kathryn Black 
+                                    p.list-group-item-text.small  5:11am 
+                                .list-group-item-figure
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Download
+                                            button.dropdown-item(type='button') View details
+                                            button.dropdown-item(type='button') Share file
+                                            button.dropdown-item(type='button') Copy link file
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                            // /.list-group-item
+                            // .list-group-header
+                            .list-group-header  Jan 19, 2018 
+                            // /.list-group-header
+                            // .list-group-item
+                            .list-group-item.align-items-start
+                                .list-group-item-figure
+                                    a.tile.tile-circle.bg-red(href='#!')
+                                        span.fa.fa-file-powerpoint
+                                .list-group-item-body
+                                    h4.list-group-item-title.text-truncate
+                                        a(href='#!') mockup-presentation.pptx
+                                    p.list-group-item-text  0.59 MB by Kathryn Black 
+                                    p.list-group-item-text.small  6:50am 
+                                .list-group-item-figure
+                                    // .dropdown
+                                    .dropdown
+                                        button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                            i.fa.fa-fw.fa-ellipsis-v
+                                        .dropdown-arrow
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button') Download
+                                            button.dropdown-item(type='button') View details
+                                            button.dropdown-item(type='button') Share file
+                                            button.dropdown-item(type='button') Copy link file
+                                            .dropdown-divider
+                                            button.dropdown-item(type='button') Remove
+                                    // /.dropdown
+                            // /.list-group-item
+                        // /.list-group
+                    // /#message-files
+                // /Tab panes
+            // /.sidebar-section-fill
+        // /.page-sidebar
+            
+block scripts_plugin
+    script(src='/vendor/tributejs/tribute.min.js')
+    script(src='/vendor/photoswipe/photoswipe.min.js')
+    script(src='/vendor/photoswipe/photoswipe-ui-default.min.js')
 
-          
 block scripts
-  script(src="/socket.io/socket.io.js")
-  script.
-    var socket = io();
-    const CONVERSATION = '#{conversation._id}';
-
-    socket.on('chat message', function (msg) {
-        console.log(msg);
-        appendMessage( msg,true);
-    });
-
-    socket.on('connect', function () {
-        socket.emit('init chat', {'conversation': CONVERSATION});
-    });
-
-
-    $('#sendMessage').click(sendNewMessage);
-
-    function sendNewMessage() {
-        var userInput = $('.text-box');
-        var newMessage = userInput.val().trim() //.replace(/\<div\>|\<br.*?\>/ig, '\n').replace(/\<\/div\>/g, '').trim().replace(/\n/g, '<br>');
-
-        if (!newMessage) return;
-
-        var message = {
-            conversation: CONVERSATION,
-            text: newMessage
-        }
-
-        socket.emit('new message', message);
-
-        // clean out old message
-        userInput.val('');
-        // focus on input
-        userInput.focus();
-
-       // appendMessage(message['text']);
-    }
-
-    function appendMessage(newMessage, mine) {
-        var messagesContainer = $('.messages');
-
-        if (mine) {
-            messagesContainer.append(`
-                        <li class="self">
-                            <strong>Sender: </strong><span>${newMessage.owner}</span><br>
-                            <strong>Date: </strong><span>${newMessage.createdAt}</span><br>
-                            <strong>Body: </strong><span>${newMessage.body}</span><br>
-                        </li>
-                        `)
-        } else {
-            messagesContainer.append([
-                '<li class="other">',
-                newMessage,
-                '</li>'
-            ].join(''));
-        }
+    script(src='/javascript/pages/photoswipe-demo.js')
+    script(src='/javascript/pages/conversations-demo.js')
+    script(src="/socket.io/socket.io.js")
+    script.
+        var socket = io();
+        const CONVERSATION = '#{currentConversation ? currentConversation._id : null}';
+    
+        $(function () {
+            if (CONVERSATION) {
+                socket.on('chat message', function (msg) {
+                    console.log(msg);
+                    appendMessage(msg, msg['owner']['refModel'] !== 'Contact');
+                });
+    
+                socket.on('connect', function () {
+                    socket.emit('init chat', {'conversation': CONVERSATION});
+                });
+    
+                $('#sendMessage').click(sendNewMessage);
+    
+                var messagesContainer = $('.msg_history');
+                messagesContainerScroll(1000);
+    
+                function messagesContainerScroll(animateDuration) {
+                    //messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, animateDuration || 500);
+    
+                }
+    
+                function sendNewMessage() {
+                    var userInput = $('.write_msg');
+                    var newMessage = userInput.val().trim()
+    
+                    if (!newMessage) return;
+    
+                    var message = {
+                        conversation: CONVERSATION,
+                        text: newMessage
+                    }
+    
+                    socket.emit('new message', message);
+    
+                    // clean out old message
+                    userInput.val('');
+                    // focus on input
+                    userInput.focus();
+    
+                    // appendMessage(message['text']);
+                }
+    
+                function appendMessage(newMessage, mine) {
+    
+                    if (mine) {
+                        messagesContainer.append(`
+                              <div class="outgoing_msg">
+                                <div class="sent_msg">
+                                    <p>${newMessage.body}</p>
+                                    <span class="time_date">${newMessage.createdAt}</span>
+                                </div>
+                              </div>`)
+    
+    
+                    } else {
+                        messagesContainer.append(`
+                              <div class="incoming_msg">  
+                                <div class="incoming_msg_img">
+                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="${newMessage.owner}">
+                                </div>  
+                                <div class="received_msg">
+                                    <div class="received_withd_msg">
+                                        <p>${newMessage.body}</p>
+                                        <span class="time_date">${newMessage.createdAt}</span>
+                                    </div>
+                                </div>
+                              </div>`);
+                    }
+    
+                    messagesContainerScroll();
+    
+                }
+            }
+        });
         
-        messagesContainer.finish().animate({
-            scrollTop: messagesContainer.prop("scrollHeight")
-        }, 250);
-    }
