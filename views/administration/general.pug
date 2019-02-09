@@ -1,7 +1,7 @@
 extends ./layout
 
 block tab
-  form(method='POST' action='')
+  form(method='POST' action='/p/'+property._id+'/update')
     div.form-group
       label(for='name') Name:
       input#name.form-control(type='text', placeholder='Property Name' name='name' required='true' value=(undefined === property ? '' : property.name) )

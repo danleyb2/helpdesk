@@ -99,11 +99,18 @@ exports.details = function (req, res) {
 
     })
 };
-exports.update = function (req, res) {
-    Property.findByIdAndUpdate(req.params.id, {$set: req.body}, function (err, property) {
+
+
+exports.update = function (req, res,next) {
+
+    Ticket.findByIdAndUpdate(req.params.tId, {$set: req.body}, function (err, ticket) {
         if (err) return next(err);
-        res.send('Product updated.');
+
+        res.send(ticket);
+
     });
+
+
 };
 
 exports.delete = function (req, res) {

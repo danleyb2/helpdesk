@@ -4,7 +4,7 @@ exports.list = function (req, res) {
 
     Conversation.findOrderByLastMessage(req.properties, function (err, conversations) {
         if (err) return next(err);
-        res.render('messaging/conversations', {title: 'Conversations', 'conversations': conversations});
+        res.render('messaging/list', {title: 'Conversations', 'conversations': conversations});
 
     });
 

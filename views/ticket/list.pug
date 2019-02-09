@@ -17,8 +17,8 @@ block content
           div Priority 
           // : #{ticket.priority}
           .btn-group.btn-group-toggle(data-toggle='buttons')
-            label.btn.btn-secondary.active
-              input#option1(type='radio' name='options' autocomplete='off' checked='')
+            label.btn.btn-secondary
+              input#option1(type='radio' name='options' autocomplete='off' )
               |  Low
             label.btn.btn-secondary
               input#option2(type='radio' name='options' autocomplete='off')
@@ -41,3 +41,14 @@ block content
     
   else
     p No tickets, Create one now
+
+    
+block scripts    
+  script.
+      $(function() {
+          $('#option3').button('toggle')
+          
+          
+          
+      })
+  

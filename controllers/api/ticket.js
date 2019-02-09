@@ -37,11 +37,12 @@ exports.receive = async function (req, res,next) {
 
     var endpoint = extractNameEmail(req.body.to)[1];
     const NOTIFICATIONS = 'notifications-';
+    var conversation;
 
     if(endpoint.indexOf(NOTIFICATIONS)>-1){
 
         var conversationId = endpoint.substring(endpoint.indexOf(NOTIFICATIONS)+NOTIFICATIONS.length,endpoint.indexOf('@'))
-        var conversation = await Conversation.findOne({_id: conversationId}).exec();;
+        conversation = await Conversation.findOne({_id: conversationId}).exec();;
         let participantIds = conversation.participants.map(p => new mongoose.Types.ObjectId(p.id));
         participant = await Participant.findOne({refModel: 'Contact'})
             .where('_id')
@@ -84,12 +85,16 @@ exports.receive = async function (req, res,next) {
             modelRef: contact._id
         });
 
-
-        var conversation = await Conversation.create({
+        Conversation.create({
             title: req.body.subject.trim(),
             property: property._id,
             mail_notifications: true,
             participants: [participant._id]
+        },function(err,conversation){
+            if (err) {
+                return next(err);
+            }
+            res.send(conversation)
         });
 
 
@@ -109,6 +114,8 @@ exports.receive = async function (req, res,next) {
                     });
                     */
 
+
+        /*
         let ticket = new Ticket({
             subject: req.body.subject,
             issue: req.body.message,
@@ -123,6 +130,7 @@ exports.receive = async function (req, res,next) {
             }
             res.send(ticket)
         })
+        */
     }
 
 };
