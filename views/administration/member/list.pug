@@ -79,19 +79,7 @@ block tab
 
   button.btn.btn-primary.mb-2(type='button' data-toggle='modal' data-target='#exampleModalCenter')
     | Invite New
-  if members.length
-    ul.list-group
-      each member in members
-        li.list-group-item
-          div Username : #{member.account.username} 
-          div Email : #{member.account.email} 
-          div Role : #{member.role} 
-          div Status : #{member.status} 
-          
-          
-  else
-    p No Members Yes
-    
+  
     
   #exampleModalCenter.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true')
     .modal-dialog.modal-dialog-centered(role='document')

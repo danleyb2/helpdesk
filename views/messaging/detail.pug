@@ -15,9 +15,9 @@ block content
                 // message header
                 header.message-header
                     .d-flex
-                        a.btn.btn-light.btn-icon(href='page-messages.html')
+                        a.btn.btn-light.btn-icon(href='/m')
                             i.fa.fa-flip-horizontal.fa-share
-                    h4.message-title  Invitation: Joe&apos;s Dinner @ Fri Aug 22 
+                    h4.message-title  #{currentConversation.title} #{currentConversation.createdAt.toLocaleString()} 
                     .message-header-actions
                         // invite members
                         .dropdown.d-inline-block
@@ -56,7 +56,7 @@ block content
                                         |  &middot; Wed, Feb 14, 2018
                                 // /.conversation-divider
                                 // .conversation-inbound
-                                li.conversation-inbound
+                                li.conversation-inbound.d-none
                                     .conversation-avatar
                                         a.tile.tile-circle.bg-muted(href='#!')
                                             i.oi.oi-person
@@ -73,7 +73,7 @@ block content
                                             button.dropdown-item(type='button') Remove
                                 // /.conversation-inbound
                                 // .conversation-inbound
-                                li.conversation-inbound.conversation-faux
+                                li.conversation-inbound.conversation-faux.d-none
                                     .conversation-message.conversation-message-skip-avatar
                                         .conversation-message-text  Laboriosam asperiores cupiditate aperiam! 
                                         .conversation-meta  Diane Peters &middot; 20m 
@@ -88,7 +88,7 @@ block content
                                             button.dropdown-item(type='button') Remove
                                 // /.conversation-inbound
                                 // .conversation-outbound
-                                li.conversation-outbound
+                                li.conversation-outbound.d-none
                                     .conversation-actions.dropdown
                                         button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
                                             i.fa.fa-fw.fa-ellipsis-h
@@ -102,7 +102,7 @@ block content
                                         .conversation-message-text  Expedita officiis delectus perspiciatis a dolores. 
                                 // /.conversation-outbound
                                 // .conversation-outbound
-                                li.conversation-outbound.conversation-faux
+                                li.conversation-outbound.conversation-faux.d-none
                                     .conversation-actions.dropdown
                                         button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
                                             i.fa.fa-fw.fa-ellipsis-h
@@ -117,7 +117,7 @@ block content
                                         .conversation-meta  Beni Arisandi &middot; 14m 
                                 // /.conversation-outbound
                                 // .conversation-divider
-                                li.log-divider
+                                li.log-divider.d-none
                                     span
                                         i.fa.fa-fw.fa-user-plus
                                         strong Jennifer
@@ -126,7 +126,7 @@ block content
                                         |  invited to the chat &middot; 5:06 PM
                                 // /.conversation-divider
                                 // .conversation-inbound
-                                li.conversation-inbound
+                                li.conversation-inbound.d-none
                                     .conversation-avatar
                                         a.user-avatar(href='#!')
                                             img(src='assets/images/avatars/uifaces11.jpg' alt='')
@@ -144,7 +144,7 @@ block content
                                             button.dropdown-item(type='button') Remove
                                 // /.conversation-inbound
                                 // .conversation-inbound
-                                li.conversation-inbound.conversation-faux
+                                li.conversation-inbound.conversation-faux.d-none
                                     .conversation-message.conversation-message-skip-avatar
                                         .conversation-message-text.has-attachment
                                             .pswp-gallery
@@ -180,7 +180,7 @@ block content
                                             button.dropdown-item(type='button') Remove
                                 // /.conversation-inbound
                                 // .conversation-outbound
-                                li.conversation-outbound
+                                li.conversation-outbound.d-none
                                     .conversation-actions.dropdown
                                         button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
                                             i.fa.fa-fw.fa-ellipsis-h
@@ -200,7 +200,7 @@ block content
                                         .conversation-meta  Beni Arisandi &middot; 5m 
                                 // /.conversation-outbound
                                 // .conversation-inbound
-                                li.conversation-inbound
+                                li.conversation-inbound.d-none
                                     .conversation-avatar
                                         a.tile.tile-circle.bg-teal(href='#!') ZF
                                     .conversation-message
@@ -217,7 +217,7 @@ block content
                                             button.dropdown-item(type='button') Remove
                                 // /.conversation-inbound
                                 // .conversation-divider
-                                li.log-divider
+                                li.log-divider.d-none
                                     span.text-danger
                                         i.oi.oi-ban.fa-fw
                                         |  The file sent by 
@@ -225,7 +225,7 @@ block content
                                         |  is too large &middot; 2m
                                 // /.conversation-divider
                                 // .conversation-inbound
-                                li.conversation-inbound
+                                li.conversation-inbound.d-none
                                     .conversation-avatar
                                         a.tile.tile-circle.bg-teal(href='#!') ZF
                                     .conversation-message
@@ -247,7 +247,7 @@ block content
                                             button.dropdown-item(type='button') Remove
                                 // /.conversation-inbound
                                 // .conversation-inbound
-                                li.conversation-inbound
+                                li.conversation-inbound.d-none
                                     .conversation-avatar
                                         a.user-avatar(href='#!')
                                             img(src='assets/images/avatars/uifaces11.jpg' alt='')
@@ -260,6 +260,45 @@ block content
                                                 span.dot
                                             em Jennifer Gray is typing
                                 // /.conversation-inbound
+                                if messages && messages.length
+                                    each message in messages
+                                        if message.owner.refModel === 'Member' && message.owner.modelRef.account.toString() === req.user._id.toString()
+                                            // .conversation-outbound
+                                            li.conversation-outbound
+                                                .conversation-actions.dropdown
+                                                    button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                                        i.fa.fa-fw.fa-ellipsis-h
+                                                    .dropdown-arrow
+                                                    .dropdown-menu
+                                                        button.dropdown-item(type='button') Copy text
+                                                        button.dropdown-item(type='button') Edit
+                                                        button.dropdown-item(type='button') Reply
+                                                        button.dropdown-item(type='button') Remove
+                                                .conversation-message
+                                                    .conversation-message-text  !{message.body}
+                                                    .conversation-meta  Beni Arisandi &middot; 14m 
+
+                                        else
+                                            // .conversation-inbound
+                                            li.conversation-inbound
+                                                .conversation-avatar
+                                                    a.user-avatar(href='#!')
+                                                        img(src='assets/images/avatars/uifaces11.jpg' alt='')
+                                                        span.avatar-badge.online
+                                                .conversation-message
+                                                    .conversation-message-text  !{message.body} 
+                                                    .conversation-meta  Zachary Fowler &middot; 3m    
+                                                .conversation-actions.dropdown
+                                                    button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
+                                                        i.fa.fa-fw.fa-ellipsis-h
+                                                    .dropdown-arrow
+                                                    .dropdown-menu
+                                                        button.dropdown-item(type='button') Copy text
+                                                        button.dropdown-item(type='button') Edit
+                                                        button.dropdown-item(type='button') Reply
+                                                        button.dropdown-item(type='button') Remove
+                                    
+                                    
                             // /.conversation-list
                         // /.conversations
                         // PhotoSwipe (.pswp) element
@@ -304,7 +343,7 @@ block content
                 // message publisher
                 footer.message-publisher
                     // form
-                    form
+                    div 
                         // .media
                         .media.mb-1
                             button.btn.btn-light.btn-icon.fileinput-button(type='button')
@@ -315,7 +354,7 @@ block content
                             div
                                 button.btn.btn-light.btn-icon(type='button')
                                     i.far.fa-smile
-                                button.btn.btn-light.btn-icon(type='submit')
+                                button.btn.btn-light.btn-icon#sendMessage(type='submit')
                                     i.far.fa-paper-plane
                         // /.media
                     // /form
@@ -924,7 +963,7 @@ block scripts
     
                 $('#sendMessage').click(sendNewMessage);
     
-                var messagesContainer = $('.msg_history');
+                var messagesContainer = $('.conversations');
                 messagesContainerScroll(1000);
     
                 function messagesContainerScroll(animateDuration) {
@@ -934,7 +973,7 @@ block scripts
                 }
     
                 function sendNewMessage() {
-                    var userInput = $('.write_msg');
+                    var userInput = $('input[name=messageText]');
                     var newMessage = userInput.val().trim()
     
                     if (!newMessage) return;
@@ -958,27 +997,50 @@ block scripts
     
                     if (mine) {
                         messagesContainer.append(`
-                              <div class="outgoing_msg">
-                                <div class="sent_msg">
-                                    <p>${newMessage.body}</p>
-                                    <span class="time_date">${newMessage.createdAt}</span>
-                                </div>
-                              </div>`)
+                            <li class="conversation-outbound">
+                            <div class="conversation-actions dropdown">
+                            <button class="btn btn-sm btn-icon btn-light" data-toggle="dropdown"><i class="fa fa-fw fa-ellipsis-h"></i>
+                            </button>
+                            <div class="dropdown-arrow"></div>
+                            <div class="dropdown-menu">
+                            <button class="dropdown-item" type="button">Copy text</button>
+                            <button class="dropdown-item" type="button">Edit</button>
+                            <button class="dropdown-item" type="button">Reply</button>
+                            <button class="dropdown-item" type="button">Remove</button>
+                            </div>
+                            </div>
+                            <div class="conversation-message">
+                            <div class="conversation-message-text">${newMessage.body}</div>
+                            <div class="conversation-meta"> Beni Arisandi · ${newMessage.createdAt}</div>
+                            </div>
+                            </li>`)
     
     
                     } else {
                         messagesContainer.append(`
-                              <div class="incoming_msg">  
-                                <div class="incoming_msg_img">
-                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="${newMessage.owner}">
-                                </div>  
-                                <div class="received_msg">
-                                    <div class="received_withd_msg">
-                                        <p>${newMessage.body}</p>
-                                        <span class="time_date">${newMessage.createdAt}</span>
-                                    </div>
-                                </div>
-                              </div>`);
+                            <li class="conversation-inbound">
+                            <div class="conversation-avatar">
+                            <a class="user-avatar" href="#!">
+                            <img src="assets/images/avatars/uifaces11.jpg" alt="${newMessage.owner}">
+                            <span class="avatar-badge online"></span>
+                            </a>
+                            </div>
+                            <div class="conversation-message">
+                            <div class="conversation-message-text">${newMessage.body}</div>
+                            <div class="conversation-meta"> Zachary Fowler · ${newMessage.createdAt}</div>
+                            </div>
+                            <div class="conversation-actions dropdown">
+                            <button class="btn btn-sm btn-icon btn-light" data-toggle="dropdown"><i class="fa fa-fw fa-ellipsis-h"></i>
+                            </button>
+                            <div class="dropdown-arrow"></div>
+                            <div class="dropdown-menu">
+                            <button class="dropdown-item" type="button">Copy text</button>
+                            <button class="dropdown-item" type="button">Edit</button>
+                            <button class="dropdown-item" type="button">Reply</button>
+                            <button class="dropdown-item" type="button">Remove</button>
+                            </div>
+                            </div>
+                            </li>`);
                     }
     
                     messagesContainerScroll();

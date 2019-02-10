@@ -6,7 +6,9 @@ var ConversationSchema = mongoose.Schema({
     title: {type: String},
     mail_notifications: {type: Boolean, default: false},
     property: {type: mongoose.Schema.Types.ObjectId, ref: 'Property', required: true},
-    status: {type: String, required: true, enum:['Active', 'Ticketed', 'Stale'], default:'Active'},
+    department: {type: mongoose.Schema.Types.ObjectId, ref: 'Department', required: true},
+    status: {type: String, required: true, enum: ['Active', 'Ticketed', 'Stale'], default: 'Active'},
+    type: {type: String, required: true, enum: ['EMAIL', 'SOCKET'], default: 'SOCKET'},
     participants: [
         {type: mongoose.Schema.Types.ObjectId, ref: 'Participant'}
     ]
@@ -38,23 +40,18 @@ ConversationSchema.methods.recentMessages = function (callback) {
 };
 
 
-ConversationSchema.statics.findOrderByLastMessage = function (properties,callback) {
+ConversationSchema.statics.findOrderByLastMessage = function (properties, callback) {
     return this.aggregate([
         {"$match": {"property": {$in: properties}}},
-        {
-            "$lookup": {
-                "from": "messages",
-                "localField": "_id",
-                "foreignField": "conversation",
-                "as": "messages"
-            }
-        },
+        {$lookup: {from: 'departments', localField: 'department', foreignField: '_id', as: 'department'}},
+        {$lookup: {from: "messages", localField: "_id", foreignField: "conversation", as: "messages"}},
         {"$unwind": "$messages"},
         {"$sort": {"messages.createdAt": -1}},
         {
             "$group": {
                 "_id": "$_id",
                 "title": {"$first": "$title"},
+                "department": {"$first": "$department.name"},
                 "participants": {"$first": "$participants"},
                 "property": {"$first": "$property"},
                 "status": {"$first": "$status"},
@@ -63,7 +60,7 @@ ConversationSchema.statics.findOrderByLastMessage = function (properties,callbac
         },
         {"$sort": {"latestMessage.createdAt": -1}},
 
-    ],callback);
+    ], callback);
 
 };
 

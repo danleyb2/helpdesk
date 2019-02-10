@@ -13,12 +13,12 @@ block tab
             // metric column
             .col
                 // .metric
-                a.metric.metric-bordered.align-items-center(href='page-team-members.html')
+                a.metric.metric-bordered.align-items-center(href='/p/'+property._id+'/members')
                     h2.metric-label  Members 
                     p.metric-value.h3
                         sub
                             i.oi.oi-people
-                        span.value 12
+                        span.value #{property.numMembers}
                 // /.metric
             // /metric column
             // metric column

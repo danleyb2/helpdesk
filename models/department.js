@@ -5,7 +5,15 @@ var Schema = mongoose.Schema;
 var DepartmentSchema = new Schema({
     name: {type: String, required: true },
     property:   { type: mongoose.Schema.Types.ObjectId, ref: 'Property', required: true },
-    support_email:{ type: String, required: true, unique: true },
+    support_email:{
+        type: String,
+        required: false,
+        trim: true,
+        index: {
+            unique: true,
+            partialFilterExpression: {support_email: {$type: 'string'}}
+        }
+    },
     members: [
         new mongoose.Schema({
             membership: {type:mongoose.Schema.Types.ObjectId, ref:'Member'},

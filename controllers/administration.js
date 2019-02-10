@@ -31,7 +31,7 @@ exports.members = function (req, res) {
 
 };
 
-exports.departments = function (req, res) {
+exports.departments = function (req, res,next) {
 
     Department.find({property:req.params.pId})
         // .populate('account')
@@ -42,6 +42,23 @@ exports.departments = function (req, res) {
 
             res.render('administration/department/list', {title: 'Departments', 'departments': departments});
         });
+
+};
+
+exports.departmentCreate = function (req, res,next) {
+
+    Department.create({
+        property:req.params.pId,
+        name:req.body.name,
+        support_email:req.body.support_email
+
+    },function (err, department) {
+        if (err) {
+            return next(err);
+        }
+
+        res.redirect(`/p/${req.params.pId}/departments`);
+    });
 
 };
 

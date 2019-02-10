@@ -43,8 +43,10 @@ module.exports = function (io) {
             var conversation;
             var participant;
             var property;
+            var department;
 
             conversation = await Conversation.findOne({_id: msg['conversation']});
+            department = await Department.findOne({_id: conversation.department});
             property = await Property.findOne({_id: conversation.property});
 
             let participantIds = conversation.participants.map(p => new mongoose.Types.ObjectId(p.id));
@@ -99,9 +101,9 @@ module.exports = function (io) {
 
 
                 let mailOptions = {
-                    from: property.support_email, // sender address
+                    from: department.support_email, // sender address
                     to: contact['modelRef']['email'], // list of receivers
-                    replyTo: 'notifications-' + conversation._id + '@danleyb2.online',
+                    replyTo: 'notifications-' + conversation._id + '@'+process.env.MAIL_SERVER_HOST,
                     subject: `Re: ${conversation.title}`, // Subject line
                     text: message['body'], // plain text body
                     // html: '<b>Hello world?</b>' // html body
@@ -163,6 +165,7 @@ module.exports = function (io) {
             conversation = await Conversation.create({
                 title: msg['text'],
                 participants: [participant._id],
+                department: msg['department'],
                 property: msg['property']
             });
             msg['conversation'] = conversation._id;

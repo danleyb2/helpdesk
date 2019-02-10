@@ -17,7 +17,7 @@ block tab
       // /.col
       // .col-auto
       .col-auto
-        button.btn.btn-primary Add Department
+        a.btn.btn-primary(href='#departmentNewModal' data-toggle='modal') Add Department
       // /.col-auto
     // /grid row
     // grid row
@@ -46,39 +46,33 @@ block tab
             // .card-body
             .card-body.text-center
               // avatars
-              a.tile.tile-lg.bg-purple.mb-2(href='page-project.html') LT
+              a.tile.tile-lg.bg-purple.mb-2(href='#!') #{department.name[0]}#{department.name[1]}
               // /avatars
               // /.media
               h5.card-title
-                a(href='page-project.html') #{department.name}
-              p.card-subtitle.text-muted  Progress in 74% - Last update 1d 
+                a(href='#!') #{department.name}
+              p.card-subtitle.text-muted  #{department.support_email}
               // .my-3
               .my-3
                 // team members
                 .avatar-group
-                  a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
-                    img(src='assets/images/avatars/uifaces6.jpg' alt='')
-                  a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Bryan Morgan')
-                    img(src='assets/images/avatars/uifaces8.jpg' alt='')
-                  a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Larry Robinson')
-                    img(src='assets/images/avatars/uifaces7.jpg' alt='')
-                  a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Beverly Simpson')
-                    img(src='assets/images/avatars/uifaces9.jpg' alt='')
-                  a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Robinson')
-                    img(src='assets/images/avatars/uifaces10.jpg' alt='')
-                  a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +21
+                  for member in department.members.slice(0,4)  
+                      a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
+                        img(src='assets/images/avatars/uifaces6.jpg' alt='')
+                      
+                  a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +#{department.members.length}
                 // /team members
               // /.my-3
               // grid row
               .row
                 // grid column
                 .col
-                  strong Budget
-                  span.d-block 40,000$
+                  strong Open
+                  span.d-block 775
                 // /grid column
                 // grid column
                 .col
-                  strong Tasks
+                  strong Closed
                   span.d-block 775
                 // /grid column
               // /grid row
@@ -89,282 +83,9 @@ block tab
                 span.sr-only 74% Complete
             // /.progress
         // /.card
-              
-        
+          
       // grid column
-      .col-lg-6
-        // .card
-        .card.card-fluid
-          // .card-header
-          header.card-header.border-0
-            .d-flex.justify-content-between.align-items-center
-              span.badge.bg-muted(data-toggle='tooltip' data-placement='bottom' title='Deadline')
-                span.sr-only Deadline
-                i.fa.fa-calendar-alt.text-muted.mr-1
-                |  15 Sep 2018
-              .dropdown
-                button.btn.btn-icon.btn-light(type='button' data-toggle='dropdown' aria-expanded='false')
-                  i.fa.fa-ellipsis-v
-                .dropdown-arrow
-                .dropdown-menu.dropdown-menu-right
-                  a.dropdown-item(href='#!') View Project
-                  a.dropdown-item(href='#!') Add Member
-                  a.dropdown-item(href='#!') Edit
-                  a.dropdown-item(href='#!') Remove
-          // /.card-header
-          // .card-body
-          .card-body.text-center
-            // avatars
-            a.tile.tile-lg.bg-indigo.mb-2(href='page-project.html') SP
-            // /avatars
-            // /.media
-            h5.card-title
-              a(href='page-project.html') Smart Paper
-            p.card-subtitle.text-muted  Progress in 22% - Last update 2h 
-            // .my-3
-            .my-3
-              // team members
-              .avatar-group
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
-                  img(src='assets/images/avatars/uifaces6.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Bryan Morgan')
-                  img(src='assets/images/avatars/uifaces8.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Larry Robinson')
-                  img(src='assets/images/avatars/uifaces7.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Beverly Simpson')
-                  img(src='assets/images/avatars/uifaces9.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Robinson')
-                  img(src='assets/images/avatars/uifaces10.jpg' alt='')
-                a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +6
-              // /team members
-            // /.my-3
-            // grid row
-            .row
-              // grid column
-              .col
-                strong Budget
-                span.d-block 10,000$
-              // /grid column
-              // grid column
-              .col
-                strong Tasks
-                span.d-block 3090
-              // /grid column
-            // /grid row
-          // /.card-body
-          // .progress
-          .progress.progress-xs(data-toggle='tooltip' title='22%')
-            .progress-bar.bg-indigo(role='progressbar' aria-valuenow='867' aria-valuemin='0' aria-valuemax='100' style='width: 22%')
-              span.sr-only 22% Complete
-          // /.progress
-        // /.card
-      // /grid column
-      // grid column
-      .col-lg-6
-        // .card
-        .card.card-fluid
-          // .card-header
-          header.card-header.border-0
-            .d-flex.justify-content-between.align-items-center
-              span.badge.bg-muted(data-toggle='tooltip' data-placement='bottom' title='Deadline')
-                span.sr-only Deadline
-                i.fa.fa-calendar-alt.text-muted.mr-1
-                |  15 Jul 2018
-              .dropdown
-                button.btn.btn-icon.btn-light(type='button' data-toggle='dropdown' aria-expanded='false')
-                  i.fa.fa-ellipsis-v
-                .dropdown-arrow
-                .dropdown-menu.dropdown-menu-right
-                  a.dropdown-item(href='#!') View Project
-                  a.dropdown-item(href='#!') Add Member
-                  a.dropdown-item(href='#!') Edit
-                  a.dropdown-item(href='#!') Remove
-          // /.card-header
-          // .card-body
-          .card-body.text-center
-            // avatars
-            a.tile.tile-lg.bg-yellow.mb-2(href='page-project.html') OS
-            // /avatars
-            // /.media
-            h5.card-title
-              a(href='page-project.html') Online Store
-            p.card-subtitle.text-muted  Progress in 99% - Last update 2d 
-            // .my-3
-            .my-3
-              // team members
-              .avatar-group
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
-                  img(src='assets/images/avatars/uifaces6.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Bryan Morgan')
-                  img(src='assets/images/avatars/uifaces8.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Larry Robinson')
-                  img(src='assets/images/avatars/uifaces7.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Beverly Simpson')
-                  img(src='assets/images/avatars/uifaces9.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Robinson')
-                  img(src='assets/images/avatars/uifaces10.jpg' alt='')
-                a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +42
-              // /team members
-            // /.my-3
-            // grid row
-            .row
-              // grid column
-              .col
-                strong Budget
-                span.d-block 100,000$
-              // /grid column
-              // grid column
-              .col
-                strong Tasks
-                span.d-block 100
-              // /grid column
-            // /grid row
-          // /.card-body
-          // .progress
-          .progress.progress-xs(data-toggle='tooltip' title='99%')
-            .progress-bar.bg-yellow(role='progressbar' aria-valuenow='6683' aria-valuemin='0' aria-valuemax='100' style='width: 99%')
-              span.sr-only 99% Complete
-          // /.progress
-        // /.card
-      // /grid column
-      // grid column
-      .col-lg-6
-        // .card
-        .card.card-fluid
-          // .card-header
-          header.card-header.border-0
-            .d-flex.justify-content-between.align-items-center
-              span.badge.bg-muted(data-toggle='tooltip' data-placement='bottom' title='Deadline')
-                span.sr-only Deadline
-                i.fa.fa-calendar-alt.text-muted.mr-1
-                |  20 Sep 2018
-              .dropdown
-                button.btn.btn-icon.btn-light(type='button' data-toggle='dropdown' aria-expanded='false')
-                  i.fa.fa-ellipsis-v
-                .dropdown-arrow
-                .dropdown-menu.dropdown-menu-right
-                  a.dropdown-item(href='#!') View Project
-                  a.dropdown-item(href='#!') Add Member
-                  a.dropdown-item(href='#!') Edit
-                  a.dropdown-item(href='#!') Remove
-          // /.card-header
-          // .card-body
-          .card-body.text-center
-            // avatars
-            a.tile.tile-lg.bg-blue.mb-2(href='page-project.html') BA
-            // /avatars
-            // /.media
-            h5.card-title
-              a(href='page-project.html') Booking App
-            p.card-subtitle.text-muted  Progress in 35% - Last update 4h 
-            // .my-3
-            .my-3
-              // team members
-              .avatar-group
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
-                  img(src='assets/images/avatars/uifaces6.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Bryan Morgan')
-                  img(src='assets/images/avatars/uifaces8.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Larry Robinson')
-                  img(src='assets/images/avatars/uifaces7.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Beverly Simpson')
-                  img(src='assets/images/avatars/uifaces9.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Robinson')
-                  img(src='assets/images/avatars/uifaces10.jpg' alt='')
-                a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +8
-              // /team members
-            // /.my-3
-            // grid row
-            .row
-              // grid column
-              .col
-                strong Budget
-                span.d-block 5,000$
-              // /grid column
-              // grid column
-              .col
-                strong Tasks
-                span.d-block 209
-              // /grid column
-            // /grid row
-          // /.card-body
-          // .progress
-          .progress.progress-xs(data-toggle='tooltip' title='35%')
-            .progress-bar.bg-blue(role='progressbar' aria-valuenow='112' aria-valuemin='0' aria-valuemax='100' style='width: 35%')
-              span.sr-only 35% Complete
-          // /.progress
-        // /.card
-      // /grid column
-      // grid column
-      .col-lg-6
-        // .card
-        .card.card-fluid
-          // .card-header
-          header.card-header.border-0
-            .d-flex.justify-content-between.align-items-center
-              span.badge.bg-muted(data-toggle='tooltip' data-placement='bottom' title='Deadline')
-                span.sr-only Deadline
-                i.fa.fa-calendar-alt.text-muted.mr-1
-                |  15 Nov 2018
-              .dropdown
-                button.btn.btn-icon.btn-light(type='button' data-toggle='dropdown' aria-expanded='false')
-                  i.fa.fa-ellipsis-v
-                .dropdown-arrow
-                .dropdown-menu.dropdown-menu-right
-                  a.dropdown-item(href='#!') View Project
-                  a.dropdown-item(href='#!') Add Member
-                  a.dropdown-item(href='#!') Edit
-                  a.dropdown-item(href='#!') Remove
-          // /.card-header
-          // .card-body
-          .card-body.text-center
-            // avatars
-            a.tile.tile-lg.bg-teal.mb-2(href='page-project.html') SB
-            // /avatars
-            // /.media
-            h5.card-title
-              a(href='page-project.html') SVG Icon Bundle
-            p.card-subtitle.text-muted  Progress in 32% - Last update 1d 
-            // .my-3
-            .my-3
-              // team members
-              .avatar-group
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
-                  img(src='assets/images/avatars/uifaces6.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Bryan Morgan')
-                  img(src='assets/images/avatars/uifaces8.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Larry Robinson')
-                  img(src='assets/images/avatars/uifaces7.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Beverly Simpson')
-                  img(src='assets/images/avatars/uifaces9.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Robinson')
-                  img(src='assets/images/avatars/uifaces10.jpg' alt='')
-                a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +8
-              // /team members
-            // /.my-3
-            // grid row
-            .row
-              // grid column
-              .col
-                strong Budget
-                span.d-block 6,000$
-              // /grid column
-              // grid column
-              .col
-                strong Tasks
-                span.d-block 958
-              // /grid column
-            // /grid row
-          // /.card-body
-          // .progress
-          .progress.progress-xs(data-toggle='tooltip' title='32%')
-            .progress-bar.bg-teal(role='progressbar' aria-valuenow='461' aria-valuemin='0' aria-valuemax='100' style='width: 32%')
-              span.sr-only 32% Complete
-          // /.progress
-        // /.card
-      // /grid column
-      // grid column
-      .col-lg-6
+      .col-lg-6.d-none
         // .card
         .card.card-fluid
           // .card-header
@@ -432,131 +153,7 @@ block tab
         // /.card
       // /grid column
       // grid column
-      .col-lg-6
-        // .card
-        .card.card-fluid
-          // .card-header
-          header.card-header.border-0
-            .d-flex.justify-content-between.align-items-center
-              span.badge.bg-muted(data-toggle='tooltip' data-placement='bottom' title='Finished')
-                span.sr-only Finished
-                i.fa.fa-fw.fa-check-circle.text-teal
-              .dropdown
-                button.btn.btn-icon.btn-light(type='button' data-toggle='dropdown' aria-expanded='false')
-                  i.fa.fa-ellipsis-v
-                .dropdown-arrow
-                .dropdown-menu.dropdown-menu-right
-                  a.dropdown-item(href='#!') View Project
-                  a.dropdown-item(href='#!') Add Member
-                  a.dropdown-item(href='#!') Edit
-                  a.dropdown-item(href='#!') Remove
-          // /.card-header
-          // .card-body
-          .card-body.text-center
-            // avatars
-            a.tile.tile-lg.bg-green.mb-2(href='page-project.html') MG
-            // /avatars
-            // /.media
-            h5.card-title
-              a(href='page-project.html') Mobile App Gex
-            p.card-subtitle.text-muted  Progress in 100% - Last update 1m 
-            // .my-3
-            .my-3
-              // team members
-              .avatar-group
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
-                  img(src='assets/images/avatars/uifaces6.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Bryan Morgan')
-                  img(src='assets/images/avatars/uifaces8.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Larry Robinson')
-                  img(src='assets/images/avatars/uifaces7.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Beverly Simpson')
-                  img(src='assets/images/avatars/uifaces9.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Robinson')
-                  img(src='assets/images/avatars/uifaces10.jpg' alt='')
-                a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +26
-              // /team members
-            // /.my-3
-            // grid row
-            .row
-              // grid column
-              .col
-                strong Budget
-                span.d-block 40,000$
-              // /grid column
-              // grid column
-              .col
-                strong Tasks
-                span.d-block 0
-              // /grid column
-            // /grid row
-          // /.card-body
-        // /.card
-      // /grid column
-      // grid column
-      .col-lg-6
-        // .card
-        .card.card-fluid
-          // .card-header
-          header.card-header.border-0
-            .d-flex.justify-content-between.align-items-center
-              span.badge.bg-muted(data-toggle='tooltip' data-placement='bottom' title='Finished')
-                span.sr-only Finished
-                i.fa.fa-fw.fa-check-circle.text-teal
-              .dropdown
-                button.btn.btn-icon.btn-light(type='button' data-toggle='dropdown' aria-expanded='false')
-                  i.fa.fa-ellipsis-v
-                .dropdown-arrow
-                .dropdown-menu.dropdown-menu-right
-                  a.dropdown-item(href='#!') View Project
-                  a.dropdown-item(href='#!') Add Member
-                  a.dropdown-item(href='#!') Edit
-                  a.dropdown-item(href='#!') Remove
-          // /.card-header
-          // .card-body
-          .card-body.text-center
-            // avatars
-            a.tile.tile-lg.bg-red.mb-2(href='page-project.html') LB
-            // /avatars
-            // /.media
-            h5.card-title
-              a(href='page-project.html') Landing Page Booster
-            p.card-subtitle.text-muted  Progress in 100% - Last update 1w 
-            // .my-3
-            .my-3
-              // team members
-              .avatar-group
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Andrew Kim')
-                  img(src='assets/images/avatars/uifaces6.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Bryan Morgan')
-                  img(src='assets/images/avatars/uifaces8.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Larry Robinson')
-                  img(src='assets/images/avatars/uifaces7.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Beverly Simpson')
-                  img(src='assets/images/avatars/uifaces9.jpg' alt='')
-                a.user-avatar.user-avatar-sm(href='#!' data-toggle='tooltip' title='Robinson')
-                  img(src='assets/images/avatars/uifaces10.jpg' alt='')
-                a.tile.tile-sm.tile-circle(href='#!' data-toggle='modal' data-target='#membersModal') +2
-              // /team members
-            // /.my-3
-            // grid row
-            .row
-              // grid column
-              .col
-                strong Budget
-                span.d-block 1,000$
-              // /grid column
-              // grid column
-              .col
-                strong Tasks
-                span.d-block 0
-              // /grid column
-            // /grid row
-          // /.card-body
-        // /.card
-      // /grid column
-      // grid column
-      .col-lg-6
+      .col-lg-6.d-none
         // .card
         .card.card-fluid
           // .card-header
@@ -910,5 +507,32 @@ block tab
         // /.modal-footer
       // /.modal-content
     // /.modal-dialog
-  // /.modal
+        
+  form#departmentNewForm(name='departmentNewForm', action='/p/'+property._id+'/departments/create', method='post')
+      #departmentNewModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='clientContactNewModalLabel' aria-hidden='true')
+          // .modal-dialog
+          .modal-dialog(role='document')
+              // .modal-content
+              .modal-content
+                  // .modal-header
+                  .modal-header
+                      h6.modal-title.inline-editable
+                          input.form-control.form-control-lg(type='text' name='name' placeholder='Name (e.g. Packaging)' required='')
+                  // /.modal-header
+                  // .modal-body
+                  .modal-body
+                      // .form-group
+                      .form-group
+                          .form-label-group
+                              input#cnEmail.form-control(type='email' name='support_email' placeholder='Support Email' required='')
+                              label(for='cnEmail') Support Email
+                      // /.form-group
+                  // /.modal-body
+                  // .modal-footer
+                  .modal-footer
+                      button.btn.btn-primary(type='submit') Save
+                      button.btn.btn-light(type='button' data-dismiss='modal') Close
+                  // /.modal-footer
+              // /.modal-content
+          // /.modal-dialog
   

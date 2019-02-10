@@ -11,7 +11,7 @@ exports.list = function (req, res) {
 };
 
 
-exports.details = function (req, res) {
+exports.details = function (req, res,next) {
 
     Conversation.findOrderByLastMessage(req.properties, function (err, conversations) {
         if (err) {

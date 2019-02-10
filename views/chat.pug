@@ -272,6 +272,11 @@ block main
                 button#sendMessage send    
         
         .flex-fill#contact
+            label(for='department') Department:
+            select#department(name='department' required='true' )
+                for department in departments
+                    option(value=department._id selected=(departments.length === 1 ? false : 'selected')) #{department.name}
+            br    
             input#name(name='name', type='text', placeholder='Your Name' required='')
             br
             input#email(name='email', type='email', placeholder='Your Email', required='')
@@ -422,6 +427,7 @@ block scripts
         }
         function startChat() {
             
+            var department = $('#department').val();
             var name = $('#name').val();
             var email = $('#email').val();
             var body = $('#message').val();
@@ -429,6 +435,7 @@ block scripts
             // todo if (!name || !email|| !message) return;
             
             var message = {
+                department:department,
                 name:name,
                 email:email,
                 property:PROPERTY,

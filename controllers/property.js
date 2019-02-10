@@ -21,7 +21,10 @@ exports.create = function (req, res, next) {
 
     let property = new Property({
         name: req.body.name,
-        type: req.body.type
+        description: req.body.description||undefined,
+        type: req.body.type,
+        owner: req.user._id
+
     });
 
     // const DEFAULT_TYPES = ['Issue', 'Task'];
@@ -56,14 +59,14 @@ exports.create = function (req, res, next) {
             role: 'Admin',
             status: 'Enabled',
             account: req.user._id,
-            property: property._id,
+            property: property._id
         });
         await membership.save(); // todo make async
 
         Department.create({
             name:'general',
             property: property._id,
-            support_email: req.body.support_email,
+            support_email: req.body.support_email||undefined,
             members:[{
                 membership:membership._id,
                 role:'owner'
@@ -78,11 +81,14 @@ exports.create = function (req, res, next) {
 
 };
 
-exports.details = function (req, res) {
-    Property.findById(req.params.pId, function (err, property) {
-        if (err) return next(err);
-        res.render('property/detail',{'property':property});
-    })
+exports.details = async function (req, res) {
+    // const doc = await Band.findOne({ name: 'Motley Crue' }).
+
+   const property = await Property.findById(req.params.pId).populate('numMembers');
+
+
+    res.render('property/detail',{'property':property});
+
 };
 exports.update = function (req, res) {
     Property.findByIdAndUpdate(req.params.pId, {$set: req.body}, function (err, property) {
@@ -105,6 +111,9 @@ exports.list = function (req, res, next) {
         })
         .populate({
             path: 'property',
+            populate: {
+                path: 'numMembers',
+            },
         })
         .exec(function (err, memberships) {
             res.render('property/list', {title: 'Memberships', 'memberships': memberships});

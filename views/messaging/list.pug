@@ -72,8 +72,8 @@ block content
                     // grid column
                     .col-12.col-lg-3.d-none.d-lg-block
                       h4.list-group-item-title.text-truncate
-                        a(href='/m/'+conversation._id) Creative Division
-                      p.list-group-item-text  16 minutes ago 
+                        a(href='/m/'+conversation._id) #{conversation.department[0]}
+                      p.list-group-item-text= dateFnsFormat(conversation.latestMessage.createdAt,'MMM D, h:m aa') 
                     // /grid column
                     // grid column
                     .col-12.col-lg-9
@@ -106,7 +106,7 @@ block content
               // /message item
              
             // message item
-            .list-group-item.unread
+            .list-group-item.unread.d-none
               // message figure
               .list-group-item-figure
                 span.rating.rating-sm.mr-3
@@ -160,7 +160,7 @@ block content
               // /message actions
             // /message item
             // message item
-            .list-group-item.read
+            .list-group-item.read.d-none
               // message figure
               .list-group-item-figure
                 span.rating.rating-sm.mr-3
@@ -213,7 +213,7 @@ block content
               // /message actions
             // /message item
             // message item
-            .list-group-item.read
+            .list-group-item.read.d-none
               // message figure
               .list-group-item-figure
                 span.rating.rating-sm.mr-3

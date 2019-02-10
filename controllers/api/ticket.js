@@ -1,6 +1,7 @@
 var Ticket = require('../../models/ticket');
 // var Member = require('../models/member');
 const Property = require('../../models/property');
+const Department = require('../../models/department');
 const Contact = require('../../models/contact');
 const Participant = require('../../models/chat/participant');
 const Conversation = require('../../models/chat/conversation');
@@ -62,22 +63,23 @@ exports.receive = async function (req, res,next) {
 
         var contactNameEmail = extractNameEmail(req.body.from);
 
-        var property = await Property.findOne({support_email: endpoint});
+        var department = await Department.findOne({support_email: endpoint});
 
-        if (property == null) {
+        if (department == null) {
             return next(new Error('SHOULD NOT HAPPEN'))
         }
 
-        var contact = await Contact.findOne({email: contactNameEmail[1], property: property._id});
+        // var property = await Property.findOne({support_email: endpoint});
+
+        var contact = await Contact.findOne({email: contactNameEmail[1], property: department.property});
         if (contact == null) {
 
             contact = await Contact.create({
                 name: contactNameEmail[0] || '',
                 email: contactNameEmail[1],
-                property: property._id
+                property: department.property
             });
         }
-
 
         // create participant
         var participant = await Participant.create({
@@ -87,33 +89,27 @@ exports.receive = async function (req, res,next) {
 
         Conversation.create({
             title: req.body.subject.trim(),
-            property: property._id,
+            property: department.property,
+            department: department._id,
             mail_notifications: true,
+            type:'SOCKET',
             participants: [participant._id]
         },function(err,conversation){
             if (err) {
                 return next(err);
             }
-            res.send(conversation)
+
+            Message.create({
+                body: req.body.message,
+                conversation: conversation._id,
+                owner: participant._id,
+            }, function (err, message) {
+                if (err) return next(err);
+
+                res.send(message);
+
+            });
         });
-
-
-        /* todo should make the subject the first message?
-                    var message = Message.create({
-                        body: msg['text'],
-                        conversation: conversation._id,
-                        owner: participant._id,
-                    }, function (err, message) {
-                        if (err) console.error(err);
-                        // saved!
-
-                        msg['_id'] = message._id;
-                        io.emit('chat message', msg);
-
-
-                    });
-                    */
-
 
         /*
         let ticket = new Ticket({

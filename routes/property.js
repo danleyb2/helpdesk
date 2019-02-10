@@ -40,6 +40,7 @@ router.get('/:pId/members', administrationController.members);
 router.post('/:pId/members', administrationController.memberCreate);
 
 router.get('/:pId/departments', administrationController.departments);
+router.post('/:pId/departments/create', administrationController.departmentCreate);
 
 router.get('/', propertyController.list);
 

@@ -10,9 +10,13 @@ block content
           input#name.form-control(type='text', placeholder='Property Name' name='name' required='true' value=(undefined===instance ? '' : instance.name) )
     
         div.form-group
-          label(for='support_email') Support Email:
-          input#support_email.form-control(type='email', placeholder='Support Email' name='support_email' required='true' value=(undefined===instance ? '' : instance.support_email) )
+          label(for='description') Description:
+          input#description.form-control(type='text', placeholder='Description' name='description' )
     
+        div.form-group
+          label(for='support_email') General Support Email:
+          input#support_email.form-control(type='email', placeholder='Support Email' name='support_email' required='true' value=(undefined===instance ? '' : instance.support_email) )
+
         div.form-group
           label(for='type') Type:
           select#type.form-control(type='select', placeholder='Select Type' name='type' required='true' )
