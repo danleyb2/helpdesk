@@ -39,7 +39,7 @@ block main
             // .nav
             ul.header-nav.nav
               // .nav-item
-              li.nav-item.dropdown.header-nav-dropdown.has-notified
+              li.nav-item.dropdown.header-nav-dropdown(class=unread_notifications?'has-notified':'')
                 a.nav-link(href='#!' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
                   span.oi.oi-pulse
                 .dropdown-arrow
@@ -47,7 +47,7 @@ block main
                 .dropdown-menu.dropdown-menu-rich.dropdown-menu-right
                   h6.dropdown-header.stop-propagation
                     span
-                      | Activities 
+                      | Notifications 
                       span.badge (2)
                   // .dropdown-scroll
                   .dropdown-scroll.perfect-scrollbar
@@ -108,13 +108,13 @@ block main
                         span.date 2 days ago
                     // /.dropdown-item
                   // /.dropdown-scroll
-                  a.dropdown-footer(href='user-activities.html')
-                    | All activities 
+                  a.dropdown-footer(href='/n')
+                    | All Notifications 
                     i.fas.fa-fw.fa-long-arrow-alt-right
                 // /.dropdown-menu
               // /.nav-item
               // .nav-item
-              li.nav-item.dropdown.header-nav-dropdown.has-notified
+              li.nav-item.dropdown.header-nav-dropdown.has-notified.d-none
                 a.nav-link(href='#!' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
                   span.oi.oi-envelope-open
                 .dropdown-arrow
