@@ -96,10 +96,10 @@ block content
                     .dropdown-arrow
                     // .dropdown-menu
                     .dropdown-menu.dropdown-menu-right
-                      a.dropdown-item(href='#!') Mark as read
-                      a.dropdown-item(href='#!') Mark as unread
-                      a.dropdown-item(href='#!') Toggle star
-                      a.dropdown-item(href='#!') Trash
+                      a.dropdown-item(href='#departmentNewModal' data-toggle='modal') Convert to Ticket
+                      //a.dropdown-item(href='#!') Mark as unread
+                      //a.dropdown-item(href='#!') Toggle star
+                      //a.dropdown-item(href='#!') Trash
                     // /.dropdown-menu
                   // /.dropdown
                 // /message actions
@@ -298,7 +298,79 @@ block content
         // /.section-block
       // /.page-section
     // /.page-inner
-     
+      
+    form#departmentNewForm(name='departmentNewForm', action='/m/' + 'conversation_id' + '/ticket/', method='post')
+      #departmentNewModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='clientContactNewModalLabel' aria-hidden='true')
+        // .modal-dialog
+        .modal-dialog(role='document')
+          // .modal-content
+          .modal-content
+            // .modal-header
+            .modal-header
+              h6.modal-title.inline-editable
+                input.form-control.form-control-lg(type='text' name='name' placeholder='Name (e.g. Packaging)' required='')
+            // /.modal-header
+            // .modal-body
+            .modal-body
+              // .form-group
+              .form-group
+                .form-label-group
+                  input#cnEmail.form-control(type='email' name='support_email' placeholder='Support Email' required='')
+                  label(for='cnEmail') Support Email
+                  
+              div.form-group
+                label(for='type') Property:
+                select#type.form-control(type='select', placeholder='Select Property' name='property' required='true' )
+                  each property in properties || []
+                    option(value=property._id selected=(instance && instance.property.toString() === property._id.toString() ? 'selected' : 'false')) #{property.name}
+
+              div.form-group
+                label(for='type') Department:
+                select#department.form-control(type='select', placeholder='Select Department' name='department' required='true' )
+                  each department in departments || []
+                    option(value=department._id selected=(instance && instance.property.toString() === property._id.toString() ? 'selected' : 'false')) #{department.name}
+
+              div.form-group
+                label(for='subject') Subject:
+                input#subject.form-control(type='text', placeholder='Ticket Subject' name='subject' required='true' value=(undefined === instance ? '' : instance.subject) )
+
+              div.form-group
+                label(for='contact_name') Contact Name:
+                input#contact_name.form-control(type='text', placeholder='Contact Name' name='contact_name' required='true' value=(undefined === instance ? '' : instance.contact_name) )
+
+              div.form-group
+                label(for='contact_email') Contact Email:
+                input#contact_email.form-control(type='email', placeholder='Contact Email' name='contact_email' required='true' value=(undefined === instance ? '' : instance.contact_email) )
+
+              div.form-group
+                label(for='issue') Issue Description:
+                textarea#issue.form-control(placeholder='Ticket Issue' name='issue' required='true') #{undefined === instance ? '' : instance.issue}
+
+              div.form-group
+                label(for='priority') Priority:
+                select#priority.form-control(type='select', placeholder='Select Priority' name='priority' required='true' )
+                  option(value='Low' selected=(undefined === instance || instance.priority != 'Low' ? false : 'selected')) Low
+                  option(value='Medium' selected=(undefined === instance || instance.priority != 'Medium' ? false : 'selected')) Medium
+                  option(value='High' selected=(undefined === instance || instance.priority != 'High' ? false : 'selected')) High
+
+              div.form-group
+                label(for='status') Status:
+                select#status.form-control(type='select', placeholder='Select status' name='status' required='true' )
+                  option(value='Open' selected=(undefined === instance || instance.status != 'Open' ? false : 'selected')) Open
+                  option(value='Closed' selected=(undefined === instance || instance.status != 'Closed' ? false : 'selected')) Closed
+
+
+              // /.form-group
+            // /.modal-body
+            // .modal-footer
+            .modal-footer
+              button.btn.btn-primary(type='submit') Save
+              button.btn.btn-light(type='button' data-dismiss='modal') Close
+            // /.modal-footer
+          // /.modal-content
+        // /.modal-dialog
+
+
 block scripts
   script.
     var name;
