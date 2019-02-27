@@ -11,7 +11,13 @@ block content
         select#type.form-control(type='select', placeholder='Select Property' name='property' required='true' )
           each property in properties
             option(value=property._id selected=(instance && instance.property.toString() === property._id.toString() ? 'selected' : 'false')) #{property.name}
-  
+
+      div.form-group
+        label(for='type') Department:
+        select#type.form-control(type='select', placeholder='Select Department' name='department' required='true' )
+          each department in departments || []
+            option(value=department._id selected=(instance && instance.property.toString() === property._id.toString() ? 'selected' : 'false')) #{department.name}
+            
       div.form-group
         label(for='subject') Subject:
         input#subject.form-control(type='text', placeholder='Ticket Subject' name='subject' required='true' value=(undefined===instance ? '' : instance.subject) )
@@ -27,7 +33,7 @@ block content
       div.form-group
         label(for='issue') Issue Description:
         textarea#issue.form-control(placeholder='Ticket Issue' name='issue' required='true') #{undefined===instance ? '' : instance.issue}
-        
+
       div.form-group
         label(for='priority') Priority:
         select#priority.form-control(type='select', placeholder='Select Priority' name='priority' required='true' )
