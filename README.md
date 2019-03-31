@@ -2,6 +2,14 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/l1dapsf26x4x3omi?svg=true)](https://ci.appveyor.com/project/danleyb2/helpdesk)
 
+#### Features
+- multiple organization support
+- multiple departments per organization
+- per department support email
+- Live chat plugin support
+- 2 way email conversation
+
+
 #### Requirements
 
 MongoDB v3.2+. - Database
