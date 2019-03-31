@@ -5,6 +5,7 @@ const Message = require('./models/chat/message');
 const Participant = require('./models/chat/participant');
 const Contact = require('./models/contact');
 const Property = require('./models/property');
+const Department = require('./models/department');
 
 const mailer = require('./mailer/index');
 //const async = require('async');
