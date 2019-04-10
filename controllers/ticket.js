@@ -84,7 +84,7 @@ exports.create = async function (req, res, next) {
 
 };
 
-exports.details = function (req, res) {
+exports.details = function (req, res, next) {
     Ticket.findOne({_id: req.params.tId}).populate('conversation').exec(function (err, ticket) {
         if (err) return next(err);
 
