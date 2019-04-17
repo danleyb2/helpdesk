@@ -6,8 +6,10 @@
 - multiple organization support
 - multiple departments per organization
 - per department support email
-- Live chat plugin support
+- Live chat plugin support with theme customizations
 - 2 way email conversation
+- HelpCenter (created from conversations)
+- Bots
 
 
 #### Requirements
