@@ -24,23 +24,23 @@ block tab
             // metric column
             .col
                 // .metric
-                a.metric.metric-bordered.align-items-center(href='page-team-projects.html')
-                    h2.metric-label  Projects 
+                a.metric.metric-bordered.align-items-center(href='/p/'+property._id+'/departments')
+                    h2.metric-label  Departments 
                     p.metric-value.h3
                         sub
                             i.oi.oi-fork
-                        span.value 26
+                        span.value #{property.numDepartments}
                 // /.metric
             // /metric column
             // metric column
             .col
                 // .metric
-                a.metric.metric-bordered.align-items-center(href='page-team-projects.html')
-                    h2.metric-label  Active Projects 
+                a.metric.metric-bordered.align-items-center(href='/t')
+                    h2.metric-label  Tickets 
                     p.metric-value.h3
                         sub
                             i.oi.oi-timer.fa-lg
-                        span.value 5
+                        span.value #{property.numTickets}
                 // /.metric
             // /metric column
         // /.metric-row

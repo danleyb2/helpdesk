@@ -84,7 +84,11 @@ exports.create = function (req, res, next) {
 exports.details = async function (req, res) {
     // const doc = await Band.findOne({ name: 'Motley Crue' }).
 
-   const property = await Property.findById(req.params.pId).populate('numMembers');
+   const property = await Property
+       .findById(req.params.pId)
+       .populate('numMembers')
+       .populate('numDepartments')
+       .populate('numTickets');
 
 
     res.render('property/detail',{'property':property});
