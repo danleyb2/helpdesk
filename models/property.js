@@ -23,5 +23,20 @@ PropertySchema.virtual('numMembers', {
     count: true // And only get the number of docs
 });
 
+PropertySchema.virtual('numDepartments', {
+    ref: 'Department', // The model to use
+    localField: '_id', // Find Members where `localField`
+    foreignField: 'property', // is equal to `foreignField`
+    count: true // And only get the number of docs
+});
+
+
+PropertySchema.virtual('numTickets', {
+    ref: 'Ticket', // The model to use
+    localField: '_id', // Find Members where `localField`
+    foreignField: 'property', // is equal to `foreignField`
+    count: true // And only get the number of docs
+});
+
 
 module.exports = mongoose.model('Property', PropertySchema);
