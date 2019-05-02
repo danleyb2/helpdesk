@@ -8,7 +8,7 @@ block content
       
       div.form-group
         label(for='type') Property:
-        select#type.form-control(type='select', placeholder='Select Property' name='property' required='true' )
+        select#property.form-control(type='select', placeholder='Select Property' name='property' required='true' )
           each property in properties
             option(value=property._id selected=(instance && instance.property.toString() === property._id.toString() ? 'selected' : 'false')) #{property.name}
 
@@ -52,3 +52,36 @@ block content
     else
       
       a.btn.btn-primary(href='/p/create') First Create A Property
+      
+      
+block scripts
+  script.
+    
+    // load departments of initial selection
+    
+    function loadDepartments(){
+
+        fetch('/api/properties/5c5fea09ba79bf46d97d13c7/departments')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (myJson) {
+                console.log(JSON.stringify(myJson));
+            });
+        
+    }
+    
+    loadDepartments();
+    
+    
+    
+    // ( disable department selection )
+    
+    // listen for property selection change
+    $('#property').change(function () {
+        alert($(this).val());
+    })
+    
+    // load selected property departments
+    // 
+    var a = 0;
