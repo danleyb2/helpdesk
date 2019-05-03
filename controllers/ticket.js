@@ -46,6 +46,7 @@ exports.create = async function (req, res, next) {
         title: req.body.subject,
         property: req.body.property,
         participants: [participant._id],
+        department:req.body.department,
         status:'Ticketed'
     });
 

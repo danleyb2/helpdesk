@@ -7,14 +7,14 @@ block content
     if properties.length
       
       div.form-group
-        label(for='type') Property:
+        label(for='property') Property:
         select#property.form-control(type='select', placeholder='Select Property' name='property' required='true' )
           each property in properties
             option(value=property._id selected=(instance && instance.property.toString() === property._id.toString() ? 'selected' : 'false')) #{property.name}
 
       div.form-group
-        label(for='type') Department:
-        select#type.form-control(type='select', placeholder='Select Department' name='department' required='true' )
+        label(for='department') Department:
+        select#department.form-control(type='select', placeholder='Select Department' name='department' required='true' )
           each department in departments || []
             option(value=department._id selected=(instance && instance.property.toString() === property._id.toString() ? 'selected' : 'false')) #{department.name}
             
@@ -59,29 +59,40 @@ block scripts
     
     // load departments of initial selection
     
-    function loadDepartments(){
-
-        fetch('/api/properties/5c5fea09ba79bf46d97d13c7/departments')
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (myJson) {
-                console.log(JSON.stringify(myJson));
-            });
-        
+    let initialPropertyId = $('#property').val();
+    
+    function loadDepartments(propertyId){
+        fetch(`/p/${propertyId}/departments`,{
+            headers: {"Accept": "application/json"}
+        })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (myJson) {
+            console.log(myJson);
+            for (var i = 0; i < myJson['departments'].length; i++) {
+                const department = myJson['departments'][i];
+                
+                let option = document.createElement('option')
+                option.setAttribute('value',department._id)
+                option.innerHTML = department.name 
+                $('#department').get(0).appendChild(option);
+            }
+            
+            
+        });
     }
     
-    loadDepartments();
-    
-    
+    loadDepartments(initialPropertyId);
     
     // ( disable department selection )
     
     // listen for property selection change
     $('#property').change(function () {
-        alert($(this).val());
+        let propertyId = $(this).val();
+        loadDepartments(propertyId);
     })
     
     // load selected property departments
     // 
-    var a = 0;
+    

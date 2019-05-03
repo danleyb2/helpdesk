@@ -5,6 +5,8 @@ var Property = require('../models/property');
 var Notification  = require('../models/notification');
 const mailer = require('../mailer/index');
 
+const { respond, respondOrRedirect } = require('../utils');
+
 
 exports.index = function (req, res, next) {
 
@@ -40,7 +42,15 @@ exports.departments = function (req, res,next) {
                 return next(err);
             }
 
-            res.render('administration/department/list', {title: 'Departments', 'departments': departments});
+            const page = (req.query.page > 0 ? req.query.page : 1) - 1;
+
+            respond(res, 'administration/department/list', {
+                title: 'Departments',
+                'departments': departments,
+                page: page + 1,
+                // pages: Math.ceil(count / limit)
+            });
+
         });
 
 };
