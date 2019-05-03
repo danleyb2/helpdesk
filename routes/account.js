@@ -57,10 +57,10 @@ router.get('/verify_email', async function (req, res, next) {
     function sendEmail(token){
         // Send the email
         var mailOptions = {
-            from: 'no-reply@helpdesk.com',
+            from: 'noreply@danleyb2.online',
             to: req.user.email,
             subject: 'Account Verification Token',
-            text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n'
+            text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + process.env.HOST + '\/confirmation\/' + token.token + '.\n'
         };
         mailer.sendNotification(mailOptions,function (err,info) {
             if (err) { return res.status(500).send({ msg: err.message }); }
