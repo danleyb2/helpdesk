@@ -1,6 +1,7 @@
 # helpdesk
 
 [![Build status](https://ci.appveyor.com/api/projects/status/l1dapsf26x4x3omi?svg=true)](https://ci.appveyor.com/project/danleyb2/helpdesk)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdanleyb2%2Fhelpdesk.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdanleyb2%2Fhelpdesk?ref=badge_shield)
 
 #### Features
 - multiple organization support
@@ -52,3 +53,7 @@ For a more in-depth understanding of how the project is structured to work, setu
      mkdoc serve
   ```  
   documentation will be accessible at http://127.0.0.1:8000/
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdanleyb2%2Fhelpdesk.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdanleyb2%2Fhelpdesk?ref=badge_large)
