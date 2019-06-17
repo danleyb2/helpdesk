@@ -1,11 +1,20 @@
 var Conversation = require('../../models/chat/conversation');
 var Ticket = require('../../models/ticket');
+var Participant = require('../../models/chat/participant');
+var mongoose = require('mongoose');
+
 
 exports.list = function (req, res) {
 
     Conversation.findOrderByLastMessage(req.properties, function (err, conversations) {
         if (err) return next(err);
-        res.render('messaging/list', {title: 'Conversations', 'conversations': conversations});
+
+        console.debug(JSON.stringify(conversations));
+
+        res.render('messaging/list', {
+            title: 'Conversations',
+            'conversations': conversations
+        });
 
     });
 
@@ -50,13 +59,22 @@ exports.details = function (req, res,next) {
 
 exports.ticket =  function (req, res,next) {
 
-    Conversation.findById(req.params.id, function (err, conversation) {
+    Conversation.findById(req.params.id, async function (err, conversation) {
         if (err) return next(err);
 
+        console.log(req.body);
+
+        let participantIds = conversation.participants.map(p => new mongoose.Types.ObjectId(p.id));
+
+        participant = await Participant.findOne({refModel: 'Contact'})
+            .where('_id')
+            .in(participantIds)
+            .exec();
+
         let ticket = new Ticket({
-            subject: conversation.title,
+            subject: req.body.subject,
             issue: req.body.issue,
-            department: conversation.department,
+            department: req.body.department,
             property: conversation.property,
             conversation: conversation._id,
             contact: participant.modelRef,
@@ -66,22 +84,10 @@ exports.ticket =  function (req, res,next) {
             if (err) {
                 return next(err);
             }
-
-
             // todo change conversation status to ticketed
-
             res.redirect('/t/')
         });
 
-        conversation.recentMessages(function (err, messages) {
-            res.render('messaging/detail', {
-                title: 'Conversation',
-                'conversations': conversations,
-                'currentConversation': conversation,
-                'messages': messages
-            });
-
-        });
     });
 
 

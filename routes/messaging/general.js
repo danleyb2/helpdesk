@@ -6,7 +6,7 @@ messagingController = require('../../controllers/messaging/index');
 
 router.get('/', messagingController.list);
 router.get('/:id', messagingController.details);
-router.get('/:id/ticket', messagingController.ticket);
+router.post('/:id/ticket', messagingController.ticket);
 
 
 module.exports = router;
