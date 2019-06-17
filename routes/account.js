@@ -28,6 +28,7 @@ router.post('/register', function (req, res, next) {
         email: req.body.email
     }), req.body.password, function (err, account) {
         if (err) {
+            console.error('Account.register Error',err);
             return res.render('register', {error: err.message});
         }
 
@@ -60,7 +61,9 @@ router.get('/verify_email', async function (req, res, next) {
             from: 'noreply@danleyb2.online',
             to: req.user.email,
             subject: 'Account Verification Token',
-            text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + process.env.HOST + '\/confirmation\/' + token.token + '.\n'
+            text: `Hello,
+Please verify your account by clicking the link: 
+http://${process.env.HOST}:${process.env.PORT}/confirmation/${token.token}`
         };
         mailer.sendNotification(mailOptions,function (err,info) {
             if (err) { return res.status(500).send({ msg: err.message }); }
@@ -112,7 +115,9 @@ router.post('/password_reset', function (req, res,next) {
             from: 'no-reply@helpdesk.com',
             to: account.email,
             subject: 'Reset Password',
-            text: 'Hello,\n\n' + 'Please reset your HelpDesk account password by clicking the link: \nhttp:\/\/' + req.headers.host + '\/reset_password\/' + token.token + '.\n'
+            text: `Hello,
+Please reset your HelpDesk account password by clicking the link: 
+http://${req.headers.host}:${req.port}/reset_password/${token.token}`
         };
         mailer.sendNotification(mailOptions,function (err,info) {
             if (err) { return res.status(500).send({ msg: err.message }); }
