@@ -121,7 +121,7 @@ exports.memberCreate = function (req, res) {
                             console.log('Message sent: %s', info.messageId);
 
                         });
-                        res.redirect(`/p/${member.property}/s/members`);
+                        res.redirect(`/p/${member.property}/members`);
 
                     });
                 });
