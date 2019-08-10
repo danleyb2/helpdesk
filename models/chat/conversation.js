@@ -29,6 +29,10 @@ ConversationSchema.methods.recentMessages = function (callback) {
             path: 'owner',
             populate: {
                 path: 'modelRef',
+                populate: {
+                    path: 'account',
+                    model: 'Account',
+                },
             },
         })
 
