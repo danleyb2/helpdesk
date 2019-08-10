@@ -11,5 +11,9 @@ var MemberSchema = new Schema({
 
 },{timestamps: true});
 
+// assign a function to the "methods" object of our animalSchema
+MemberSchema.methods.getFullName = function() {
+    return this.account.username
+};
 
 module.exports = mongoose.model('Member', MemberSchema);

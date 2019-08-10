@@ -10,4 +10,9 @@ var ContactSchema = new Schema({
 }, {timestamps: true});
 
 
+// assign a function to the "methods" object of our animalSchema
+ContactSchema.methods.getFullName = function() {
+    return this.name
+};
+
 module.exports = mongoose.model('Contact', ContactSchema);
