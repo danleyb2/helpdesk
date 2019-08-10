@@ -262,7 +262,7 @@ block content
                                 // /.conversation-inbound
                                 if messages && messages.length
                                     each message in messages
-                                        if message.owner.refModel === 'Member' && message.owner.modelRef.account.toString() === req.user._id.toString()
+                                        if message.owner.refModel === 'Member' && message.owner.modelRef.account._id.toString() === req.user._id.toString()
                                             // .conversation-outbound
                                             li.conversation-outbound
                                                 .conversation-actions.dropdown
@@ -276,10 +276,9 @@ block content
                                                         button.dropdown-item(type='button') Remove
                                                 .conversation-message
                                                     .conversation-message-text  !{message.body}
-                                                    .conversation-meta  Beni Arisandi &middot; 14m 
+                                                    .conversation-meta  !{message.owner.modelRef.getFullName()} &middot; 14m 
 
                                         else
-                                            // .conversation-inbound
                                             li.conversation-inbound
                                                 .conversation-avatar
                                                     a.user-avatar(href='#!')
@@ -287,7 +286,7 @@ block content
                                                         span.avatar-badge.online
                                                 .conversation-message
                                                     .conversation-message-text  !{message.body} 
-                                                    .conversation-meta  Zachary Fowler &middot; 3m    
+                                                    .conversation-meta  !{message.owner.modelRef.getFullName()} &middot; 3m    
                                                 .conversation-actions.dropdown
                                                     button.btn.btn-sm.btn-icon.btn-light(data-toggle='dropdown')
                                                         i.fa.fa-fw.fa-ellipsis-h
