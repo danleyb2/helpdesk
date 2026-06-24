@@ -31,19 +31,17 @@ router.post('/register', function (req, res, next) {
             console.error('Account.register Error',err);
             return res.render('register', {error: err.message});
         }
-
         passport.authenticate('local')(req, res, function () {
             // res.redirect('/');
             req.session.save(function (err) {
                 if (err) {
+                    console.error('req.session.save Error',err);
+                    // throw new Error(err);
                     return next(err);
                 }
                 res.redirect('/');
             });
-
         });
-
-
     });
 });
 
@@ -76,22 +74,13 @@ http://${process.env.HOST}:${process.env.PORT}/confirmation/${token.token}`
     let token = await Token.findOne({account: req.user._id});
     if (!token){
         // Create a verification token for this user
-        Token.create({
+        token = await Token.create({
             account: req.user._id,
             token: crypto.randomBytes(16).toString('hex')
-
-        },function (err, token) {
-            if (err){
-                console.trace(err);
-            }
-            sendEmail(token);
         });
-
-    }else {
-        // todo update expiry if will be soon
-        sendEmail(token);
-
     }
+    // todo update expiry if will be soon
+    sendEmail(token);
 
     res.render('account/verify_email', {user:req.user});
 
@@ -107,52 +96,41 @@ router.get('/password_reset/done/', function (req, res) {
     res.render('forgot_password_done', {title:'Forgot Password'});
 });
 
-router.post('/password_reset', function (req, res,next) {
+router.post('/password_reset', async function (req, res, next) {
 
-    function sendEmail(token,account){
+    function sendEmail(token, account){
         // Send the email
         var mailOptions = {
             from: 'no-reply@helpdesk.com',
             to: account.email,
             subject: 'Reset Password',
             text: `Hello,
-Please reset your HelpDesk account password by clicking the link: 
+Please reset your HelpDesk account password by clicking the link:
 http://${req.headers.host}:${req.port}/reset_password/${token.token}`
         };
-        mailer.sendNotification(mailOptions,function (err,info) {
+        mailer.sendNotification(mailOptions, function (err, info) {
             if (err) { return res.status(500).send({ msg: err.message }); }
             console.log('Message sent: %s', info.messageId);
         });
     }
 
-    Account.findOne({'email':req.body.email},function (err, account) {
-        if (err) {
-            return next(err);
-        }
+    try {
+        const account = await Account.findOne({'email': req.body.email});
         if (account) {
-            Token.findOne({account: account._id},function (err, token) {
-                if (!token) {
-                    // Create a verification token for this user
-                    Token.create({
-                        account: account._id,
-                        token: crypto.randomBytes(16).toString('hex')
-
-                    }, function (err, token) {
-                        if (err) {
-                           return next(err);
-                        }
-                        sendEmail(token,account);
-                    });
-
-                } else {
-                    // todo update expiry if will be soon
-                    sendEmail(token,account);
-                }
-            });
-
+            let token = await Token.findOne({account: account._id});
+            if (!token) {
+                // Create a verification token for this user
+                token = await Token.create({
+                    account: account._id,
+                    token: crypto.randomBytes(16).toString('hex')
+                });
+            }
+            // todo update expiry if will be soon
+            sendEmail(token, account);
         }
-
-    });
+    } catch (err) {
+        return next(err);
+    }
 
     res.redirect('/password_reset/done/');
 });

@@ -1,4 +1,4 @@
-# helpdesk
+# HelpDesk
 
 [![Build status](https://ci.appveyor.com/api/projects/status/l1dapsf26x4x3omi?svg=true)](https://ci.appveyor.com/project/danleyb2/helpdesk)
 
@@ -11,13 +11,6 @@
 - HelpCenter (created from conversations)
 - Bots
 
-
-#### Requirements
-
-MongoDB v3.2+. - Database
-mkdocs - documentation
-
-
 #### Setup
 copy/rename .env.template into .env  
 ```bash
@@ -26,6 +19,7 @@ mv .env.template .env
 
 edit/update the following .env fields
 - DB_HOST
+- DB_NAME
 
 if need to also send emails and have 2 way email conversations like in github issues 
 - SMTP_HOST
@@ -35,6 +29,13 @@ if need to also send emails and have 2 way email conversations like in github is
 
 2 way email conversations won't without the [Helpdesk Mail Server](https://github.com/danleyb2/helpdesk_mail_server) to forward the emails to specific 
 tickets' conversation.  
+
+Run:
+```shell
+
+docker compose up --build
+
+```
 
 ### Documentation
 For a more in-depth understanding of how the project is structured to work, setup the documentation

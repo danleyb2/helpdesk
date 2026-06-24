@@ -37,10 +37,7 @@ app.locals.dateFnsFormat = format;
 app.enable('trust proxy');
 
 // mongoose
-mongoose.connect(`mongodb://${process.env.DB_HOST}/${process.env.DB_NAME}`, {
-    useCreateIndex: true,
-    useNewUrlParser: true
-});
+mongoose.connect(`mongodb://${process.env.DB_HOST}/${process.env.DB_NAME}`, {});
 
 /* todo upgrade to this
 let dev_db_url = 'mongodb://someuser:abcd1234@ds123619.mlab.com:23619/productstutorial';

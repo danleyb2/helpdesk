@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var passportLocalMongoose = require('passport-local-mongoose');
+var passportLocalMongoose = require('passport-local-mongoose').default;
 const Member = require('./member');
 
 var Account = new Schema({
@@ -42,17 +42,9 @@ Account.plugin(passportLocalMongoose, {
 });
 
 
-Account.methods.currentProperties = function (cb) {
-
-    Member.find({account:this._id,'status':'Enabled'},function (err,memberships) {
-        let properties = memberships.map(function (membership) {
-            return membership.property;
-        });
-
-        cb(properties);
-
-    });
-
+Account.methods.currentProperties = async function () {
+    const memberships = await Member.find({account: this._id, status: 'Enabled'});
+    return memberships.map(m => m.property);
 };
 
 

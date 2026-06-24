@@ -7,21 +7,21 @@ module.exports = {
     checkAuthentication
 };
 
-function loadCommon(req, res, next) {
-    req.user.currentProperties(async function (properties) {
+async function loadCommon(req, res, next) {
+    try {
+        const properties = await req.user.currentProperties();
         req.properties = properties;
 
         Object.assign(res.locals, {
             open_tickets_count: await Ticket.countDocuments({ "property": { $in: properties }}),
             active_conversations_count: await Conversation.countDocuments({ "property": { $in: properties },status:'Active'}),
-            // open_tickets_count: Ticket.find(),
             unread_notifications: await Notification.countDocuments({"receivers.account": req.user._id,"receivers.read": false})
-
         });
 
         return next();
-
-    });
+    } catch (err) {
+        return next(err);
+    }
 }
 
 

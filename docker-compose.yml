@@ -1,0 +1,40 @@
+services:
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+#    env_file:
+#      - .env
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - PROTOCOL=${PROTOCOL}
+      - HOST=${HOST}
+      - PORT=${PORT}
+      - SESSION_SECRET=${SESSION_SECRET}
+      - NODE_ENV=${NODE_ENV}
+      - MAIL_SERVER_HOST=${MAIL_SERVER_HOST}
+
+    depends_on:
+      db:
+        condition: service_healthy
+    # restart: unless-stopped
+
+  db:
+    image: mongo:7
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # restart: unless-stopped
+
+volumes:
+  mongo_data:
