@@ -6,14 +6,14 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 // todo var winston = require('./config/winston');
 var io = require("socket.io")();
-var format = require('date-fns/format');
+const datefns = require('date-fns');
 const cors = require('cors');
 
 var mongoose = require('mongoose');
 var passport = require('passport');
 // var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
+const { MongoStore } = require('connect-mongo');
 
 const { checkAuthentication, loadCommon } = require('./middleware');
 
@@ -33,25 +33,22 @@ var usersRouter = require('./routes/users');
 var app = express();
 app.io = io;
 
-app.locals.dateFnsFormat = format;
+app.locals.dateFnsFormat = datefns.format;
 app.enable('trust proxy');
 
 // mongoose
-mongoose.connect(`mongodb://${process.env.DB_HOST}/${process.env.DB_NAME}`, {});
-
-/* todo upgrade to this
-let dev_db_url = 'mongodb://someuser:abcd1234@ds123619.mlab.com:23619/productstutorial';
-const mongoDB = process.env.MONGODB_URI || dev_db_url;
-mongoose.connect(mongoDB);
-mongoose.Promise = global.Promise;
+const mongoDB = process.env.MONGODB_URI || `mongodb://${process.env.DB_HOST}/${process.env.DB_NAME}`;
+mongoose.connect(mongoDB, {
+  // Mongoose v8: useNewUrlParser/useUnifiedTopology are defaults
+});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-*/
-
 // end mongoose
 
 
-let sessionStore = new MongoStore({mongooseConnection: mongoose.connection, autoReconnect: true});
+let sessionStore = new MongoStore({
+  client: mongoose.connection.client,
+});
 
 var cookie = {
     httpOnly: true,
@@ -81,10 +78,8 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 // todo app.use(logger('dev', { stream: winston.stream }));
 
-app.use(express.json());
-
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 
