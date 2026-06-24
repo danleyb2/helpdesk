@@ -55,7 +55,7 @@ module.exports = function (io) {
             if (socket.user){
                 var member = await Member.findOne({account: socket.user._id});
 
-                participant = await Participant.findOne({modelRef: mongoose.Types.ObjectId(member._id)})
+                participant = await Participant.findOne({modelRef: member._id})
                     .where('_id')
                     .in(participantIds)
                     .exec();
@@ -119,7 +119,7 @@ module.exports = function (io) {
             var room = 'c/' + conversation._id;
             // console.log(io.sockets.adapter.rooms[room]);
 
-            io.sockets.in(room).emit('chat message', message);
+            io.in(room).emit('chat message', message);
 
 
         });
