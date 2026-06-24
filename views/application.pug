@@ -16,6 +16,16 @@ html
     //link(rel='stylesheet' href='assets/stylesheets/theme-dark.min.css' data-skin='dark')
     link(rel='stylesheet', href='/stylesheets/style.css')
     // END THEME STYLES
+    // Global site tag (gtag.js) - Google Analytics
+    script(async='' src='https://www.googletagmanager.com/gtag/js?id=UA-113329820-3')
+    script.
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-113329820-3');
+
     block styles
   body
 
